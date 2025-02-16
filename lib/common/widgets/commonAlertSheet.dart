@@ -62,7 +62,7 @@ void showCommonAlertSheet({
                       GestureDetector(
                         onTap: () {}, // 약관 링크 이동 구현 가능
                         child: Text(
-                          "[필수] 티끌미끌 모임 서비스 이용약관",
+                          "[필수] 티끌미끌 모임 서비스 이용약관 ",
                           style:
                               TextStyle(fontSize: 14, color: MyColors.darkGrey),
                         ),
