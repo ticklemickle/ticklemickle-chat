@@ -21,7 +21,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   @override
   void initState() {
     super.initState();
-    _addNextQuestion(); // 첫 번째 질문 추가
+    _addNextQuestion();
   }
 
   void _addNextQuestion([String? userResponse]) {

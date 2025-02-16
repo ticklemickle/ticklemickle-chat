@@ -16,7 +16,7 @@ class ChatBotResultScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("금융 닮은꼴 결과"),
+        title: const Text("금융 닮은꼴 찾기 결과"),
         backgroundColor: Colors.white,
         actions: [
           IconButton(
