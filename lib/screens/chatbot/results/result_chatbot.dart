@@ -22,13 +22,24 @@ final List<Lookalike> lookalikeList = [
         "가치투자의 대가인 워렌버핏과 매우 닮았습니다. 항공사, 카지노, 백화점 등에 대한 섹터와 어울리며,"
         "저평가된 기업을 면밀히 분석하여 장기 투자하는 것이 매우 적합합니다.",
     "links": [
-      {"title": freeTitle, "detail": freeDetail, "imagePath": freeImagePath},
       {
+        "level": 1,
+        "title": freeTitle,
+        "detail": freeDetail,
+        "imagePath": freeImagePath
+      },
+      {
+        "level": 2,
         "title": "한국의 워렌 버핏 모임",
         "detail": groupDetail,
         "imagePath": groupImagePath
       },
-      {"title": vipTitle, "detail": vipDetail, "imagePath": vipImagePath},
+      {
+        "level": 3,
+        "title": vipTitle,
+        "detail": vipDetail,
+        "imagePath": vipImagePath
+      },
     ]
   }),
   Lookalike.fromJson({
@@ -39,13 +50,24 @@ final List<Lookalike> lookalikeList = [
         "투자에 대한 학구열이 높고 꼼꼼히 학습하는 습관은 결국 당신을 부자로 만들어주게 되겠네요.\n"
         "추천드리는 투자 섹터는 반도체, 2차전지, IT 등이 있으며 뛰어난 시장성을 갖은 섹터를 찾아 기업을 분석하는 TOP DOWN 방식이 어울리는 투자자 입니다.",
     "links": [
-      {"title": freeTitle, "detail": freeDetail, "imagePath": freeImagePath},
       {
+        "level": 1,
+        "title": freeTitle,
+        "detail": freeDetail,
+        "imagePath": freeImagePath
+      },
+      {
+        "level": 2,
         "title": "한국의 빌 게이츠 모임",
         "detail": groupDetail,
         "imagePath": groupImagePath
       },
-      {"title": vipTitle, "detail": vipDetail, "imagePath": vipImagePath},
+      {
+        "level": 3,
+        "title": vipTitle,
+        "detail": vipDetail,
+        "imagePath": vipImagePath
+      },
     ]
   }),
   Lookalike.fromJson({
@@ -56,13 +78,24 @@ final List<Lookalike> lookalikeList = [
         "매우 젊은 나이부터 백만장자가 되고 남들이 생각하지 않는 기발한 생각을 갖고 있는 당신은 향후 뛰어난 성공한 투자자가 될 수 있어보여요!\n"
         "당신과 어울리는 투자 섹터는 태양광, 풍력, 우주산업 등이 있으며 환경, 사회, 지배구조를 고려하여 투자하는 ESG 투자 방식이 어울리는 투자자 입니다.",
     "links": [
-      {"title": freeTitle, "detail": freeDetail, "imagePath": freeImagePath},
       {
+        "level": 1,
+        "title": freeTitle,
+        "detail": freeDetail,
+        "imagePath": freeImagePath
+      },
+      {
+        "level": 2,
         "title": "한국의 일론 머스크 모임",
         "detail": groupDetail,
         "imagePath": groupImagePath
       },
-      {"title": vipTitle, "detail": vipDetail, "imagePath": vipImagePath},
+      {
+        "level": 3,
+        "title": vipTitle,
+        "detail": vipDetail,
+        "imagePath": vipImagePath
+      },
     ]
   }),
 ];

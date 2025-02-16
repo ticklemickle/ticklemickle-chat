@@ -28,13 +28,14 @@ class Lookalike {
   }
 }
 
-/// 링크 정보를 관리하는 클래스
 class LinkInfo {
+  final int level;
   final String title;
   final String detail;
   final String imagePath;
 
   LinkInfo({
+    required this.level,
     required this.title,
     required this.detail,
     required this.imagePath,
@@ -43,6 +44,7 @@ class LinkInfo {
   /// JSON 데이터를 객체로 변환하는 메서드
   factory LinkInfo.fromJson(Map<String, dynamic> json) {
     return LinkInfo(
+      level: json["level"],
       title: json["title"],
       detail: json["detail"],
       imagePath: json["imagePath"],
