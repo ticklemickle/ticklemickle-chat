@@ -46,33 +46,33 @@ class AppHome extends StatelessWidget {
       },
       {
         "title": "금융 닮은꼴 찾기",
-        "subtitle": "",
+        "subtitle": "성향 분석",
         "image": "happyface.png",
         "participants": 3675
       },
       {
-        "title": "금융 닮은꼴 찾기",
-        "subtitle": "",
-        "image": "happyface.png",
-        "participants": 3675
+        "title": "안정적인 투자자",
+        "subtitle": "성향 분석",
+        "image": "bank.png",
+        "participants": 75
       },
       {
-        "title": "금융 닮은꼴 찾기",
-        "subtitle": "",
-        "image": "happyface.png",
-        "participants": 3675
+        "title": "세금(절세, 연말정산)",
+        "subtitle": "지식 테스트",
+        "image": "tax.png",
+        "participants": 5
       },
       {
-        "title": "금융 닮은꼴 찾기",
-        "subtitle": "",
-        "image": "happyface.png",
-        "participants": 3675
+        "title": "대출",
+        "subtitle": "지식 테스트",
+        "image": "loan.png",
+        "participants": 15
       },
       {
-        "title": "금융 닮은꼴 찾기",
-        "subtitle": "",
-        "image": "happyface.png",
-        "participants": 3675
+        "title": "금융 역사",
+        "subtitle": "지식 데스트",
+        "image": "history.png",
+        "participants": 75
       },
     ];
 

@@ -63,12 +63,17 @@ class AppListItem extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
-                color: MyColors.mainDarkColor,
+                color: participants >= 100
+                    ? MyColors.mainDarkColor
+                    : MyColors.lightGrey,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
                 "$participants명 참여",
-                style: const TextStyle(fontSize: 12, color: Colors.white),
+                style: TextStyle(
+                  fontSize: 12,
+                  color: participants >= 100 ? Colors.white : Colors.black,
+                ),
               ),
             ),
           ],

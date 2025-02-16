@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
+import 'package:ticklemickle_m/common/widgets/termsCheckBox.dart';
 
 void showCommonAlertSheet({
   required BuildContext context,
@@ -29,12 +30,12 @@ void showCommonAlertSheet({
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: 20),
+            SizedBox(height: 22),
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(8),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,
@@ -54,21 +55,7 @@ void showCommonAlertSheet({
                     textAlign: TextAlign.left,
                   ),
                   SizedBox(height: 40),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.check_circle, color: MyColors.mainColor),
-                      SizedBox(width: 8),
-                      GestureDetector(
-                        onTap: () {}, // 약관 링크 이동 구현 가능
-                        child: Text(
-                          "[필수] 티끌미끌 모임 서비스 이용약관 ",
-                          style:
-                              TextStyle(fontSize: 14, color: MyColors.darkGrey),
-                        ),
-                      ),
-                    ],
-                  ),
+                  TermsCheckbox(),
                 ],
               ),
             ),
@@ -82,12 +69,13 @@ void showCommonAlertSheet({
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
+                  elevation: 0,
                 ),
                 onPressed: onConfirm,
                 child: Text(confirmText,
                     style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                         color: Colors.black)),
               ),
             ),
