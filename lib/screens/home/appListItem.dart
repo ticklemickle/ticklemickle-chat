@@ -24,12 +24,27 @@ class AppListItem extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: MyColors.lightestGrey,
+          color: MyColors.darkWhite,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           children: [
-            Image.asset(imagePath, width: 50, height: 50, fit: BoxFit.contain),
+            Container(
+              width: 60, // 원형 컨테이너 크기
+              height: 60,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+              ),
+              child: Center(
+                child: Image.asset(
+                  imagePath,
+                  width: 40,
+                  height: 40,
+                  fit: BoxFit.contain, // 이미지가 원 안에 자연스럽게 위치하도록 설정
+                ),
+              ),
+            ),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -41,7 +56,7 @@ class AppListItem extends StatelessWidget {
                   if (subtitle.isNotEmpty)
                     Text(subtitle,
                         style:
-                            TextStyle(fontSize: 14, color: Colors.grey[600])),
+                            TextStyle(fontSize: 14, color: MyColors.darkGrey)),
                 ],
               ),
             ),

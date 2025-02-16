@@ -13,8 +13,10 @@ class ChatBotScreen extends StatefulWidget {
 
 class _ChatBotScreenState extends State<ChatBotScreen> {
   List<Map<String, dynamic>> messages = []; // 대화 내역 저장
-  int currentQuestionIndex = 0; // 현재 질문 인덱스
-  bool isFirstMessage = true; // 첫 메시지 체크
+  List<Map<String, String>> selectedAnswers = []; // 사용자의 선택 저장
+  int currentQuestionIndex = 0;
+  bool isFirstMessage = true;
+  bool isResultDisplayed = false; // 결과가 표시되었는지 체크
 
   final ScrollController _scrollController = ScrollController();
 
@@ -27,7 +29,16 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   void _addNextQuestion([String? userResponse]) {
     if (userResponse != null) {
       setState(() {
-        messages.add({"type": "answer", "message": userResponse});
+        /* 첫 번째  */
+        if (messages[currentQuestionIndex - 1]["answer"] != null) {
+          print(messages[currentQuestionIndex - 1]);
+          selectedAnswers.add({
+            "question": messages.last["message"], // 마지막 질문과 연결
+            "userPick": userResponse,
+          });
+
+          // messages.add({"type": "answer", "userPick": userResponse});
+        }
       });
     }
 
@@ -37,29 +48,61 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
         currentQuestionIndex++;
       });
 
-      // **Web에서 setState 강제 리빌드 문제 해결을 위해 딜레이 적용**
       Future.delayed(const Duration(milliseconds: 50), () {
-        if (mounted) {
-          setState(() {});
-        }
+        if (mounted) setState(() {});
       });
     } else {
-      print("마지막 질문까지 모두 제출됨.");
-      context.go('/ChatBotResult');
+      _displayFinalAnswers();
     }
 
-    // 애니메이션 효과 및 스크롤 이동
     Future.delayed(const Duration(milliseconds: 100), () {
       _scrollToBottom();
     });
 
-    // 첫 번째 메시지 이후, 자동으로 다음 질문 표시 (인사말 처리)
     if (isFirstMessage) {
       isFirstMessage = false;
       Future.delayed(const Duration(seconds: 1), () {
         _addNextQuestion();
       });
     }
+  }
+
+  void _displayFinalAnswers() {
+    if (isResultDisplayed) {
+      print("마지막 질문까지 모두 제출됨.");
+      context.go('/ChatBotResult');
+      return;
+    }
+
+    setState(() {
+      isResultDisplayed = true;
+      // messages.add({
+      //   "type": "text",
+      //   "message": "재테크 현황 분석이 완료되었습니다.\n아래 정보를 제출하겠습니다.\n\n",
+      // });
+
+      // for (var finalAnswer in selectedAnswers) {
+      //   messages.add({
+      //     "type": "text",
+      //     "message":
+      //         "${finalAnswer["question"]}\n\n➡️ ${finalAnswer["answer"]}",
+      //   });
+      // }
+
+      messages.add({
+        "type": "choice",
+        "options": ["위 내용으로 분석하기"],
+        "message": """
+재테크 현황 분석이 완료되었습니다.
+
+${selectedAnswers.map((finalAnswer) => "• ${finalAnswer["question"]}\n➡️ ${finalAnswer["userPick"]}").join("\n\n")}
+        """,
+      });
+    });
+
+    Future.delayed(const Duration(milliseconds: 100), () {
+      _scrollToBottom();
+    });
   }
 
   void _scrollToBottom() {

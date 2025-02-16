@@ -124,16 +124,18 @@ class _MessageWidgetState extends State<MessageWidget>
               return _buildSelectableContainer(
                 label: options[index],
                 isSelected: selectedAnswer == options[index],
-                onTap: () {
-                  setState(() {
-                    selectedAnswer = options[index];
-                  });
-                  Future.delayed(const Duration(milliseconds: 500), () {
-                    if (mounted) {
-                      widget.onAnswerSelected(options[index]);
-                    }
-                  });
-                },
+                onTap: selectedAnswer == null
+                    ? () {
+                        setState(() {
+                          selectedAnswer = options[index];
+                        });
+                        Future.delayed(const Duration(milliseconds: 500), () {
+                          if (mounted) {
+                            widget.onAnswerSelected(options[index]);
+                          }
+                        });
+                      }
+                    : () {},
               );
             },
           ),
@@ -219,14 +221,16 @@ class _MessageWidgetState extends State<MessageWidget>
     return _buildSelectableContainer(
       label: label,
       isSelected: selectedAnswer == label,
-      onTap: () {
-        setState(() {
-          selectedAnswer = label;
-        });
-        Future.delayed(const Duration(milliseconds: 500), () {
-          widget.onAnswerSelected(label);
-        });
-      },
+      onTap: selectedAnswer == null
+          ? () {
+              setState(() {
+                selectedAnswer = label;
+              });
+              Future.delayed(const Duration(milliseconds: 500), () {
+                widget.onAnswerSelected(label);
+              });
+            }
+          : () {},
     );
   }
 }
