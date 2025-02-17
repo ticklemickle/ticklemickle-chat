@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "416243924439",
+    "project_id": "ticklemickle-m",
+    "storage_bucket": "ticklemickle-m.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416243924439:android:e8604d53630b7f152b1f92",
+        "android_client_info": {
+          "package_name": "com.example.ticklemickle_m"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY3Cx2sGERq9mAk29o1fRYfoXrYCTL4Mo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
