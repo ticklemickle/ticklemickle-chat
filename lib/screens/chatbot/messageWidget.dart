@@ -20,7 +20,6 @@ class _MessageWidgetState extends State<MessageWidget>
   String? selectedAnswer;
   late AnimationController _animationController;
   late Animation<double> _fadeInAnimation;
-  static const double QUESTION_WIDTH = 400;
 
   @override
   void initState() {
@@ -62,7 +61,7 @@ class _MessageWidgetState extends State<MessageWidget>
       children: [
         _buildBotProfile(),
         Container(
-          width: QUESTION_WIDTH,
+          width: MediaQuery.of(context).size.width * 0.7,
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.symmetric(vertical: 6),
           decoration: BoxDecoration(
@@ -78,8 +77,7 @@ class _MessageWidgetState extends State<MessageWidget>
 
   Widget _buildUserPick() {
     return Container(
-      padding: const EdgeInsets.all(8),
-      width: 100,
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 30),
       decoration: BoxDecoration(
         color: MyColors.mainlightColor,
         borderRadius: BorderRadius.circular(12),
@@ -246,7 +244,7 @@ class _MessageWidgetState extends State<MessageWidget>
           ),
           const SizedBox(height: 20),
           SizedBox(
-            width: QUESTION_WIDTH,
+            width: MediaQuery.of(context).size.width * 0.7,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

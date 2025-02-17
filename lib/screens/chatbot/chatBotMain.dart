@@ -14,9 +14,10 @@ class ChatBotScreen extends StatefulWidget {
 
 class _ChatBotScreenState extends State<ChatBotScreen> {
   List<Map<String, dynamic>> messages = []; // 대화 내역 저장
-  List<Map<String, String>> selectedAnswers = []; // 사용자의 선택 저장
-  int totalQuestions = financeBasicTest.length;
+  List<Map<String, String>> userPickMessage = []; // 사용자의 선택 저장
+  final int totalQuestions = financeBasicTest.length;
   int currentQuestionIndex = 0;
+  int messageIndex = 0;
   bool isFirstMessage = true;
   bool isResultDisplayed = false; // 결과가 표시되었는지 체크
 
@@ -31,29 +32,27 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   void _addNextQuestion([String? userResponse]) {
     if (userResponse != null) {
       setState(() {
-        print(messages[currentQuestionIndex - 1]["answer"]);
         String upperResponse = userResponse;
         if (RegExp(r'^[a-zA-Z\s]+$').hasMatch(upperResponse)) {
           upperResponse = upperResponse.toUpperCase();
         }
 
-        if (messages[currentQuestionIndex - 1]["answer"] != null) {
-          // print(messages[currentQuestionIndex - 1]);
-          selectedAnswers.add({
+        if (messages[messageIndex - 1]["answer"] != null) {
+          userPickMessage.add({
             "question": messages.last["message"], // 마지막 질문과 연결
             "message": upperResponse,
           });
-          print(upperResponse);
           messages.add({"type": "userPick", "message": upperResponse});
+          messageIndex++;
         }
       });
-      print(userResponse);
     }
 
     if (currentQuestionIndex < financeBasicTest.length) {
       setState(() {
         messages.add(financeBasicTest[currentQuestionIndex]);
         currentQuestionIndex++;
+        messageIndex++;
       });
 
       Future.delayed(const Duration(milliseconds: 50), () {
@@ -62,7 +61,6 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
     } else {
       _displayFinalAnswers();
     }
-
     Future.delayed(const Duration(milliseconds: 100), () {
       _scrollToBottom();
     });
@@ -84,26 +82,13 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
 
     setState(() {
       isResultDisplayed = true;
-      // messages.add({
-      //   "type": "text",
-      //   "message": "재테크 현황 분석이 완료되었습니다.\n아래 정보를 제출하겠습니다.\n\n",
-      // });
-
-      // for (var finalAnswer in selectedAnswers) {
-      //   messages.add({
-      //     "type": "text",
-      //     "message":
-      //         "${finalAnswer["question"]}\n\n➡️ ${finalAnswer["answer"]}",
-      //   });
-      // }
-
       messages.add({
         "type": "choice",
         "options": ["위 내용으로 분석하기"],
         "message": """
 재테크 현황 분석이 완료되었습니다.
 
-${selectedAnswers.map((finalAnswer) => "• ${finalAnswer["question"]}\n➡️ ${finalAnswer["userPick"]}").join("\n\n")}
+${userPickMessage.map((userPick) => "• ${userPick["question"]}\n➡️ ${userPick["message"]}").join("\n\n")}
         """,
       });
     });

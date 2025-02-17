@@ -92,19 +92,25 @@ class AppHome extends StatelessWidget {
         ],
       ),
       body: ListView.builder(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
         itemCount: items.length,
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              context.push('/ChatBotMain');
-            },
-            child: AppListItem(
-              title: items[index]["title"],
-              subtitle: items[index]["subtitle"],
-              imagePath: "assets/icon3D/${items[index]["image"]}",
-              participants: items[index]["participants"],
-            ),
+          return Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  context.push('/ChatBotMain');
+                },
+                child: AppListItem(
+                  title: items[index]["title"],
+                  subtitle: items[index]["subtitle"],
+                  imagePath: "assets/icon3D/${items[index]["image"]}",
+                  participants: items[index]["participants"],
+                ),
+              ),
+              if (index < items.length - 1)
+                Divider(color: MyColors.lightGrey, thickness: 1), // 마지막 항목 제외
+            ],
           );
         },
       ),
