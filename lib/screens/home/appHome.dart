@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ticklemickle_m/common/themes/colors.dart';
 import 'appListItem.dart';
 
 class AppHome extends StatelessWidget {
@@ -80,7 +81,7 @@ class AppHome extends StatelessWidget {
       appBar: AppBar(
         title: const Text("경제 근육 키우기",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.white,
+        backgroundColor: MyColors.lightestGrey,
         actions: [
           IconButton(
             icon: const Icon(Icons.menu, size: 28),

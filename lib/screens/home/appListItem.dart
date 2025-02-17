@@ -24,7 +24,7 @@ class AppListItem extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: MyColors.darkWhite,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -34,7 +34,7 @@ class AppListItem extends StatelessWidget {
               height: 60,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white,
+                color: MyColors.darkWhite,
               ),
               child: Center(
                 child: Image.asset(
@@ -63,9 +63,8 @@ class AppListItem extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
-                color: participants >= 100
-                    ? MyColors.mainDarkColor
-                    : MyColors.lightGrey,
+                color:
+                    participants >= 100 ? MyColors.mainDarkColor : Colors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
