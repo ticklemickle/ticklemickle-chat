@@ -43,29 +43,56 @@ class _MessageWidgetState extends State<MessageWidget>
     return FadeTransition(
       opacity: _fadeInAnimation,
       child: Column(
-        crossAxisAlignment: type == "answer"
+        crossAxisAlignment: type == "userPick"
             ? CrossAxisAlignment.end
             : CrossAxisAlignment.start,
         children: [
           if (type == "text") _buildTextOptions(),
           if (type == "choice") _buildChoiceOptions(),
           if (type == "ox") _buildOXButtons(),
+          if (type == "userPick") _buildUserPick(),
         ],
       ),
     );
   }
 
   Widget _buildContainer({required Widget child}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildBotProfile(),
+        Container(
+          width: QUESTION_WIDTH,
+          padding: const EdgeInsets.all(12),
+          margin: const EdgeInsets.symmetric(vertical: 6),
+          decoration: BoxDecoration(
+            color: MyColors.lightGrey,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: MyColors.lightGrey),
+          ),
+          child: child,
+        )
+      ],
+    );
+  }
+
+  Widget _buildUserPick() {
     return Container(
-      width: QUESTION_WIDTH,
-      padding: const EdgeInsets.all(12),
-      margin: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.all(8),
+      width: 100,
       decoration: BoxDecoration(
-        color: MyColors.lightGrey,
+        color: MyColors.mainlightColor,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: MyColors.lightGrey),
+        border: Border.all(color: MyColors.mainlightColor),
       ),
-      child: child,
+      child: Text(
+        widget.messageData["message"],
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 
@@ -75,6 +102,23 @@ class _MessageWidgetState extends State<MessageWidget>
         widget.messageData["message"],
         style: const TextStyle(fontSize: 16),
       ),
+    );
+  }
+
+  Widget _buildBotProfile() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ClipOval(
+          child: Image.asset(
+            'assets/icon/app_icon_dark.png',
+            width: 40,
+            height: 40,
+            fit: BoxFit.cover, // 이미지가 원 안에 꽉 차도록 설정
+          ),
+        ),
+        SizedBox(width: 10),
+      ],
     );
   }
 

@@ -81,7 +81,7 @@ class AppHome extends StatelessWidget {
       appBar: AppBar(
         title: const Text("경제 근육 키우기",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        backgroundColor: MyColors.lightestGrey,
+        backgroundColor: Colors.white,
         actions: [
           IconButton(
             icon: const Icon(Icons.menu, size: 28),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ticklemickle_m/common/themes/colors.dart';
 import 'dart:async';
 import 'messageWidget.dart';
 import 'package:ticklemickle_m/screens/chatbot/questions/basicTest.dart';
@@ -14,6 +15,7 @@ class ChatBotScreen extends StatefulWidget {
 class _ChatBotScreenState extends State<ChatBotScreen> {
   List<Map<String, dynamic>> messages = []; // 대화 내역 저장
   List<Map<String, String>> selectedAnswers = []; // 사용자의 선택 저장
+  int totalQuestions = financeBasicTest.length;
   int currentQuestionIndex = 0;
   bool isFirstMessage = true;
   bool isResultDisplayed = false; // 결과가 표시되었는지 체크
@@ -29,17 +31,23 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   void _addNextQuestion([String? userResponse]) {
     if (userResponse != null) {
       setState(() {
-        /* 첫 번째  */
+        print(messages[currentQuestionIndex - 1]["answer"]);
+        String upperResponse = userResponse;
+        if (RegExp(r'^[a-zA-Z\s]+$').hasMatch(upperResponse)) {
+          upperResponse = upperResponse.toUpperCase();
+        }
+
         if (messages[currentQuestionIndex - 1]["answer"] != null) {
-          print(messages[currentQuestionIndex - 1]);
+          // print(messages[currentQuestionIndex - 1]);
           selectedAnswers.add({
             "question": messages.last["message"], // 마지막 질문과 연결
-            "userPick": userResponse,
+            "message": upperResponse,
           });
-
-          // messages.add({"type": "answer", "userPick": userResponse});
+          print(upperResponse);
+          messages.add({"type": "userPick", "message": upperResponse});
         }
       });
+      print(userResponse);
     }
 
     if (currentQuestionIndex < financeBasicTest.length) {
@@ -122,6 +130,18 @@ ${selectedAnswers.map((finalAnswer) => "• ${finalAnswer["question"]}\n➡️ $
       ),
       body: Column(
         children: [
+          TweenAnimationBuilder<double>(
+            tween: Tween<double>(
+                begin: 0.0, end: currentQuestionIndex / totalQuestions),
+            duration: Duration(seconds: 1), // 애니메이션 지속 시간
+            builder: (context, value, child) {
+              return LinearProgressIndicator(
+                value: value,
+                backgroundColor: MyColors.lightGrey,
+                valueColor: AlwaysStoppedAnimation<Color>(MyColors.mainColor),
+              );
+            },
+          ),
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
