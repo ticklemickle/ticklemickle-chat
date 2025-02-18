@@ -21,32 +21,35 @@ class CommonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: backgroundColor ?? MyColors.lightestGrey,
-      elevation: 0, // ✅ 그림자 제거
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        side: BorderSide(color: MyColors.lightestGrey),
-      ),
-      child: ListTile(
-        leading: Row(
-          mainAxisSize: MainAxisSize.min, // 🔹 Row가 최소 크기로 유지되도록 설정
-          children: [
-            _buildImageOrIcon(),
-            const SizedBox(width: 12), // 🔹 아이콘과 타이틀 사이 간격 추가
-          ],
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 2.0),
+      child: Card(
+        color: backgroundColor ?? MyColors.darkWhite,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          side: BorderSide(color: MyColors.darkWhite),
         ),
-        title: Text(
-          title,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+        child: ListTile(
+          contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
+          leading: Row(
+            mainAxisSize: MainAxisSize.min, // 🔹 Row가 최소 크기로 유지되도록 설정
+            children: [
+              _buildImageOrIcon(),
+              const SizedBox(width: 12), // 🔹 아이콘과 타이틀 사이 간격 추가
+            ],
+          ),
+          title: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          subtitle: Text(subtitle),
+          onTap: onTap,
         ),
-        subtitle: Text(subtitle),
-        onTap: onTap,
       ),
     );
   }
 
-  /// ✅ 이미지가 존재하면 `Image.asset`, 없으면 기본 아이콘 표시
   Widget _buildImageOrIcon() {
     if (imagePath != null && imagePath!.isNotEmpty) {
       return Image.asset(

@@ -87,7 +87,7 @@ class _MessageWidgetState extends State<MessageWidget>
         widget.messageData["message"],
         textAlign: TextAlign.center,
         style: const TextStyle(
-          fontSize: 18,
+          fontSize: 16,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -129,8 +129,8 @@ class _MessageWidgetState extends State<MessageWidget>
     int totalOptions = options.length;
     int crossAxisCount = (totalOptions == 1)
         ? 1
-        : (totalOptions == 3)
-            ? 3
+        : (totalOptions == 2 || totalOptions == 3)
+            ? 1
             : (totalOptions == 4)
                 ? 2
                 : (totalOptions == 5 || totalOptions == 6)
@@ -154,12 +154,14 @@ class _MessageWidgetState extends State<MessageWidget>
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
               childAspectRatio: (totalOptions == 1)
-                  ? 8 / 1
-                  : (totalOptions == 3)
-                      ? 3 / 1
-                      : (totalOptions == 2 || totalOptions == 4)
-                          ? 4 / 1
-                          : 1,
+                  ? 6 / 1
+                  : (totalOptions == 2)
+                      ? 5 / 1
+                      : (totalOptions == 3)
+                          ? 6 / 1
+                          : (totalOptions == 4)
+                              ? 3 / 1
+                              : 1,
             ),
             itemCount: totalOptions,
             itemBuilder: (context, index) {
@@ -201,7 +203,7 @@ class _MessageWidgetState extends State<MessageWidget>
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(
-            color: isSelected ? Colors.cyan : Colors.white,
+            color: isSelected ? MyColors.mainDarkColor : Colors.white,
             width: 2,
           ),
           borderRadius: BorderRadius.circular(12),
@@ -226,7 +228,7 @@ class _MessageWidgetState extends State<MessageWidget>
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: isSelected ? Colors.cyan : Colors.black,
+                  color: isSelected ? MyColors.mainDarkColor : Colors.black,
                 ),
               ),
       ),
@@ -244,7 +246,7 @@ class _MessageWidgetState extends State<MessageWidget>
           ),
           const SizedBox(height: 20),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.7,
+            // width: MediaQuery.of(context).size.width * 0.8,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

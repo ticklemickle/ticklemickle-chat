@@ -2,7 +2,7 @@ const List<Map<String, dynamic>> financeBasicTest = [
   {"type": "text", "message": "안녕하세요. 금융 지식 테스트를 시작하겠습니다!"},
   {
     "type": "choice",
-    "message": "먼저 저희쪽에 등록한 정보가 맞는지 확인해주세요. \n아래 정보가 맞나요?\n\n1990년생 남성",
+    "message": "먼저 저희쪽에 등록한 정보가 맞는지 확인해주세요. 아래 정보가 맞나요?\n\n1990년생 남성",
     "options": ["맞아요", "변경하기"]
   },
   {"type": "ox", "message": "은행에 돈을 예금하면 시간이 지날수록 가치가 올라간다.", "answer": "x"},

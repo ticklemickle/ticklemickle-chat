@@ -109,7 +109,10 @@ class AppHome extends StatelessWidget {
                 ),
               ),
               if (index < items.length - 1)
-                Divider(color: MyColors.lightGrey, thickness: 1), // 마지막 항목 제외
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: Divider(color: MyColors.lightGrey, thickness: 1),
+                ),
             ],
           );
         },
