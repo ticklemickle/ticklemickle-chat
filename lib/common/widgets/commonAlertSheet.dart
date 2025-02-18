@@ -86,19 +86,14 @@ void showCommonAlertSheet({
                     ),
                     onPressed: () async {
                       if (isChecked) {
-                        // ✅ 체크 여부 확인
-                        final Uri url =
-                            Uri.parse('https://www.tosspayments.com/');
-                        if (await canLaunchUrl(url)) {
-                          await launchUrl(url,
-                              mode: LaunchMode.externalApplication);
-                        } else {
+                        try {
+                          launchUrl(Uri.parse('https://www.tosspayments.com'));
+                        } catch (e) {
                           showToast(context, "결제창 연결에 실패했습니다.");
                         }
                         Navigator.pop(context);
                       } else {
-                        showToast(
-                            context, "이용약관에 동의해주세요."); // ✅ 약관 동의하지 않으면 메시지 표시
+                        showToast(context, "이용약관에 동의해주세요.");
                       }
                     },
                     child: Text(

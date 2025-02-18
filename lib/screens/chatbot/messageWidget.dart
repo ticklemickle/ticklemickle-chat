@@ -41,16 +41,19 @@ class _MessageWidgetState extends State<MessageWidget>
 
     return FadeTransition(
       opacity: _fadeInAnimation,
-      child: Column(
-        crossAxisAlignment: type == "userPick"
-            ? CrossAxisAlignment.end
-            : CrossAxisAlignment.start,
-        children: [
-          if (type == "text") _buildTextOptions(),
-          if (type == "choice") _buildChoiceOptions(),
-          if (type == "ox") _buildOXButtons(),
-          if (type == "userPick") _buildUserPick(),
-        ],
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 7),
+        child: Column(
+          crossAxisAlignment: type == "userPick"
+              ? CrossAxisAlignment.end
+              : CrossAxisAlignment.start,
+          children: [
+            if (type == "text") _buildTextOptions(),
+            if (type == "choice") _buildChoiceOptions(),
+            if (type == "ox") _buildOXButtons(),
+            if (type == "userPick") _buildUserPick(),
+          ],
+        ),
       ),
     );
   }
@@ -77,7 +80,7 @@ class _MessageWidgetState extends State<MessageWidget>
 
   Widget _buildUserPick() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 30),
+      padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 25),
       decoration: BoxDecoration(
         color: MyColors.mainlightColor,
         borderRadius: BorderRadius.circular(12),
@@ -88,7 +91,7 @@ class _MessageWidgetState extends State<MessageWidget>
         textAlign: TextAlign.center,
         style: const TextStyle(
           fontSize: 16,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w500,
         ),
       ),
     );

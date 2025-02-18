@@ -110,6 +110,7 @@ ${userPickMessage.map((userPick) => "• ${userPick["question"]}\n➡️ ${userP
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         title: const Text("금융 지식 테스트"),
         backgroundColor: Colors.white,
       ),

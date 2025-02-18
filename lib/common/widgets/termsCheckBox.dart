@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
+import 'package:ticklemickle_m/common/widgets/commonToast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TermsCheckbox extends StatefulWidget {
@@ -45,12 +46,11 @@ class TermsCheckboxState extends State<TermsCheckbox> {
           GestureDetector(
             behavior: HitTestBehavior.opaque, // 아이콘 주변 영역도 클릭 가능하도록 설정
             onTap: () async {
-              final Uri url = Uri.parse(
-                  'https://superb-nitrogen-81f.notion.site/18d48074a12d80d8ab2cec2977e2ece7?pvs=4');
-              if (await canLaunchUrl(url)) {
-                await launchUrl(url, mode: LaunchMode.externalApplication);
-              } else {
-                debugPrint("Could not launch $url");
+              try {
+                launchUrl(Uri.parse(
+                    'https://superb-nitrogen-81f.notion.site/18d48074a12d80d8ab2cec2977e2ece7?pvs=4'));
+              } catch (e) {
+                showToast(context, "이용약관 연결에 실패했습니다.");
               }
             },
             child: Icon(

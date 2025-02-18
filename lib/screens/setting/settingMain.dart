@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ticklemickle_m/common/themes/colors.dart';
 import 'package:ticklemickle_m/common/widgets/commonListScreen.dart';
 import 'package:ticklemickle_m/common/widgets/commonToast.dart';
 import 'package:ticklemickle_m/common/widgets/setting/commonMenuItem.dart';
 import 'package:ticklemickle_m/common/widgets/setting/faqListScreen.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ticklemickle_m/screens/setting/myInfo.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Settingmain extends StatelessWidget {
@@ -23,34 +25,12 @@ class Settingmain extends StatelessWidget {
         ],
       ),
       body: ListView(children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              const Expanded(
-                child: Text(
-                  'adjlsajdk',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  context.push('/myInfo');
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey[200], // 버튼 배경 색상
-                  foregroundColor: Colors.black, // 버튼 글자 색상
-                ),
-                child: const Text('수정'),
-              ),
-            ],
-          ),
-        ),
-        const Divider(height: 1, thickness: 1),
-        _buildMenuItem(context, "내 활동", [
-          ListItem(title: "작성한 글", viewIcon: true),
-          ListItem(title: "작성한 댓글", viewIcon: true),
-          ListItem(title: "좋아요 또는 싫어요한 글", viewIcon: true),
+        _buildMyInfo(context, "내 정보"),
+        _buildMenuItem(context, "점검 결과 다시 보기", [
+          ListItem(
+            viewIcon: true,
+            title: "TEST",
+          )
         ]),
         _buildLinkItem(context, "진행 중인 이벤트", ""),
         _buildLinkItem(context, "공지사항",
@@ -89,6 +69,13 @@ class Settingmain extends StatelessWidget {
     return CommonMenuItem(
       title: title,
       destinationScreen: FaqListScreen(title: title),
+    );
+  }
+
+  Widget _buildMyInfo(BuildContext context, String title) {
+    return CommonMenuItem(
+      title: title,
+      destinationScreen: MyInfo(),
     );
   }
 

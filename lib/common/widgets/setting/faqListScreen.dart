@@ -90,8 +90,8 @@ class _FaqListScreenState extends State<FaqListScreen> {
                     child: Text(
                       '더 보기',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold, // 글씨를 bold 처리
-                        color: MyColors.darkGrey, // 글씨를 black으로 설정
+                        fontWeight: FontWeight.w500,
+                        color: MyColors.darkGrey,
                       ),
                     ),
                   ),
@@ -139,7 +139,8 @@ class _FaqListScreenState extends State<FaqListScreen> {
                         '문의하기',
                         style: TextStyle(
                           color: MyColors.linkFontColor,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     )
@@ -165,14 +166,14 @@ class _FaqListScreenState extends State<FaqListScreen> {
                 text: "Q.   ",
                 style: TextStyle(
                   color: MyColors.mainDarkColor,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               TextSpan(
                 text: "$question",
                 style: TextStyle(
                   color: MyColors.mainFontColor,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],
@@ -180,7 +181,6 @@ class _FaqListScreenState extends State<FaqListScreen> {
           textAlign: TextAlign.left, // 좌측 정렬
         ),
         iconColor: Colors.grey[400], // 화살표 아이콘 색상 옅은 회색 처리
-        // 테두리 없애기 위한 수정
         shape: Border.all(color: Colors.transparent), // 테두리 없애기
         children: [
           Padding(
