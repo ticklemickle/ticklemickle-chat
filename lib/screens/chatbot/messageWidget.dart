@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
+import 'package:ticklemickle_m/common/widgets/commonDialog.dart';
+import 'package:ticklemickle_m/screens/chatbot/selectableContrainerState.dart';
+import 'package:ticklemickle_m/screens/setting/myInfo.dart';
 
 class MessageWidget extends StatefulWidget {
   final Map<String, dynamic> messageData;
@@ -38,7 +41,6 @@ class _MessageWidgetState extends State<MessageWidget>
   @override
   Widget build(BuildContext context) {
     String type = widget.messageData["type"] ?? "text";
-
     return FadeTransition(
       opacity: _fadeInAnimation,
       child: Container(
@@ -79,19 +81,22 @@ class _MessageWidgetState extends State<MessageWidget>
   }
 
   Widget _buildUserPick() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 25),
-      decoration: BoxDecoration(
-        color: MyColors.mainlightColor,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: MyColors.mainlightColor),
-      ),
-      child: Text(
-        widget.messageData["message"],
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 25),
+        decoration: BoxDecoration(
+          color: MyColors.mainlightColor,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: MyColors.mainlightColor),
+        ),
+        child: Text(
+          widget.messageData["message"],
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
     );
@@ -124,6 +129,8 @@ class _MessageWidgetState extends State<MessageWidget>
   }
 
   Widget _buildChoiceOptions() {
+    bool hasBeenTapped = false;
+
     List<String> options = (widget.messageData["options"] as List<dynamic>?)
             ?.map((e) => e.toString())
             .toList() ??
@@ -139,7 +146,6 @@ class _MessageWidgetState extends State<MessageWidget>
                 : (totalOptions == 5 || totalOptions == 6)
                     ? 3
                     : 2;
-
     return _buildContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,7 +174,7 @@ class _MessageWidgetState extends State<MessageWidget>
             ),
             itemCount: totalOptions,
             itemBuilder: (context, index) {
-              return _buildSelectableContainer(
+              return SelectableContainer(
                 label: options[index],
                 isSelected: selectedAnswer == options[index],
                 onTap: selectedAnswer == null
@@ -192,12 +198,31 @@ class _MessageWidgetState extends State<MessageWidget>
   }
 
   Widget _buildSelectableContainer({
+    required BuildContext context, // BuildContext 추가
     required String label,
     required bool isSelected,
     required VoidCallback onTap,
   }) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        onTap();
+        // print("label:" + label.toString() + isSelected.toString());
+        if (label == "변경하기") {
+          CommonDialog.show(
+            context: context,
+            title: '내정보 수정 화면으로 이동하시겠습니까?',
+            leftButtonText: '아니오',
+            leftButtonAction: () => Navigator.pop(context),
+            rightButtonText: '예',
+            rightButtonAction: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyInfo()),
+              );
+            },
+          );
+        }
+      },
       child: Container(
         width: 80,
         height: 80,
@@ -249,7 +274,6 @@ class _MessageWidgetState extends State<MessageWidget>
           ),
           const SizedBox(height: 20),
           SizedBox(
-            // width: MediaQuery.of(context).size.width * 0.8,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -265,7 +289,7 @@ class _MessageWidgetState extends State<MessageWidget>
   }
 
   Widget _buildOXButton(String label) {
-    return _buildSelectableContainer(
+    return SelectableContainer(
       label: label,
       isSelected: selectedAnswer == label,
       onTap: selectedAnswer == null

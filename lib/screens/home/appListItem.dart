@@ -21,7 +21,7 @@ class AppListItem extends StatelessWidget {
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Container(
-        padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+        padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
@@ -44,33 +44,32 @@ class AppListItem extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 15),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(title,
                       style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold)),
+                          fontSize: 16, fontWeight: FontWeight.w600)),
                   if (subtitle.isNotEmpty)
                     Text(subtitle,
                         style:
-                            TextStyle(fontSize: 14, color: MyColors.darkGrey)),
+                            TextStyle(fontSize: 13, color: MyColors.darkGrey)),
                 ],
               ),
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
-                color:
-                    participants >= 100 ? MyColors.mainDarkColor : Colors.white,
+                color: participants >= 100 ? MyColors.mainColor : Colors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
                 "$participants명 참여",
                 style: TextStyle(
                   fontSize: 12,
-                  color: participants >= 100 ? Colors.white : Colors.black,
+                  color: participants >= 100 ? Colors.black : Colors.black,
                 ),
               ),
             ),

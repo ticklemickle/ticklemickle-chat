@@ -7,7 +7,7 @@ class MyColors {
   static const Color mainDarkColor = Color.fromARGB(255, 64, 190, 200);
   static const Color lightestGrey = Color.fromARGB(250, 244, 244, 244);
   static const Color lightGrey = Color.fromARGB(220, 242, 242, 242);
-  static const Color grey = Color.fromARGB(199, 221, 221, 221);
+  static const Color grey = Color.fromARGB(199, 230, 230, 230);
   static const Color darkGrey = Color.fromARGB(255, 132, 132, 132);
   static const Color darkWhite = Color.fromARGB(255, 248, 248, 248);
 

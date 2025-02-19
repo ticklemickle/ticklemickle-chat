@@ -54,10 +54,6 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
         currentQuestionIndex++;
         messageIndex++;
       });
-
-      Future.delayed(const Duration(milliseconds: 50), () {
-        if (mounted) setState(() {});
-      });
     } else {
       _displayFinalAnswers();
     }
@@ -129,16 +125,18 @@ ${userPickMessage.map((userPick) => "• ${userPick["question"]}\n➡️ ${userP
             },
           ),
           Expanded(
-            child: ListView.builder(
+            child: SingleChildScrollView(
               controller: _scrollController,
               padding: const EdgeInsets.all(12),
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                return MessageWidget(
-                  messageData: messages[index],
-                  onAnswerSelected: _addNextQuestion,
-                );
-              },
+              child: Column(
+                children: messages
+                    .map((message) => MessageWidget(
+                          key: ValueKey(message), // Key 추가하여 위젯 재사용
+                          messageData: message,
+                          onAnswerSelected: _addNextQuestion,
+                        ))
+                    .toList(),
+              ),
             ),
           ),
         ],
