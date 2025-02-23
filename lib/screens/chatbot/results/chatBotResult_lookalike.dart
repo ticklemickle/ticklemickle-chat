@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
 import 'package:ticklemickle_m/common/widgets/commonAlertsheet.dart';
 import 'package:ticklemickle_m/common/widgets/commonCard.dart';
-import 'package:ticklemickle_m/screens/chatbot/results/result_chatbot.dart';
+import 'package:ticklemickle_m/screens/chatbot/results/lookalike_answerList/lookalike_answerList.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ChatBotResultScreen extends StatelessWidget {

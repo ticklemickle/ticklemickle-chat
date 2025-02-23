@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ticklemickle_m/common/themes/colors.dart';
 import 'package:ticklemickle_m/common/widgets/commonListScreen.dart';
 import 'package:ticklemickle_m/common/widgets/commonToast.dart';
 import 'package:ticklemickle_m/common/widgets/setting/commonMenuItem.dart';
 import 'package:ticklemickle_m/common/widgets/setting/faqListScreen.dart';
-import 'package:go_router/go_router.dart';
 import 'package:ticklemickle_m/screens/setting/myInfo.dart';
 import 'package:url_launcher/url_launcher.dart';
 

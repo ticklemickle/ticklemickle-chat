@@ -23,7 +23,6 @@ class _SelectableContainerState extends State<SelectableContainer> {
   @override
   Widget build(BuildContext context) {
     // print(widget.label);
-    print(widget.label + ": selected");
     return GestureDetector(
       onTap: () {
         if (widget.label == "변경하기") {
@@ -34,10 +33,6 @@ class _SelectableContainerState extends State<SelectableContainer> {
             leftButtonAction: () => Navigator.pop(context),
             rightButtonText: '예',
             rightButtonAction: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MyInfo()),
-              // );
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(

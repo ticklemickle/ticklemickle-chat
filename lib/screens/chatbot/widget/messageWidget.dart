@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
-import 'package:ticklemickle_m/common/widgets/commonDialog.dart';
-import 'package:ticklemickle_m/screens/chatbot/selectableContrainerState.dart';
-import 'package:ticklemickle_m/screens/setting/myInfo.dart';
+import 'package:ticklemickle_m/screens/chatbot/widget/selectableContrainerState.dart';
 
 class MessageWidget extends StatefulWidget {
   final Map<String, dynamic> messageData;
