@@ -6,15 +6,16 @@ import 'package:url_launcher/url_launcher.dart';
 
 class FaqListScreen extends StatefulWidget {
   final String title;
+  final bool useAppHome;
 
-  const FaqListScreen({super.key, required this.title});
+  const FaqListScreen(
+      {super.key, required this.title, required this.useAppHome});
 
   @override
   _FaqListScreenState createState() => _FaqListScreenState();
 }
 
 class _FaqListScreenState extends State<FaqListScreen> {
-  // 초기 5개의 질문과 답변
   final List<Map<String, String>> faqData = [
     {
       'question': '티끌미끌은 어떤 서비스인가요?',
@@ -59,7 +60,10 @@ class _FaqListScreenState extends State<FaqListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CommonAppBar(title: widget.title),
+      appBar: CommonAppBar(
+        title: widget.title,
+        useAppHome: false,
+      ),
       body: ListView(
         children: [
           // FAQ 리스트

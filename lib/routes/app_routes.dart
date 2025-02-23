@@ -23,11 +23,11 @@ class AppRoutes {
       ),
       GoRoute(
         path: '/myInfo',
-        builder: (context, state) => const MyInfo(),
+        builder: (context, state) => const MyInfo(useAppHome: false),
       ),
       GoRoute(
         path: '/settingMain',
-        builder: (context, state) => const Settingmain(),
+        builder: (context, state) => const Settingmain(useAppHome: false),
       ),
     ],
   );

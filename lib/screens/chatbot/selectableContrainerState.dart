@@ -20,34 +20,33 @@ class SelectableContainer extends StatefulWidget {
 }
 
 class _SelectableContainerState extends State<SelectableContainer> {
-  bool hasBeenTapped = false; // 클릭 여부 저장
-
   @override
   Widget build(BuildContext context) {
-    print(widget.label);
+    // print(widget.label);
+    print(widget.label + ": selected");
     return GestureDetector(
       onTap: () {
-        if (!hasBeenTapped) {
-          setState(() {
-            hasBeenTapped = true;
-          });
+        if (widget.label == "변경하기") {
+          CommonDialog.show(
+            context: context,
+            title: '정보 수정 화면으로 이동하시겠습니까?',
+            leftButtonText: '아니오',
+            leftButtonAction: () => Navigator.pop(context),
+            rightButtonText: '예',
+            rightButtonAction: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MyInfo()),
+              // );
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MyInfo(useAppHome: true)),
+              );
+            },
+          );
+        } else {
           widget.onTap();
-
-          if (widget.label == "변경하기") {
-            CommonDialog.show(
-              context: context,
-              title: '정보 수정 화면으로 이동하시겠습니까?',
-              leftButtonText: '아니오',
-              leftButtonAction: () => Navigator.pop(context),
-              rightButtonText: '예',
-              rightButtonAction: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MyInfo()),
-                );
-              },
-            );
-          }
         }
       },
       child: Container(

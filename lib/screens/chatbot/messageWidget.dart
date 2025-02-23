@@ -129,8 +129,6 @@ class _MessageWidgetState extends State<MessageWidget>
   }
 
   Widget _buildChoiceOptions() {
-    bool hasBeenTapped = false;
-
     List<String> options = (widget.messageData["options"] as List<dynamic>?)
             ?.map((e) => e.toString())
             .toList() ??
@@ -193,72 +191,6 @@ class _MessageWidgetState extends State<MessageWidget>
             },
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildSelectableContainer({
-    required BuildContext context, // BuildContext 추가
-    required String label,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: () {
-        onTap();
-        // print("label:" + label.toString() + isSelected.toString());
-        if (label == "변경하기") {
-          CommonDialog.show(
-            context: context,
-            title: '내정보 수정 화면으로 이동하시겠습니까?',
-            leftButtonText: '아니오',
-            leftButtonAction: () => Navigator.pop(context),
-            rightButtonText: '예',
-            rightButtonAction: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MyInfo()),
-              );
-            },
-          );
-        }
-      },
-      child: Container(
-        width: 80,
-        height: 80,
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            color: isSelected ? MyColors.mainDarkColor : Colors.white,
-            width: 2,
-          ),
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withAlpha((0.2 * 255).toInt()),
-              spreadRadius: 0,
-              blurRadius: 1,
-              offset: const Offset(1, 1),
-            ),
-          ],
-        ),
-        child: (label == "o" || label == "x")
-            ? Image.asset(
-                'assets/chatbot/question/$label.png',
-                width: 40,
-                height: 40,
-                fit: BoxFit.contain,
-              )
-            : Text(
-                label,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: isSelected ? MyColors.mainDarkColor : Colors.black,
-                ),
-              ),
       ),
     );
   }

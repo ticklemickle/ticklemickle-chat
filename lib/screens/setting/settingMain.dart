@@ -9,7 +9,8 @@ import 'package:ticklemickle_m/screens/setting/myInfo.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Settingmain extends StatelessWidget {
-  const Settingmain({super.key});
+  final bool useAppHome;
+  const Settingmain({super.key, required this.useAppHome});
 
   @override
   Widget build(BuildContext context) {
@@ -68,14 +69,19 @@ class Settingmain extends StatelessWidget {
   Widget _buildFAQItem(BuildContext context, String title) {
     return CommonMenuItem(
       title: title,
-      destinationScreen: FaqListScreen(title: title),
+      destinationScreen: FaqListScreen(
+        title: title,
+        useAppHome: false,
+      ),
     );
   }
 
   Widget _buildMyInfo(BuildContext context, String title) {
     return CommonMenuItem(
       title: title,
-      destinationScreen: MyInfo(),
+      destinationScreen: MyInfo(
+        useAppHome: false,
+      ),
     );
   }
 

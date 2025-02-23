@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
 
 class MyInfo extends StatelessWidget {
-  const MyInfo({super.key});
+  final bool useAppHome;
+  const MyInfo({super.key, required this.useAppHome});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CommonAppBar(title: '내 정보 수정'),
+      appBar: CommonAppBar(
+        title: '내 정보 수정',
+        useAppHome: useAppHome,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

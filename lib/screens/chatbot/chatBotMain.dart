@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
+import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
 import 'dart:async';
 import 'messageWidget.dart';
 import 'package:ticklemickle_m/screens/chatbot/questions/basicTest.dart';
@@ -32,6 +33,13 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   void _addNextQuestion([String? userResponse]) {
     if (userResponse != null) {
       setState(() {
+        print(userResponse.toString());
+
+        if (userResponse.toString() == "변경하기") {
+          print("IN");
+          return;
+        }
+
         String upperResponse = userResponse;
         if (RegExp(r'^[a-zA-Z\s]+$').hasMatch(upperResponse)) {
           upperResponse = upperResponse.toUpperCase();
@@ -105,10 +113,9 @@ ${userPickMessage.map((userPick) => "• ${userPick["question"]}\n➡️ ${userP
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        title: const Text("금융 지식 테스트"),
-        backgroundColor: Colors.white,
+      appBar: CommonAppBar(
+        title: '금융 지식 테스트',
+        useAppHome: true,
       ),
       body: Column(
         children: [

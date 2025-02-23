@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
+import 'package:go_router/go_router.dart';
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final bool useAppHome;
 
-  const CommonAppBar({super.key, required this.title});
+  const CommonAppBar(
+      {super.key, required this.title, required this.useAppHome});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,11 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios),
         onPressed: () {
-          Navigator.of(context).pop();
+          if (useAppHome) {
+            context.go('/AppHome');
+          } else {
+            Navigator.of(context).pop();
+          }
         },
         padding: EdgeInsets.zero,
         iconSize: 24,

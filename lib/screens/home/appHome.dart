@@ -100,7 +100,7 @@ class AppHome extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  context.push('/ChatBotMain');
+                  context.go('/ChatBotMain');
                 },
                 child: AppListItem(
                   title: items[index]["title"],
