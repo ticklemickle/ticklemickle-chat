@@ -9,6 +9,7 @@ class MyColors {
   static const Color lightGrey = Color.fromARGB(220, 242, 242, 242);
   static const Color grey = Color.fromARGB(199, 230, 230, 230);
   static const Color darkGrey = Color.fromARGB(255, 132, 132, 132);
+  static const Color darkestGrey = Color.fromARGB(255, 83, 83, 83);
   static const Color darkWhite = Color.fromARGB(255, 248, 248, 248);
 
   static const Color shadowBlack = Color.fromARGB(50, 0, 0, 0);
@@ -19,7 +20,8 @@ class MyColors {
   /* Font Color */
   static const Color mainBackgroundColor =
       Color(0xFFFFFFFF); // Background Color
-  static const Color mainFontColor = Color(0xFF000000); // Main Font Color
+  static const Color mainFontColor = Color(0xFF000000);
+  static const Color lightBlack = Color.fromARGB(255, 37, 37, 37);
   static const Color subFontColor = Color(0xFF7F7F7F); // Sub Font Color
   static const Color whiteFontColor = Color.fromARGB(255, 255, 255, 255);
   static const Color linkFontColor = Color.fromARGB(255, 0, 51, 255);

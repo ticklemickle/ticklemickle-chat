@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
+import 'package:ticklemickle_m/common/utils/StringUtil.dart';
 
 class CommonDialog {
   static void show({
@@ -23,31 +24,33 @@ class CommonDialog {
           child: SizedBox(
             width: width,
             child: Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 18.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    title,
+                    processText(title),
                     style: const TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      color: MyColors.lightBlack,
                     ),
                     textAlign: TextAlign.start,
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
                       Expanded(
                         child: TextButton(
                           onPressed: leftButtonAction, // 왼쪽 버튼 기능
                           style: TextButton.styleFrom(
-                            backgroundColor: Colors.white,
+                            backgroundColor: MyColors.lightestGrey,
+                            fixedSize: Size.fromHeight(50),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(1.0),
+                              borderRadius: BorderRadius.circular(10),
                               side: BorderSide(
-                                color: MyColors.grey, // 테두리 색상
+                                color: MyColors.lightestGrey, // 테두리 색상
                                 width: 1.0, // 테두리 두께
                               ),
                             ),
@@ -55,20 +58,21 @@ class CommonDialog {
                           child: Text(
                             leftButtonText,
                             style: const TextStyle(
-                              color: MyColors.darkGrey,
-                              fontSize: 16,
+                              color: MyColors.darkestGrey,
+                              fontSize: 18,
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(width: 20),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: TextButton(
                           onPressed: rightButtonAction, // 오른쪽 버튼 기능
                           style: TextButton.styleFrom(
                             backgroundColor: MyColors.mainColor,
+                            fixedSize: Size.fromHeight(50),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(1.0),
+                              borderRadius: BorderRadius.circular(10),
                               side: BorderSide(
                                 color: MyColors.mainColor, // 테두리 색상
                                 width: 1.0, // 테두리 두께
@@ -79,7 +83,7 @@ class CommonDialog {
                             rightButtonText,
                             style: const TextStyle(
                               color: Colors.black,
-                              fontSize: 16,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
