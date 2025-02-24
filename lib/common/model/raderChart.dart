@@ -1,8 +1,6 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:ticklemickle_m/common/model/radarChartPainter.dart';
 import 'dart:math' as math;
-import 'package:flutter/material.dart';
 
 class RadarChart extends StatelessWidget {
   /// 예: [자산, 소비, 가능성, 관심, 소득] 순으로 5개의 값
@@ -22,18 +20,22 @@ class RadarChart extends StatelessWidget {
     required this.values,
     required this.maxValue,
     this.labels,
-    this.chartSize = 200,
+    required this.chartSize,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      size: Size(chartSize, chartSize),
-      painter: RadarChartPainter(
-        values: values,
-        maxValue: maxValue,
-        labels: labels,
+    return Column(children: [
+      const SizedBox(height: 70),
+      CustomPaint(
+        size: Size(chartSize, chartSize),
+        painter: RadarChartPainter(
+          values: values,
+          maxValue: maxValue,
+          labels: labels,
+        ),
       ),
-    );
+      const SizedBox(height: 100),
+    ]);
   }
 }

@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ticklemickle_m/common/themes/colors.dart';
 import 'package:ticklemickle_m/common/widgets/commonAlertsheet.dart';
 import 'package:ticklemickle_m/common/widgets/commonCard.dart';
-import 'package:ticklemickle_m/screens/chatbot/results/lookalike_answerList/lookalike_answerList.dart';
+import 'package:ticklemickle_m/common/widgets/commonShareLink.dart';
+import 'package:ticklemickle_m/screens/chatbot/results/answerList/lookalike_answerList.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ChatBotResultScreen extends StatelessWidget {
@@ -23,7 +23,7 @@ class ChatBotResultScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh),
+            icon: const Icon(Icons.home),
             onPressed: () {
               context.go('/AppHome');
             },
@@ -65,36 +65,7 @@ class ChatBotResultScreen extends StatelessWidget {
           //   ),
           // ),
           const SizedBox(height: 25),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: MyColors.lightestGrey,
-                child: IconButton(
-                  icon: const Icon(Icons.share),
-                  color: MyColors.mainDarkColor,
-                  onPressed: () {},
-                ),
-              ),
-              const SizedBox(width: 16),
-              GestureDetector(
-                onTap: () {
-                  print("kako 공유하기");
-                },
-                child: CircleAvatar(
-                  radius: 30,
-                  backgroundColor: MyColors.kakaoColor,
-                  child: Image.asset(
-                    "assets/chatbot/result/common/kakao_share.png",
-                    width: 30,
-                    height: 30,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ],
-          ),
+          Commonsharelink(),
           const SizedBox(height: 40),
           for (var link in result.links)
             CommonCard(
