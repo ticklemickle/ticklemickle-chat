@@ -22,7 +22,8 @@ class MyColors {
       Color(0xFFFFFFFF); // Background Color
   static const Color mainFontColor = Color(0xFF000000);
   static const Color lightBlack = Color.fromARGB(255, 37, 37, 37);
-  static const Color subFontColor = Color(0xFF7F7F7F); // Sub Font Color
+  static const Color subFontColor = Color(0xFF7F7F7F);
   static const Color whiteFontColor = Color.fromARGB(255, 255, 255, 255);
   static const Color linkFontColor = Color.fromARGB(255, 0, 51, 255);
+  static const Color highlightFontColor = Color.fromARGB(255, 40, 148, 155);
 }

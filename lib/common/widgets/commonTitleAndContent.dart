@@ -46,7 +46,7 @@ class CommonTextWidget extends StatelessWidget {
         /// 2) 본문 (RichText를 사용해 특정 단어만 색상 강조)
         RichText(
           text: TextSpan(
-            style: contentStyle ?? DefaultTextStyle.of(context).style,
+            style: contentStyle ?? TextStyle(fontSize: 15),
             children: _buildHighlightedText(
               text: content,
               highlightWords: highlightWords,

@@ -27,7 +27,8 @@ class ComparisonBarChart extends StatelessWidget {
     final avgBarHeight = avgRatio * maxBarHeight;
     final myBarHeight = myRatio * maxBarHeight;
 
-    return Column(
+    return Container(
+        child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -46,12 +47,12 @@ class ComparisonBarChart extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(data.averageLabel, style: const TextStyle(fontSize: 14)),
+                Text(data.averageLabel, style: const TextStyle(fontSize: 13)),
                 const SizedBox(height: 4),
                 Container(
                     width: barWidth, height: avgBarHeight, color: Colors.grey),
                 const SizedBox(height: 4),
-                const Text('평균', style: TextStyle(fontSize: 11)),
+                const Text('평균', style: TextStyle(fontSize: 10)),
               ],
             ),
             // 내 막대
@@ -63,7 +64,7 @@ class ComparisonBarChart extends StatelessWidget {
                 Container(
                     width: barWidth,
                     height: myBarHeight,
-                    color: MyColors.mainDarkColor),
+                    color: MyColors.mainColor),
                 const SizedBox(height: 4),
                 const Text('나', style: TextStyle(fontSize: 11)),
               ],
@@ -71,6 +72,6 @@ class ComparisonBarChart extends StatelessWidget {
           ],
         ),
       ],
-    );
+    ));
   }
 }
