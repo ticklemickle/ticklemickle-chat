@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:ticklemickle_m/screens/chatbot/results/chatBotResult_common.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/chatBotResult_finance.dart';
 import 'package:ticklemickle_m/screens/home/appHome.dart';
 import 'package:ticklemickle_m/screens/chatbot/chatBotMain.dart';
@@ -21,6 +22,10 @@ class AppRoutes {
       GoRoute(
         path: '/ChatBotReult_finance',
         builder: (context, state) => const ChatBotResultFinance(),
+      ),
+      GoRoute(
+        path: '/ChatBotReult_common',
+        builder: (context, state) => const ChatBotResultCommon(),
       ),
       GoRoute(
         path: '/ChatBotResult',

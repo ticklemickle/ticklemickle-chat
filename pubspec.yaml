@@ -35,6 +35,7 @@ flutter:
     - assets/chatbot/question/
     - assets/chatbot/result/lookalike/
     - assets/chatbot/result/common/
+    - assets/chatbot/result/logo/
 
 flutter_launcher_name:
   name: "티끌미끌"

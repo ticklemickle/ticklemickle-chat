@@ -1,4 +1,4 @@
-import 'package:ticklemickle_m/common/model/lookalike.dart';
+import 'package:ticklemickle_m/common/model/jsonToLookalike.dart';
 
 const freeTitle = "재테크 단톡방 참여하기";
 const freeDetail = "200명 미만 무료";
@@ -12,8 +12,8 @@ const vipTitle = "투자 레벨이 맞는 맞춤형 모임";
 const vipDetail = "10명 미만, 실명, 오프라인 스터디";
 const vipImagePath = "assets/chatbot/result/common/vip_card.png";
 
-final List<Lookalike> lookalikeList = [
-  Lookalike.fromJson({
+final List<JsonToResult> lookalikeList = [
+  JsonToResult.fromJson({
     "name": "철수 버핏",
     "image": "assets/chatbot/result/lookalike/warren_buffett.png",
     "match": "회귀성 16%",
@@ -42,7 +42,7 @@ final List<Lookalike> lookalikeList = [
       },
     ]
   }),
-  Lookalike.fromJson({
+  JsonToResult.fromJson({
     "name": "영희 게이츠",
     "image": "assets/chatbot/result/lookalike/bill_gates.png",
     "match": "독창성 56%",
@@ -70,7 +70,7 @@ final List<Lookalike> lookalikeList = [
       },
     ]
   }),
-  Lookalike.fromJson({
+  JsonToResult.fromJson({
     "name": "명수 머스크",
     "image": "assets/chatbot/result/lookalike/elon_musk.png",
     "match": "독창성 56%",

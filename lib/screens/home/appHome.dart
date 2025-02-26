@@ -100,9 +100,13 @@ class AppHome extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  index % 2 == 0
-                      ? context.go('/ChatBotMain')
-                      : context.go('/ChatBotReult_finance');
+                  if (index % 3 == 0) {
+                    context.go('/ChatBotMain');
+                  } else if (index % 3 == 1) {
+                    context.go('/ChatBotReult_finance');
+                  } else {
+                    context.go('/ChatBotReult_common');
+                  }
                 },
                 child: AppListItem(
                   title: items[index]["title"],

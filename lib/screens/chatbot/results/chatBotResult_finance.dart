@@ -8,6 +8,7 @@ import 'package:ticklemickle_m/common/widgets/commonTitleAndContent.dart';
 import 'package:ticklemickle_m/common/widgets/roundTextButton.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/answerList/comparsion_barList.dart';
 import 'package:ticklemickle_m/screens/chatbot/widget/comparisonBarWidget.dart';
+import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
 
 class ChatBotResultFinance extends StatelessWidget {
   const ChatBotResultFinance({Key? key}) : super(key: key);
@@ -20,18 +21,9 @@ class ChatBotResultFinance extends StatelessWidget {
     final double maxValue = 5;
 
     return Scaffold(
-        appBar: AppBar(
-          scrolledUnderElevation: 0,
-          title: const Text("재태크 현황 결과"),
-          backgroundColor: Colors.white,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.home),
-              onPressed: () {
-                context.go('/AppHome');
-              },
-            )
-          ],
+        appBar: CommonAppBar(
+          title: '재테크 현황 결과',
+          useAppHome: true,
         ),
         body: SingleChildScrollView(
             child: Container(
@@ -39,14 +31,12 @@ class ChatBotResultFinance extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
                 child: Column(
                   children: [
-                    Row(
-                      children: const [
-                        CommonHighlightText(
-                          leadingText: "홍길동 님은 ",
-                          highlightedText: "발전 가능형",
-                          trailingText: " 입니다.",
-                        ),
-                      ],
+                    Center(
+                      child: CommonHighlightText(
+                        leadingText: "홍길동 님은 ",
+                        highlightedText: "발전 가능형",
+                        trailingText: " 입니다.",
+                      ),
                     ),
                     RadarChart(
                       values: sampleValues,

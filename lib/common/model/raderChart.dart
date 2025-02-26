@@ -35,7 +35,7 @@ class _RadarChartState extends State<RadarChart>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 2),
       vsync: this,
     );
     // CurvedAnimation을 사용해 자연스러운 확대 효과 적용 (예: easeOutBack)
