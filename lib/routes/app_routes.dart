@@ -24,8 +24,11 @@ class AppRoutes {
         builder: (context, state) => const ChatBotResultFinance(),
       ),
       GoRoute(
-        path: '/ChatBotReult_common',
-        builder: (context, state) => const ChatBotResultCommon(),
+        path: '/ChatBotResult_common',
+        builder: (context, state) {
+          final type = state.uri.queryParameters['type'] ?? '';
+          return ChatBotResultCommon(type: type);
+        },
       ),
       GoRoute(
         path: '/ChatBotResult',

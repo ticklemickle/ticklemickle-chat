@@ -71,23 +71,44 @@ class RadarChartPainter extends CustomPainter {
     scaleMatrix.translate(-center.dx, -center.dy);
     final transformedPath = dataPath.transform(scaleMatrix.storage);
 
-    // 애니메이션된 경로 그리기 (strokePaint)
     final strokePaint = Paint()
       ..color = MyColors.mainDarkColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2;
-    canvas.drawPath(transformedPath, strokePaint);
+    final strokePath = Path();
+    for (int i = 0; i < values.length; i++) {
+      final ratio = (values[i] / maxValue).clamp(0, 1);
+      final localAnimationValue =
+          ratio > 0 ? (animationValue / ratio).clamp(0.0, 1.0) : 1.0;
+      final angle = angleStep * i - math.pi / 2;
+      final x =
+          center.dx + (radius * ratio * localAnimationValue) * math.cos(angle);
+      final y =
+          center.dy + (radius * ratio * localAnimationValue) * math.sin(angle);
+      if (i == 0) {
+        strokePath.moveTo(x, y);
+      } else {
+        strokePath.lineTo(x, y);
+      }
+    }
+    strokePath.close();
+    canvas.drawPath(strokePath, strokePaint);
 
     // 꼭짓점 원 애니메이션: 각 꼭짓점도 center 기준 scale 적용
     final circlePaint = Paint()
       ..color = MyColors.mainDarkColor
       ..style = PaintingStyle.fill;
     const double finalVertexCircleRadius = 4.0;
-    // 원의 반지름도 애니메이션에 따라 변화시키고 싶다면
-    final double animatedCircleRadius =
-        finalVertexCircleRadius * animationValue;
     for (final vertex in vertices) {
-      final scaledVertex = center + (vertex - center) * animationValue;
+      // 각 꼭짓점의 최종 비율 (values[i]/maxValue와 동일)
+      final vertexRatio = (vertex - center).distance / radius;
+      // vertexRatio가 0보다 크면 global animationValue를 해당 비율로 나누어 local 애니메이션 값 계산
+      final localAnimationValue = vertexRatio > 0
+          ? (animationValue / vertexRatio).clamp(0.0, 1.0)
+          : 1.0;
+      final scaledVertex = center + (vertex - center) * localAnimationValue;
+      final animatedCircleRadius =
+          finalVertexCircleRadius * localAnimationValue;
       canvas.drawCircle(scaledVertex, animatedCircleRadius, circlePaint);
     }
 

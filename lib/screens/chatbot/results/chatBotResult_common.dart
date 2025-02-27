@@ -12,16 +12,63 @@ import 'package:ticklemickle_m/screens/chatbot/results/answerList/common_Finance
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
 
 class ChatBotResultCommon extends StatelessWidget {
-  const ChatBotResultCommon({Key? key}) : super(key: key);
+  final String type;
+
+  const ChatBotResultCommon({Key? key, required this.type}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final List<String> labels = ['공격성', '기대\n수익률', '지식', '트랜드', '투자\n금액'];
     // 5점 척도라고 가정 (maxValue = 5)
-    final List<double> sampleValues = [5, 1, 2, 3.5, 3];
     final random = Random();
-    final result = commonFinanceList[random.nextInt(3)];
+    final List<double> resultValues = generateRandomValues();
+
     final double maxValue = 5;
+
+    late final List<String> labels;
+    late final dynamic result;
+    late final dynamic match_result;
+    late final dynamic circleImage;
+
+    if (type == 'stock') {
+      labels = ['공격성', '기대\n수익률', '지식', '트랜드', '투자\n금액'];
+      result = commonStockList[random.nextInt(3)];
+      match_result = commonStockList[random.nextInt(3)];
+      circleImage = const [
+        CircleTitleItem(
+          title: "삼성전자",
+          imagePath: "assets/chatbot/result/logo/samsung.png",
+          defaultColor: Colors.blue,
+        ),
+        CircleTitleItem(
+          title: "카카오",
+          imagePath: "assets/chatbot/result/logo/kakao.png",
+          defaultColor: Colors.yellow,
+        ),
+        CircleTitleItem(
+          title: "롯데건설",
+          imagePath: "assets/chatbot/result/logo/lotte.png",
+          defaultColor: Colors.red,
+        ),
+      ];
+    } else if (type == 'housing') {
+      labels = ['공격성', '기대\n수익률', '지식', '투자기간', '투자\n금액'];
+      result = commonHousingList[random.nextInt(6)];
+      match_result = commonHousingList[random.nextInt(6)];
+      circleImage = const [
+        CircleTitleItem(
+          title: "연령대",
+          content: "2030",
+        ),
+        CircleTitleItem(
+          title: "지역",
+          content: "서초\n광교",
+        ),
+        CircleTitleItem(
+          title: "투자금",
+          content: "1~3억",
+        ),
+      ];
+    }
 
     return Scaffold(
         appBar: CommonAppBar(
@@ -37,16 +84,23 @@ class ChatBotResultCommon extends StatelessWidget {
                     Center(
                       child: CommonHighlightText(
                         leadingText: "홍길동 님은 ",
-                        highlightedText: "독수리 투자자",
+                        highlightedText: result.title,
                         trailingText: " 입니다.",
                       ),
                     ),
                     RadarChart(
-                      values: sampleValues,
+                      values: resultValues,
                       maxValue: maxValue,
                       labels: labels,
                       chartSize: 200,
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(result.description,
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(fontSize: 16)),
+                    ),
+                    const SizedBox(height: 45),
                     Center(
                         child: Text("나와 비슷한 투자 성향을 가진 사람들은?",
                             textAlign: TextAlign.left,
@@ -55,23 +109,7 @@ class ChatBotResultCommon extends StatelessWidget {
                     const SizedBox(height: 35),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        CircleTitleItem(
-                          title: "삼성전자",
-                          imagePath: "assets/chatbot/result/logo/samsung.png",
-                          defaultColor: Colors.blue,
-                        ),
-                        CircleTitleItem(
-                          title: "카카오",
-                          imagePath: "assets/chatbot/result/logo/kakao.png",
-                          defaultColor: Colors.yellow,
-                        ),
-                        CircleTitleItem(
-                          title: "롯데건설",
-                          imagePath: "assets/chatbot/result/logo/lotte.png",
-                          defaultColor: Colors.red,
-                        ),
-                      ],
+                      children: circleImage,
                     ),
                     const SizedBox(height: 70),
                     Column(children: [
@@ -81,15 +119,15 @@ class ChatBotResultCommon extends StatelessWidget {
                               fontSize: 17, fontWeight: FontWeight.w600)),
                       const SizedBox(height: 20),
                       Center(
-                          child: Text(result.image,
+                          child: Text(match_result.image,
                               style: const TextStyle(fontSize: 60))),
                       const SizedBox(height: 8),
                       Center(
-                          child: Text(result.sub,
+                          child: Text(match_result.sub,
                               style: const TextStyle(fontSize: 16))),
                       const SizedBox(height: 8),
                       Center(
-                          child: Text(result.title,
+                          child: Text(match_result.title,
                               style: const TextStyle(
                                   fontSize: 25, fontWeight: FontWeight.w600))),
                       const SizedBox(height: 12),
@@ -102,7 +140,7 @@ class ChatBotResultCommon extends StatelessWidget {
                                 height: 2,
                                 color: MyColors.mainDarkColor),
                             SizedBox(height: 4),
-                            Text(result.match,
+                            Text(match_result.match,
                                 style: const TextStyle(
                                     fontSize: 16,
                                     color: MyColors.mainDarkColor)),
@@ -117,7 +155,7 @@ class ChatBotResultCommon extends StatelessWidget {
                       const SizedBox(height: 30),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Text(result.description,
+                        child: Text(match_result.description,
                             textAlign: TextAlign.left,
                             style: const TextStyle(fontSize: 16)),
                       ),
@@ -140,4 +178,9 @@ class ChatBotResultCommon extends StatelessWidget {
                   ],
                 ))));
   }
+}
+
+List<double> generateRandomValues() {
+  Random random = Random();
+  return List.generate(5, (_) => 0.5 + random.nextDouble() * (5 - 0.5));
 }

@@ -3,34 +3,46 @@ import 'package:ticklemickle_m/common/themes/colors.dart';
 
 class CircleTitleItem extends StatelessWidget {
   final String title;
-
-  /// 이미지 경로 (null 또는 빈 문자열이면 이미지 없이 배경색 표시)
   final String? imagePath;
-
-  /// 이미지가 없을 경우 원형 배경에 사용할 색상
   final Color defaultColor;
+  final String? content;
 
   const CircleTitleItem({
     Key? key,
     required this.title,
+    this.content,
     this.imagePath,
-    this.defaultColor = Colors.grey,
+    this.defaultColor = MyColors.mainlightColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool hasImage = imagePath != null && imagePath!.isNotEmpty;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         CircleAvatar(
-          radius: 25,
-          backgroundColor: MyColors.grey,
-          backgroundImage: AssetImage(imagePath!),
+          radius: 27,
+          backgroundColor: defaultColor, // 배경색 적용
+          backgroundImage:
+              hasImage ? AssetImage(imagePath!) as ImageProvider : null,
+          child: !hasImage && content != null // 이미지가 없고, content가 있을 때만 표시
+              ? Text(
+                  content!,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                )
+              : null,
         ),
         const SizedBox(height: 8),
         Text(
           title,
-          style: const TextStyle(fontSize: 10),
+          style: const TextStyle(fontSize: 12),
         ),
       ],
     );
