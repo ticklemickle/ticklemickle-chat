@@ -4,19 +4,24 @@ import 'package:ticklemickle_m/common/themes/colors.dart';
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
 import 'dart:async';
 import 'widget/messageWidget.dart';
-import 'package:ticklemickle_m/screens/chatbot/questions/basicTest.dart';
+import 'package:ticklemickle_m/screens/chatbot/questions/chatbotQuestions.dart';
 
 class ChatBotScreen extends StatefulWidget {
-  const ChatBotScreen({super.key});
+  final String category;
+
+  const ChatBotScreen({Key? key, required this.category}) : super(key: key);
 
   @override
   _ChatBotScreenState createState() => _ChatBotScreenState();
 }
 
 class _ChatBotScreenState extends State<ChatBotScreen> {
+  late String category;
+  late final List<Map<String, dynamic>> questionList;
+
   List<Map<String, dynamic>> messages = []; // 대화 내역 저장
   List<Map<String, String>> userPickMessage = []; // 사용자의 선택 저장
-  final int totalQuestions = financeBasicTest.length;
+  int totalQuestions = 0;
   int currentQuestionIndex = 0;
   int messageIndex = 0;
   bool isFirstMessage = true;
@@ -27,6 +32,9 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   @override
   void initState() {
     super.initState();
+    category = widget.category;
+    questionList = getQuestionsList(category);
+    totalQuestions = questionList.length;
     _addNextQuestion();
   }
 
@@ -56,9 +64,9 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
       });
     }
 
-    if (currentQuestionIndex < financeBasicTest.length) {
+    if (currentQuestionIndex < questionList.length) {
       setState(() {
-        messages.add(financeBasicTest[currentQuestionIndex]);
+        messages.add(questionList[currentQuestionIndex]);
         currentQuestionIndex++;
         messageIndex++;
       });
@@ -80,7 +88,8 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   void _displayFinalAnswers() {
     if (isResultDisplayed) {
       print("마지막 질문까지 모두 제출됨.");
-      context.go('/ChatBotResult');
+      // context.go('/ChatBotResult');
+      context.go('/ChatBotResult_common?category=$category');
       return;
     }
 

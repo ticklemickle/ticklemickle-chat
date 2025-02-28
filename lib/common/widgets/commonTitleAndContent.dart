@@ -64,52 +64,45 @@ class CommonTextWidget extends StatelessWidget {
     required String text,
     required List<String> highlightWords,
     required Color highlightColor,
+    Color normalTextColor = Colors.black, // 기본 텍스트 색상을 지정
   }) {
-    // 강조할 단어 목록이 비어있다면, 통째로 반환
     if (highlightWords.isEmpty) {
-      return [TextSpan(text: text)];
+      return [TextSpan(text: text, style: TextStyle(color: normalTextColor))];
     }
 
     final spans = <TextSpan>[];
     String remainingText = text;
 
     while (true) {
-      // 가장 먼저 발견되는 강조 단어를 찾음
       int earliestIndex = -1;
       String? earliestWord;
 
       for (final word in highlightWords) {
         final index = remainingText.indexOf(word);
-        // 발견된 단어 중 가장 앞에 있는 단어를 찾음
         if (index != -1 && (earliestIndex == -1 || index < earliestIndex)) {
           earliestIndex = index;
           earliestWord = word;
         }
       }
 
-      // 더 이상 강조 단어가 없다면, 남은 텍스트를 그대로 추가하고 종료
       if (earliestIndex == -1 || earliestWord == null) {
-        spans.add(TextSpan(text: remainingText));
+        spans.add(TextSpan(
+            text: remainingText, style: TextStyle(color: normalTextColor)));
         break;
       }
 
-      // 강조 단어 전까지의 텍스트 추가
       if (earliestIndex > 0) {
-        spans.add(TextSpan(text: remainingText.substring(0, earliestIndex)));
+        spans.add(TextSpan(
+          text: remainingText.substring(0, earliestIndex),
+          style: TextStyle(color: normalTextColor),
+        ));
       }
 
-      // 강조 단어 추가 (색상 및 굵기 적용 등)
-      spans.add(
-        TextSpan(
-          text: earliestWord,
-          style: TextStyle(
-            color: highlightColor,
-            // fontWeight: FontWeight.bold,
-          ),
-        ),
-      );
+      spans.add(TextSpan(
+        text: earliestWord,
+        style: TextStyle(color: highlightColor),
+      ));
 
-      // 처리한 부분 이후의 텍스트로 갱신
       remainingText =
           remainingText.substring(earliestIndex + earliestWord.length);
     }

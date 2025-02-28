@@ -16,8 +16,11 @@ class AppRoutes {
         builder: (context, state) => const AppHome(),
       ),
       GoRoute(
-        path: '/ChatBotMain',
-        builder: (context, state) => const ChatBotScreen(),
+        path: '/ChatBotMain/:category',
+        builder: (context, state) {
+          final String category = state.pathParameters['category'] ?? '';
+          return ChatBotScreen(category: category);
+        },
       ),
       GoRoute(
         path: '/ChatBotReult_finance',
@@ -26,8 +29,8 @@ class AppRoutes {
       GoRoute(
         path: '/ChatBotResult_common',
         builder: (context, state) {
-          final type = state.uri.queryParameters['type'] ?? '';
-          return ChatBotResultCommon(type: type);
+          final category = state.uri.queryParameters['category'] ?? '';
+          return ChatBotResultCommon(category: category);
         },
       ),
       GoRoute(

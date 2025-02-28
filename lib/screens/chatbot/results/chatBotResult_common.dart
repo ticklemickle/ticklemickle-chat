@@ -12,9 +12,10 @@ import 'package:ticklemickle_m/screens/chatbot/results/answerList/common_Finance
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
 
 class ChatBotResultCommon extends StatelessWidget {
-  final String type;
+  final String category;
 
-  const ChatBotResultCommon({Key? key, required this.type}) : super(key: key);
+  const ChatBotResultCommon({Key? key, required this.category})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,10 @@ class ChatBotResultCommon extends StatelessWidget {
     late final dynamic match_result;
     late final dynamic circleImage;
 
-    if (type == 'stock') {
+    if (category == 'Questions_InvestmentStatus' ||
+        category == 'Questions_KoreaStockInvestment' ||
+        category == 'Questions_USAStockInvestment' ||
+        category == 'Questions_Crypto') {
       labels = ['공격성', '기대\n수익률', '지식', '트랜드', '투자\n금액'];
       result = commonStockList[random.nextInt(3)];
       match_result = commonStockList[random.nextInt(3)];
@@ -50,7 +54,26 @@ class ChatBotResultCommon extends StatelessWidget {
           defaultColor: Colors.red,
         ),
       ];
-    } else if (type == 'housing') {
+    } else if (category == 'Questions_RealEstateCommercial' ||
+        category == 'Questions_RealEstateResidential') {
+      labels = ['공격성', '기대\n수익률', '지식', '투자기간', '투자\n금액'];
+      result = commonHousingList[random.nextInt(6)];
+      match_result = commonHousingList[random.nextInt(6)];
+      circleImage = const [
+        CircleTitleItem(
+          title: "연령대",
+          content: "2030",
+        ),
+        CircleTitleItem(
+          title: "지역",
+          content: "서초\n광교",
+        ),
+        CircleTitleItem(
+          title: "투자금",
+          content: "1~3억",
+        ),
+      ];
+    } else {
       labels = ['공격성', '기대\n수익률', '지식', '투자기간', '투자\n금액'];
       result = commonHousingList[random.nextInt(6)];
       match_result = commonHousingList[random.nextInt(6)];
