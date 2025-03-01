@@ -111,11 +111,11 @@ class _ChatBotScreenState extends State<ChatBotMain> {
     if (isResultDisplayed) {
       print("마지막 질문까지 모두 제출됨.");
       if (category == CategoryConst.questionsBasicStatus) {
-        context.go('/ChatBotReult_finance');
+        context.go(RouteConst.chatBotResultBasic);
       } else if (category == CategoryConst.questionsLookalike) {
-        context.go('/ChatBotLookalike');
+        context.go(RouteConst.chatBotResultLookalike);
       } else {
-        context.go('/ChatBotResult_common?category=$category',
+        context.go('${RouteConst.chatBotResultCommon}?category=$category',
             extra: scaleScores(userScores, scoreRange));
       }
       return;

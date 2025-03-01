@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
-import 'package:ticklemickle_m/common/utils/StringUtil.dart';
 import 'package:ticklemickle_m/screens/chatbot/widget/selectableContrainerState.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 

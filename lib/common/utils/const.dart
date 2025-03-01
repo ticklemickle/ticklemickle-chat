@@ -12,3 +12,15 @@ class CategoryConst {
   static const String questionsLookalike = "Questions_Loans";
   static const String questionsBasicStatus = "Questions_FinancialHistory";
 }
+
+class RouteConst {
+  static const String chatBotMain = "/ChatBotMain";
+  static const String chatBotBasic = "/ChatBotBasic";
+  static const String chatBotResultCommon = "/ChatBotResultCommon";
+  static const String chatBotResultBasic = "/ChatBotReult_basic";
+
+  static const String chatBotResultLookalike = "/ChatBotResultLookalike";
+  static const String myInfo = "/myInfo";
+  static const String appHome = "/AppHome";
+  static const String settingMain = "/settingMain";
+}

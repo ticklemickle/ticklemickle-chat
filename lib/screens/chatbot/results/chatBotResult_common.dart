@@ -212,7 +212,7 @@ class ChatBotResultCommon extends StatelessWidget {
                       child: RoundedTextButton(
                         text: '다른 분석 결과 보기',
                         onPressed: () {
-                          context.go("/AppHome");
+                          context.go(RouteConst.appHome);
                         },
                         backgroundColor: MyColors.mainColor,
                         textColor: Colors.black,

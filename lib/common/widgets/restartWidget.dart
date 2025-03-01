@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ticklemickle_m/common/utils/const.dart';
 
 class RestartWidget extends StatefulWidget {
   final Widget child;
@@ -42,7 +43,7 @@ class RedirectToAppHome extends StatelessWidget {
   Widget build(BuildContext context) {
     // 프레임이 완료된 후 '/AppHome'으로 이동
     Future.microtask(() {
-      context.go('/AppHome');
+      context.go(RouteConst.appHome);
     });
     // 리다이렉트 전까지 표시할 임시 UI (로딩 인디케이터 등)
     return const Scaffold(
