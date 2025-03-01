@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class RestartWidget extends StatefulWidget {
   final Widget child;
@@ -29,6 +30,23 @@ class _RestartWidgetState extends State<RestartWidget> {
     return KeyedSubtree(
       key: key,
       child: widget.child,
+    );
+  }
+}
+
+// 새 리다이렉트 위젯
+class RedirectToAppHome extends StatelessWidget {
+  const RedirectToAppHome({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // 프레임이 완료된 후 '/AppHome'으로 이동
+    Future.microtask(() {
+      context.go('/AppHome');
+    });
+    // 리다이렉트 전까지 표시할 임시 UI (로딩 인디케이터 등)
+    return const Scaffold(
+      body: Center(child: CircularProgressIndicator()),
     );
   }
 }

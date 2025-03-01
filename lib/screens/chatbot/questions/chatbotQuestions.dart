@@ -110,7 +110,7 @@ const List<Map<String, dynamic>> Questions_USAStockInvestment = [
     "options": ["내일까지 두고 본다", "장 마감까지 기다려본다", "즉시 판다"]
   },
   {
-    "goal": ["aggression", "return", "amount"],
+    "goal": ["return", "amount"],
     "type": "choice",
     "message": "1년에 10,000달러를 투자해서 10% 수익(1,000달러)을 냈다",
     "options": ["너무 잘해서 감격이다", "이정도면 만족한다", "그정도 벌꺼면 주식을 왜하나"]
@@ -137,7 +137,7 @@ const List<Map<String, dynamic>> Questions_USAStockInvestment = [
     "goal": ["aggression", "period"],
     "type": "choice",
     "message": "나는 미국 주식을 한 번 사면,",
-    "options": ["1주일 이상 보유하는 편이다.", "6개월 내외로 거래한다.", "1년 이상 보유한다."]
+    "options": ["1주일 이내로 매도한다.", "6개월 내외로 거래한다.", "1년 이상 보유한다."]
   },
   {
     "goal": ["aggression", "amount"],

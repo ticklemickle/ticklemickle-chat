@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
 import 'package:ticklemickle_m/screens/chatbot/widget/selectableContrainerState.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class MessageWidget extends StatefulWidget {
   final Map<String, dynamic> messageData;
@@ -151,43 +152,32 @@ class _MessageWidgetState extends State<MessageWidget>
             style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 20),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: crossAxisCount,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
-              childAspectRatio: (totalOptions == 1)
-                  ? 6 / 1
-                  : (totalOptions == 2)
-                      ? 5 / 1
-                      : (totalOptions == 3)
-                          ? 6 / 1
-                          : (totalOptions == 4)
-                              ? 3 / 1
-                              : 1,
-            ),
-            itemCount: totalOptions,
-            itemBuilder: (context, index) {
-              return SelectableContainer(
-                label: options[index],
-                isSelected: selectedAnswer == options[index],
-                onTap: selectedAnswer == null
-                    ? () {
-                        setState(() {
-                          selectedAnswer = options[index];
-                        });
-                        Future.delayed(const Duration(milliseconds: 500), () {
-                          if (mounted) {
-                            widget.onAnswerSelected(options[index]);
-                          }
-                        });
-                      }
-                    : () {},
+          StaggeredGrid.count(
+            crossAxisCount: crossAxisCount,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+            children: List.generate(totalOptions, (index) {
+              return StaggeredGridTile.fit(
+                crossAxisCellCount: 1,
+                child: SelectableContainer(
+                  label: options[index],
+                  isSelected: selectedAnswer == options[index],
+                  onTap: selectedAnswer == null
+                      ? () {
+                          setState(() {
+                            selectedAnswer = options[index];
+                          });
+                          Future.delayed(const Duration(milliseconds: 500), () {
+                            if (mounted) {
+                              widget.onAnswerSelected(options[index]);
+                            }
+                          });
+                        }
+                      : () {},
+                ),
               );
-            },
-          ),
+            }),
+          )
         ],
       ),
     );

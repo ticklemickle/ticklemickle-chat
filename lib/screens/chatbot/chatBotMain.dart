@@ -69,7 +69,6 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
 
         if (messages[messageIndex - 1]["type"] != "text" &&
             messages[messageIndex - 1]["type"] != "userPick") {
-          print(userScores);
           userScores = getUserScore(
               messages[messageIndex - 1], userResponse, userScores);
           scoreRange = getQuestionRange(messages[messageIndex - 1], scoreRange);

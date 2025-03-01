@@ -10,6 +10,7 @@ import 'package:ticklemickle_m/common/widgets/commonShareLink.dart';
 import 'package:ticklemickle_m/common/widgets/roundTextButton.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/answerList/common_FinanceList.dart';
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
+import 'package:ticklemickle_m/screens/chatbot/results/answerList/type_StockInvestor.dart';
 
 class ChatBotResultCommon extends StatelessWidget {
   final String category;
@@ -38,8 +39,14 @@ class ChatBotResultCommon extends StatelessWidget {
         category == 'Questions_USAStockInvestment' ||
         category == 'Questions_Crypto') {
       labels = ['공격성', '기대\n수익률', '보유\n기간', '지식', '투자\n금액'];
-      result = commonStockList[random.nextInt(3)];
-      match_result = commonStockList[random.nextInt(3)];
+      result = mapInvestorResult(
+          aggression: scoreList[0],
+          ret: scoreList[1],
+          period: scoreList[2],
+          knowledge: scoreList[3],
+          amount: scoreList[4]);
+      match_result =
+          commonStockList[random.nextInt(commonStockList.length - 1)];
       circleImage = const [
         CircleTitleItem(
           title: "삼성전자",
@@ -114,6 +121,11 @@ class ChatBotResultCommon extends StatelessWidget {
                         trailingText: " 입니다.",
                       ),
                     ),
+                    const SizedBox(height: 16),
+                    Center(
+                        child: Text(result.image,
+                            style: const TextStyle(fontSize: 60))),
+                    const SizedBox(height: 8),
                     RadarChart(
                       values: resultValues,
                       maxValue: maxValue,

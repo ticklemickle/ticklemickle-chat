@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:ticklemickle_m/common/widgets/restartWidget.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/chatBotResult_common.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/chatBotResult_finance.dart';
 import 'package:ticklemickle_m/screens/home/appHome.dart';
@@ -30,6 +31,9 @@ class AppRoutes {
         path: '/ChatBotResult_common',
         builder: (context, state) {
           final category = state.uri.queryParameters['category'] ?? '';
+          if (category.isEmpty || !(state.extra is List<double>)) {
+            return const RedirectToAppHome();
+          }
           final scoreList = state.extra as List<double>;
           return ChatBotResultCommon(category: category, scoreList: scoreList);
         },
@@ -47,5 +51,8 @@ class AppRoutes {
         builder: (context, state) => const Settingmain(useAppHome: false),
       ),
     ],
+    errorBuilder: (context, state) {
+      return const RedirectToAppHome();
+    },
   );
 }

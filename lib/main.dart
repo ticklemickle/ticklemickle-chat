@@ -23,20 +23,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ErrorBoundary(
-      child: MaterialApp.router(
-        routerConfig: AppRoutes.router,
-        title: '티끌미끌',
-        theme: ThemeData(
-          scaffoldBackgroundColor: MyColors.mainBackgroundColor,
-          textSelectionTheme: const TextSelectionThemeData(
-            cursorColor: MyColors.mainColor, // 커서 색상
-            selectionColor: MyColors.mainlightestColor, // 선택된 텍스트 배경 색상
-            selectionHandleColor:
-                MyColors.mainDarkColor, // 선택 핸들 색상 (드래그할 때 나오는 손잡이)
-          ),
+    return MaterialApp.router(
+      routerConfig: AppRoutes.router,
+      title: '티끌미끌',
+      theme: ThemeData(
+        scaffoldBackgroundColor: MyColors.mainBackgroundColor,
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: MyColors.mainColor,
+          selectionColor: MyColors.mainlightestColor,
+          selectionHandleColor: MyColors.mainDarkColor,
         ),
       ),
+      // ErrorBoundary를 builder로 래핑하여 GoRouter context를 포함하게 함
+      builder: (context, child) {
+        return ErrorBoundary(child: child!);
+      },
     );
   }
 }

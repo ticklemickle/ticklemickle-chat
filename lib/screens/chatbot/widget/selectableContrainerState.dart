@@ -46,9 +46,9 @@ class _SelectableContainerState extends State<SelectableContainer> {
       },
       child: Container(
         width: 80,
-        height: 80,
+        height: 60,
         alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(vertical: 4),
+        padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 15),
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(
@@ -73,7 +73,8 @@ class _SelectableContainerState extends State<SelectableContainer> {
                 fit: BoxFit.contain,
               )
             : Text(
-                widget.label,
+                widget.label, maxLines: 2, // 최대 두 줄로 표시
+                softWrap: true,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
