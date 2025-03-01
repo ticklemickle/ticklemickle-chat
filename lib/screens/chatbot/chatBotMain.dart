@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
+import 'package:ticklemickle_m/screens/chatbot/widget/calculateScores.dart';
 import 'dart:async';
 import 'widget/messageWidget.dart';
 import 'package:ticklemickle_m/screens/chatbot/questions/chatbotQuestions.dart';
@@ -25,7 +26,22 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   int currentQuestionIndex = 0;
   int messageIndex = 0;
   bool isFirstMessage = true;
-  bool isResultDisplayed = false; // 결과가 표시되었는지 체크
+  bool isResultDisplayed = false;
+
+  Map<String, double> userScores = {
+    "aggression": 0,
+    "return": 0,
+    "period": 0,
+    "knowledge": 0,
+    "amount": 0,
+  };
+  Map<String, Map<String, double>> scoreRange = {
+    "aggression": {"max": 0.0, "min": 0.0},
+    "return": {"max": 0.0, "min": 0.0},
+    "period": {"max": 0.0, "min": 0.0},
+    "knowledge": {"max": 0.0, "min": 0.0},
+    "amount": {"max": 0.0, "min": 0.0},
+  };
 
   final ScrollController _scrollController = ScrollController();
 
@@ -41,10 +57,8 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   void _addNextQuestion([String? userResponse]) {
     if (userResponse != null) {
       setState(() {
-        print(userResponse.toString());
-
         if (userResponse.toString() == "변경하기") {
-          print("IN");
+          print("변경하기");
           return;
         }
 
@@ -53,9 +67,15 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
           upperResponse = upperResponse.toUpperCase();
         }
 
-        if (messages[messageIndex - 1]["answer"] != null) {
+        if (messages[messageIndex - 1]["type"] != "text" &&
+            messages[messageIndex - 1]["type"] != "userPick") {
+          print(userScores);
+          userScores = getUserScore(
+              messages[messageIndex - 1], userResponse, userScores);
+          scoreRange = getQuestionRange(messages[messageIndex - 1], scoreRange);
+
           userPickMessage.add({
-            "question": messages.last["message"], // 마지막 질문과 연결
+            "question": messages.last["message"],
             "message": upperResponse,
           });
           messages.add({"type": "userPick", "message": upperResponse});
@@ -64,7 +84,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
       });
     }
 
-    if (currentQuestionIndex < questionList.length) {
+    if (currentQuestionIndex < totalQuestions) {
       setState(() {
         messages.add(questionList[currentQuestionIndex]);
         currentQuestionIndex++;
@@ -88,8 +108,8 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   void _displayFinalAnswers() {
     if (isResultDisplayed) {
       print("마지막 질문까지 모두 제출됨.");
-      // context.go('/ChatBotResult');
-      context.go('/ChatBotResult_common?category=$category');
+      context.go('/ChatBotResult_common?category=$category',
+          extra: scaleScores(userScores, scoreRange));
       return;
     }
 

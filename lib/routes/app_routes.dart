@@ -30,7 +30,8 @@ class AppRoutes {
         path: '/ChatBotResult_common',
         builder: (context, state) {
           final category = state.uri.queryParameters['category'] ?? '';
-          return ChatBotResultCommon(category: category);
+          final scoreList = state.extra as List<double>;
+          return ChatBotResultCommon(category: category, scoreList: scoreList);
         },
       ),
       GoRoute(

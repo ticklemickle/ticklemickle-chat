@@ -77,7 +77,7 @@ class _AppHomeState extends State<AppHome> {
                     },
                     child: AppListItem(
                       title: appfinanceList[index]["title"],
-                      subtitle: appfinanceList[index]["subtitle"],
+                      subtitle: getSubTitleText(index),
                       imagePath:
                           "assets/icon3D/${appfinanceList[index]["image"]}",
                       participants: appfinanceList[index]["participants"],
@@ -93,5 +93,15 @@ class _AppHomeState extends State<AppHome> {
             },
           ),
         ));
+  }
+}
+
+String getSubTitleText(int index) {
+  if (appfinanceList[index]["group"] == "propensity") {
+    return "성향 분석";
+  } else if (appfinanceList[index]["group"] == "knowledge") {
+    return "지식 테스트";
+  } else {
+    return appfinanceList[index]["subtitle"];
   }
 }

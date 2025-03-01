@@ -13,15 +13,18 @@ import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
 
 class ChatBotResultCommon extends StatelessWidget {
   final String category;
+  final List<double> scoreList;
 
-  const ChatBotResultCommon({Key? key, required this.category})
+  const ChatBotResultCommon(
+      {Key? key, required this.category, required this.scoreList})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // 5점 척도라고 가정 (maxValue = 5)
     final random = Random();
-    final List<double> resultValues = generateRandomValues();
+    print(scoreList);
+    final List<double> resultValues = scoreList;
 
     final double maxValue = 5;
 
@@ -34,7 +37,7 @@ class ChatBotResultCommon extends StatelessWidget {
         category == 'Questions_KoreaStockInvestment' ||
         category == 'Questions_USAStockInvestment' ||
         category == 'Questions_Crypto') {
-      labels = ['공격성', '기대\n수익률', '지식', '트랜드', '투자\n금액'];
+      labels = ['공격성', '기대\n수익률', '보유\n기간', '지식', '투자\n금액'];
       result = commonStockList[random.nextInt(3)];
       match_result = commonStockList[random.nextInt(3)];
       circleImage = const [
@@ -201,9 +204,4 @@ class ChatBotResultCommon extends StatelessWidget {
                   ],
                 ))));
   }
-}
-
-List<double> generateRandomValues() {
-  Random random = Random();
-  return List.generate(5, (_) => 0.5 + random.nextDouble() * (5 - 0.5));
 }

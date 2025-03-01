@@ -69,7 +69,6 @@ class RadarChartPainter extends CustomPainter {
     scaleMatrix.translate(center.dx, center.dy);
     scaleMatrix.scale(animationValue);
     scaleMatrix.translate(-center.dx, -center.dy);
-    final transformedPath = dataPath.transform(scaleMatrix.storage);
 
     final strokePaint = Paint()
       ..color = MyColors.mainDarkColor
@@ -116,7 +115,7 @@ class RadarChartPainter extends CustomPainter {
     if (labels != null && labels!.length == n) {
       for (int i = 0; i < n; i++) {
         final angle = angleStep * i - math.pi / 2;
-        final labelRadius = radius + 20;
+        final labelRadius = radius + 25;
         final labelX = center.dx + labelRadius * math.cos(angle);
         final labelY = center.dy + labelRadius * math.sin(angle);
 

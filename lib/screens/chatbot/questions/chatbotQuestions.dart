@@ -47,51 +47,106 @@ const List<Map<String, dynamic>> Questions_InvestmentStatus = [
   },
   {"type": "ox", "message": "비트코인은 중앙은행이 발행하는 디지털 화폐이다.", "answer": "x"}
 ];
-// 국내 주식 투자 지식 테스트
+// 국내 주식 투자
 const List<Map<String, dynamic>> Questions_KoreaStockInvestment = [
-  {"type": "text", "message": "안녕하세요. 국내 주식 투자 지식 테스트를 시작하겠습니다!"},
-  {"type": "ox", "message": "주식은 기업의 지분을 나타내는 금융상품이다.", "answer": "o"},
+  {"type": "text", "message": "안녕하세요. 국내 주식 투자 성향 분석을 시작하겠습니다!"},
   {
+    "goal": ["aggression", "return", "period"],
     "type": "choice",
-    "message": "국내 코스피 시장에서 시가총액이 가장 큰 기업은?",
-    "options": ["삼성전자", "현대차", "SK하이닉스", "LG에너지솔루션"],
-    "answer": "삼성전자"
+    "message": "추천받은 주식을 오전에 샀는데 오후에 15% 상승했다.",
+    "options": ["내일까지 두고 본다", "장 마감까지 기다려본다", "즉시 판다"],
   },
   {
+    "goal": ["aggression", "return", "amount"],
     "type": "choice",
-    "message": "주식 투자 시 '분산 투자'의 주요 목적은 무엇일까요?",
-    "options": ["수수료 절감", "위험 분산", "배당금 극대화", "기업 지분 확대"],
-    "answer": "위험 분산"
+    "message": "1년에 1천만원을 투자해서 10% 수익(100만원)을 냈다",
+    "options": ["너무 잘해서 감격이다", "이정도면 만족한다", "그정도 벌꺼면 주식을 왜하나"],
   },
-  {"type": "ox", "message": "코스닥 지수는 주로 대기업 중심으로 편성되어 있다.", "answer": "x"},
+  {
+    "goal": ["return", "period"],
+    "type": "choice",
+    "message": "투자한 지 한달 된 종목의 수익률이 마이너스 18% 이다",
+    "options": ["잘못된 판단임으로 손절을 한다", "한달 밖에 안되어서 조금 더 지켜본다", "추매로 평단을 낮춘다"],
+  },
+  {
+    "goal": ["knowledge"],
+    "type": "ox",
+    "message": "엔 캐리 트레이드란, 금리가 높은 다른 국가에서 돈을 빌려 금리가 낮은 일본 엔화를 매수하는 방법이다.",
+    "answer": "x"
+  },
+  {
+    "goal": ["knowledge"],
+    "type": "ox",
+    "message": "기업이 주식을 새로 발행하여 기존 주주나 새로운 주주에게 파는 행위를 유상증자라고 한다.",
+    "answer": "o"
+  },
+  {
+    "goal": ["aggression", "period"],
+    "type": "choice",
+    "message": "나는 보통 주식을 한번 사면 ",
+    "options": ["일주일 이면 오래 보유한 편이다.", "6개월 내외로 사고 판다", "1년 이상 보유한다"],
+  },
+  {
+    "goal": ["aggression", "amount"],
+    "type": "choice",
+    "message": "나의 국내 투자 씨드(금액)는 연봉의 ",
+    "options": ["10% 미만", "10% ~ 50%", "50% 이상"],
+  },
 ];
 
-// 미국 주식 투자 지식 테스트
+// 미국 주식 투자
 const List<Map<String, dynamic>> Questions_USAStockInvestment = [
-  {"type": "text", "message": "안녕하세요. 미국 주식 투자 지식 테스트를 시작하겠습니다!"},
+  {"type": "text", "message": "안녕하세요. 미국 주식 투자 성향 분석을 시작하겠습니다!"},
   {
+    "goal": ["knowledge"],
     "type": "ox",
     "message": "미국 주식 시장은 뉴욕증권거래소(NYSE)와 나스닥(NASDAQ)이 대표적이다.",
     "answer": "o"
   },
   {
+    "goal": ["aggression", "return", "period"],
     "type": "choice",
-    "message": "다음 중 미국 나스닥(NASDAQ)에 상장된 대표 기술주는?",
-    "options": ["마이크로소프트", "JP모건", "버크셔해서웨이", "엑슨모빌"],
-    "answer": "마이크로소프트"
+    "message": "추천받은 미국 주식을 시장 개장 후에 샀는데 오후에 15% 상승했다.",
+    "options": ["내일까지 두고 본다", "장 마감까지 기다려본다", "즉시 판다"]
   },
   {
+    "goal": ["aggression", "return", "amount"],
     "type": "choice",
-    "message": "미국 주식 시장에서 'ETF'는 무엇의 약자일까요?",
-    "options": [
-      "Exchange Traded Fund",
-      "Enhanced Trade Finance",
-      "Electronic Trading Framework",
-      "Equity Tax Fund"
-    ],
-    "answer": "Exchange Traded Fund"
+    "message": "1년에 10,000달러를 투자해서 10% 수익(1,000달러)을 냈다",
+    "options": ["너무 잘해서 감격이다", "이정도면 만족한다", "그정도 벌꺼면 주식을 왜하나"]
   },
   {
+    "goal": ["return", "period"],
+    "type": "choice",
+    "message": "투자한 지 한 달 된 미국 주식의 수익률이 -18%이다",
+    "options": ["추매로 평단을 낮춘다", "한 달 밖에 안되어서 조금 더 지켜본다", "잘못된 판단임으로 손절을 한다"]
+  },
+  {
+    "goal": ["knowledge"],
+    "type": "ox",
+    "message": "레버리지 ETF는 기본 ETF의 수익률을 항상 2배로 보장한다.",
+    "answer": "x"
+  },
+  {
+    "goal": ["knowledge"],
+    "type": "ox",
+    "message": "기업이 주식을 새로 발행하여 기존 주주나 새로운 투자자에게 파는 행위를 유상증자라고 한다.",
+    "answer": "o"
+  },
+  {
+    "goal": ["aggression", "period"],
+    "type": "choice",
+    "message": "나는 미국 주식을 한 번 사면,",
+    "options": ["1주일 이상 보유하는 편이다.", "6개월 내외로 거래한다.", "1년 이상 보유한다."]
+  },
+  {
+    "goal": ["aggression", "amount"],
+    "type": "choice",
+    "message": "나의 미국 주식 투자 씨드(금액)은 연봉의 ",
+    "options": ["10% 미만", "10% ~ 50%", "50% 이상"]
+  },
+  {
+    "goal": ["knowledge"],
     "type": "ox",
     "message": "미국 주식 투자 시 배당금에는 한국과 동일한 세율이 적용된다.",
     "answer": "x"
@@ -100,7 +155,7 @@ const List<Map<String, dynamic>> Questions_USAStockInvestment = [
 
 // 상업용 부동산 지식 테스트
 const List<Map<String, dynamic>> Questions_RealEstateCommercial = [
-  {"type": "text", "message": "안녕하세요. 상업용 부동산 투자 지식 테스트를 시작하겠습니다!"},
+  {"type": "text", "message": "안녕하세요. 상업용 부동산 투자 성향 분석을 시작하겠습니다!"},
   {
     "type": "ox",
     "message": "상업용 부동산의 가치는 주로 임대료 수익과 시세 차익에 의해 결정된다.",
@@ -127,7 +182,7 @@ const List<Map<String, dynamic>> Questions_RealEstateCommercial = [
 
 // 주거용 부동산 지식 테스트
 const List<Map<String, dynamic>> Questions_RealEstateResidential = [
-  {"type": "text", "message": "안녕하세요. 주거용 부동산 투자 지식 테스트를 시작하겠습니다!"},
+  {"type": "text", "message": "안녕하세요. 주거용 부동산 투자 성향 분석을 시작하겠습니다!"},
   {
     "type": "ox",
     "message": "주거용 부동산 투자 시 지역 인프라(교통, 교육 등)는 중요한 고려 요소이다.",
@@ -152,7 +207,7 @@ const List<Map<String, dynamic>> Questions_RealEstateResidential = [
   },
 ]; // 암호화폐(Crypto) 투자 지식 테스트
 const List<Map<String, dynamic>> Questions_Crypto = [
-  {"type": "text", "message": "안녕하세요. 암호화폐(Crypto) 투자 지식 테스트를 시작하겠습니다!"},
+  {"type": "text", "message": "안녕하세요. 암호화폐(Crypto) 투자 성향 분석을 시작하겠습니다!"},
   {
     "type": "ox",
     "message": "비트코인(Bitcoin)은 중앙은행이 통제하는 형태의 디지털 화폐이다.",
@@ -179,10 +234,7 @@ const List<Map<String, dynamic>> Questions_Crypto = [
 
 // 안정적인 투자(Stable Investor) 지식 테스트
 const List<Map<String, dynamic>> Questions_StableInvestor = [
-  {
-    "type": "text",
-    "message": "안녕하세요. 안정적인 투자(Stable Investor) 지식 테스트를 시작하겠습니다!"
-  },
+  {"type": "text", "message": "안녕하세요. 안정적인 투자 성향 분석을 시작하겠습니다!"},
   {
     "type": "ox",
     "message": "안정적인 투자는 높은 위험을 감수해 단기간에 수익을 극대화하는 방식이다.",
@@ -209,7 +261,7 @@ const List<Map<String, dynamic>> Questions_StableInvestor = [
 
 // 세금(Taxes) 지식 테스트
 const List<Map<String, dynamic>> Questions_Taxes = [
-  {"type": "text", "message": "안녕하세요. 세금(Taxes) 지식 테스트를 시작하겠습니다!"},
+  {"type": "text", "message": "안녕하세요. 세금 지식 테스트를 시작하겠습니다!"},
   {
     "type": "ox",
     "message": "소득세(Income Tax)는 개인이 얻은 소득에 대해 부과되는 세금이다.",
@@ -232,7 +284,7 @@ const List<Map<String, dynamic>> Questions_Taxes = [
 
 // 대출(Loans) 지식 테스트
 const List<Map<String, dynamic>> Questions_Loans = [
-  {"type": "text", "message": "안녕하세요. 대출(Loans) 지식 테스트를 시작하겠습니다!"},
+  {"type": "text", "message": "안녕하세요. 대출 지식 테스트를 시작하겠습니다!"},
   {
     "type": "ox",
     "message": "대출 이자율은 개인의 신용등급과 담보 등에 따라 달라질 수 있다.",
@@ -259,10 +311,7 @@ const List<Map<String, dynamic>> Questions_Loans = [
 
 // 금융 역사(Financial History) 지식 테스트
 const List<Map<String, dynamic>> Questions_FinancialHistory = [
-  {
-    "type": "text",
-    "message": "안녕하세요. 금융 역사(Financial History) 지식 테스트를 시작하겠습니다!"
-  },
+  {"type": "text", "message": "안녕하세요. 금융 역사 지식 테스트를 시작하겠습니다!"},
   {
     "type": "ox",
     "message": "역사상 가장 오래된 화폐 형태 중 하나는 조개껍데기 화폐이다.",
