@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
+import 'package:ticklemickle_m/common/utils/StringUtil.dart';
 import 'package:ticklemickle_m/screens/chatbot/widget/selectableContrainerState.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -50,7 +51,7 @@ class _MessageWidgetState extends State<MessageWidget>
               : CrossAxisAlignment.start,
           children: [
             if (type == "text") _buildTextOptions(),
-            if (type == "choice") _buildChoiceOptions(),
+            if (type == "choice" || type == "basic") _buildChoiceOptions(),
             if (type == "ox") _buildOXButtons(),
             if (type == "userPick") _buildUserPick(),
           ],

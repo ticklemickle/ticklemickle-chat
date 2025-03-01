@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
 import 'package:ticklemickle_m/screens/chatbot/widget/calculateScores.dart';
+import 'package:ticklemickle_m/screens/home/appList/appfinanceList.dart';
 import 'dart:async';
 import 'widget/messageWidget.dart';
 import 'package:ticklemickle_m/screens/chatbot/questions/chatbotQuestions.dart';
@@ -68,7 +69,8 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
         }
 
         if (messages[messageIndex - 1]["type"] != "text" &&
-            messages[messageIndex - 1]["type"] != "userPick") {
+            messages[messageIndex - 1]["type"] != "userPick" &&
+            messages[messageIndex - 1]["type"] != "basic") {
           userScores = getUserScore(
               messages[messageIndex - 1], userResponse, userScores);
           scoreRange = getQuestionRange(messages[messageIndex - 1], scoreRange);
@@ -107,8 +109,14 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   void _displayFinalAnswers() {
     if (isResultDisplayed) {
       print("마지막 질문까지 모두 제출됨.");
-      context.go('/ChatBotResult_common?category=$category',
-          extra: scaleScores(userScores, scoreRange));
+      if (category == "Questions_InvestmentStatus") {
+        context.go('/ChatBotReult_finance');
+      } else if (category == "Questions_lookalike") {
+        context.go('/ChatBotLookalike');
+      } else {
+        context.go('/ChatBotResult_common?category=$category',
+            extra: scaleScores(userScores, scoreRange));
+      }
       return;
     }
 
@@ -142,7 +150,7 @@ ${userPickMessage.map((userPick) => "• ${userPick["question"]}\n➡️ ${userP
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(
-        title: '금융 지식 테스트',
+        title: getCategoryGroup(category),
         useAppHome: true,
       ),
       body: Column(

@@ -11,6 +11,7 @@ import 'package:ticklemickle_m/common/widgets/roundTextButton.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/answerList/common_FinanceList.dart';
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/answerList/type_StockInvestor.dart';
+import 'package:ticklemickle_m/screens/home/appList/appfinanceList.dart';
 
 class ChatBotResultCommon extends StatelessWidget {
   final String category;
@@ -105,7 +106,7 @@ class ChatBotResultCommon extends StatelessWidget {
 
     return Scaffold(
         appBar: CommonAppBar(
-          title: '국내 주식 성향 분석 결과',
+          title: getCategoryObject(category)["title"] + ' 결과',
           useAppHome: true,
         ),
         body: SingleChildScrollView(
@@ -114,6 +115,11 @@ class ChatBotResultCommon extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
                 child: Column(
                   children: [
+                    const SizedBox(height: 8),
+                    Center(
+                        child: Text(result.image,
+                            style: const TextStyle(fontSize: 60))),
+                    const SizedBox(height: 15),
                     Center(
                       child: CommonHighlightText(
                         leadingText: "홍길동 님은 ",
@@ -121,24 +127,24 @@ class ChatBotResultCommon extends StatelessWidget {
                         trailingText: " 입니다.",
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    Center(
-                        child: Text(result.image,
-                            style: const TextStyle(fontSize: 60))),
                     const SizedBox(height: 8),
-                    RadarChart(
-                      values: resultValues,
-                      maxValue: maxValue,
-                      labels: labels,
-                      chartSize: 200,
-                    ),
+                    Center(
+                        child: Text(result.sub,
+                            style: const TextStyle(fontSize: 16))),
+                    const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Text(result.description,
                           textAlign: TextAlign.left,
                           style: const TextStyle(fontSize: 16)),
                     ),
-                    const SizedBox(height: 45),
+                    RadarChart(
+                      values: resultValues,
+                      maxValue: maxValue,
+                      labels: labels,
+                      chartSize: 200,
+                    ),
+                    const SizedBox(height: 40),
                     Center(
                         child: Text("나와 비슷한 투자 성향을 가진 사람들은?",
                             textAlign: TextAlign.left,
@@ -163,7 +169,7 @@ class ChatBotResultCommon extends StatelessWidget {
                       Center(
                           child: Text(match_result.sub,
                               style: const TextStyle(fontSize: 16))),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 12),
                       Center(
                           child: Text(match_result.title,
                               style: const TextStyle(

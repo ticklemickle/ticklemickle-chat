@@ -8,8 +8,8 @@ import 'package:ticklemickle_m/common/widgets/commonShareLink.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/answerList/lookalike_answerList.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ChatBotResultScreen extends StatelessWidget {
-  const ChatBotResultScreen({super.key});
+class ChatBotLookalikeScreen extends StatelessWidget {
+  const ChatBotLookalikeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

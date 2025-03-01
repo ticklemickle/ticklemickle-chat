@@ -1,3 +1,22 @@
+Map<String, dynamic> getCategoryObject(String category) {
+  final result = appfinanceList.firstWhere(
+    (element) => element["category"] == category,
+  );
+  return result;
+}
+
+String getCategoryGroup(String category) {
+  final String group = getCategoryObject(category)["group"];
+  final String title = getCategoryObject(category)["title"];
+  final String result = group == "propensity"
+      ? " 성향 분석"
+      : group == "knowledge"
+          ? " 지식 테스트"
+          : "";
+
+  return title + result;
+}
+
 final List<Map<String, dynamic>> appfinanceList = [
   {
     "group": "basic",
@@ -42,12 +61,13 @@ final List<Map<String, dynamic>> appfinanceList = [
     "image": "bitcoin.png",
     "participants": 35
   },
-  // {"group": "propensity",
-  //   "category": "Questions_InvestmentStatus",
-  //   "title": "금융 닮은꼴 찾기",
-  //   "image": "happyface.png",
-  //   "participants": 3675
-  // },
+  {
+    "group": "propensity",
+    "category": "Questions_lookalike",
+    "title": "금융 닮은꼴 찾기",
+    "image": "happyface.png",
+    "participants": 3675
+  },
   {
     "group": "propensity",
     "category": "Questions_StableInvestor",

@@ -39,8 +39,8 @@ class AppRoutes {
         },
       ),
       GoRoute(
-        path: '/ChatBotResult',
-        builder: (context, state) => const ChatBotResultScreen(),
+        path: '/ChatBotLookalike',
+        builder: (context, state) => const ChatBotLookalikeScreen(),
       ),
       GoRoute(
         path: '/myInfo',

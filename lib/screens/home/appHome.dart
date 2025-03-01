@@ -66,14 +66,6 @@ class _AppHomeState extends State<AppHome> {
                     onTap: () {
                       context.push(
                           '/ChatBotMain/${appfinanceList[index]["category"]}');
-                      // if (index % 4 == 0) {
-                      // } else if (index % 4 == 1) {
-                      //   context.go('/ChatBotReult_finance');
-                      // } else if (index % 4 == 2) {
-                      //   context.go('/ChatBotResult_common?type=stock');
-                      // } else {
-                      //   context.go('/ChatBotResult_common?type=housing');
-                      // }
                     },
                     child: AppListItem(
                       title: appfinanceList[index]["title"],

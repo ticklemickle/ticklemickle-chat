@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
+import 'package:ticklemickle_m/common/utils/StringUtil.dart';
 import 'package:ticklemickle_m/common/widgets/commonDialog.dart';
 import 'package:ticklemickle_m/screens/setting/myInfo.dart';
 
@@ -48,7 +49,7 @@ class _SelectableContainerState extends State<SelectableContainer> {
         width: 80,
         height: 60,
         alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 15),
+        padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 13),
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(
@@ -72,16 +73,8 @@ class _SelectableContainerState extends State<SelectableContainer> {
                 height: 40,
                 fit: BoxFit.contain,
               )
-            : Text(
-                widget.label, maxLines: 2, // 최대 두 줄로 표시
-                softWrap: true,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color:
-                      widget.isSelected ? MyColors.mainDarkColor : Colors.black,
-                ),
-              ),
+            : ChatbotSelectableText(
+                label: widget.label, isSelected: widget.isSelected),
       ),
     );
   }
