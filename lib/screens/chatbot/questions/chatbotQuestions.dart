@@ -1,37 +1,87 @@
+import 'package:ticklemickle_m/common/utils/const.dart';
+
 List<Map<String, dynamic>> getQuestionsList(String category) {
   switch (category) {
-    case 'Questions_InvestmentStatus':
-      return Questions_InvestmentStatus;
-    case 'Questions_KoreaStockInvestment':
+    case CategoryConst.questionsBasicStatus:
+      return Questions_basicStatus;
+    case CategoryConst.questionsLookalike:
+      return Questions_lookalike;
+    case CategoryConst.questionsKoreaStockInvestment:
       return Questions_KoreaStockInvestment;
-    case 'Questions_USAStockInvestment':
+    case CategoryConst.questionsUSAStockInvestment:
       return Questions_USAStockInvestment;
-    case 'Questions_RealEstateCommercial':
+    case CategoryConst.questionsRealEstateCommercial:
       return Questions_RealEstateCommercial;
-    case 'Questions_RealEstateResidential':
+    case CategoryConst.questionsRealEstateResidential:
       return Questions_RealEstateResidential;
-    case 'Questions_Crypto':
+    case CategoryConst.questionsCrypto:
       return Questions_Crypto;
-    case 'Questions_StableInvestor':
+    case CategoryConst.questionsStableInvestor:
       return Questions_StableInvestor;
-    case 'Questions_Taxes':
+    case CategoryConst.questionsTaxes:
       return Questions_Taxes;
-    case 'Questions_Loans':
+    case CategoryConst.questionsLoans:
       return Questions_Loans;
-    case 'Questions_FinancialHistory':
+    case CategoryConst.questionsFinancialHistory:
       return Questions_FinancialHistory;
     default:
-      return Questions_InvestmentStatus;
+      return Questions_basicStatus;
   }
 }
 
-const List<Map<String, dynamic>> Questions_InvestmentStatus = [
-  {"type": "text", "message": "안녕하세요. 금융 지식 테스트를 시작하겠습니다!"},
+const List<Map<String, dynamic>> Questions_basicStatus = [
   {
+    "type": "text",
+    "message": "안녕하세요. 티끌미끌 챗봇입니다."
+        "지금부터 재테크 현황 분석을 시작하겠습니다! 3분 정도면 충분하니 천천히 따라와주세요. 😃"
+  },
+  {
+    "goal": ["assets, spend, possiblity, interest, income"],
     "type": "basic",
     "message": "먼저 저희쪽에 등록한 정보가 맞는지 확인해주세요. 아래 정보가 맞나요?\n\n1990년생 남성",
     "options": ["맞아요", "변경하기"],
   },
+  {
+    "goal": ["assets, spend, possiblity, interest, income"],
+    "type": "input",
+    "message": "연소득이 얼마인지 알려주세요.",
+    "options": ["3000", "5000", "9000", "13000"],
+  },
+  {
+    "goal": ["assets, spend, possiblity, interest, income"],
+    "type": "input",
+    "message": "월 평균 카드값이 얼마 정도 나오나요?",
+    "options": ["120", "220", "350", "500"],
+  },
+  {
+    "goal": ["assets, spend, possiblity, interest, income"],
+    "type": "mult-choice",
+    "message": "현재 보유하고 있는 대출을 모두 선택해주세요.",
+    "options": [
+      "주택담보",
+      "전세",
+      "자동차",
+      "부동산",
+      "예적금",
+      "신용대출",
+      "마이너스통장",
+      "학자금",
+      "케피탈",
+      "카드론",
+      "사업자",
+      "정부 지원"
+    ],
+  },
+  {
+    "goal": ["assets, spend, possiblity, interest, income"],
+    "type": "input",
+    "message": "마지막 질문입니다! 현재 즉시 가용 가능한 현금 및 예적금은 총 얼마인가요? (저축 포함)",
+    "options": ["1000", "2000", "5000", "10000"],
+  },
+];
+
+const List<Map<String, dynamic>> Questions_lookalike = [
+  {"type": "text", "message": "안녕하세요. 금융 지식 테스트를 시작하겠습니다!"},
   {
     "goal": ["knowledge"],
     "type": "ox",

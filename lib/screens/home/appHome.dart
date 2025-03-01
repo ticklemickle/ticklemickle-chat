@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
+import 'package:ticklemickle_m/common/utils/const.dart';
 import 'package:ticklemickle_m/common/widgets/commonToast.dart';
 import 'package:ticklemickle_m/screens/home/appList/appfinanceList.dart';
 import 'appListItem.dart';
@@ -64,8 +65,14 @@ class _AppHomeState extends State<AppHome> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      context.push(
-                          '/ChatBotMain/${appfinanceList[index]["category"]}');
+                      if (appfinanceList[index]["category"] ==
+                          CategoryConst.questionsBasicStatus) {
+                        context.push(
+                            '/ChatBotBasic/${appfinanceList[index]["category"]}');
+                      } else {
+                        context.push(
+                            '/ChatBotMain/${appfinanceList[index]["category"]}');
+                      }
                     },
                     child: AppListItem(
                       title: appfinanceList[index]["title"],

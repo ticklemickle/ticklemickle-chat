@@ -9,16 +9,16 @@ import 'dart:async';
 import 'widget/messageWidget.dart';
 import 'package:ticklemickle_m/screens/chatbot/questions/chatbotQuestions.dart';
 
-class ChatBotMain extends StatefulWidget {
+class ChatBotBasic extends StatefulWidget {
   final String category;
 
-  const ChatBotMain({Key? key, required this.category}) : super(key: key);
+  const ChatBotBasic({Key? key, required this.category}) : super(key: key);
 
   @override
   _ChatBotScreenState createState() => _ChatBotScreenState();
 }
 
-class _ChatBotScreenState extends State<ChatBotMain> {
+class _ChatBotScreenState extends State<ChatBotBasic> {
   late String category;
   late final List<Map<String, dynamic>> questionList;
 
@@ -31,18 +31,18 @@ class _ChatBotScreenState extends State<ChatBotMain> {
   bool isResultDisplayed = false;
 
   Map<String, double> userScores = {
-    "aggression": 0,
-    "return": 0,
-    "period": 0,
-    "knowledge": 0,
-    "amount": 0,
+    "assets": 0,
+    "spend": 0,
+    "possiblity": 0,
+    "interest": 0,
+    "income": 0,
   };
   Map<String, Map<String, double>> scoreRange = {
-    "aggression": {"max": 0.0, "min": 0.0},
-    "return": {"max": 0.0, "min": 0.0},
-    "period": {"max": 0.0, "min": 0.0},
-    "knowledge": {"max": 0.0, "min": 0.0},
-    "amount": {"max": 0.0, "min": 0.0},
+    "assets": {"max": 0.0, "min": 0.0},
+    "spend": {"max": 0.0, "min": 0.0},
+    "possiblity": {"max": 0.0, "min": 0.0},
+    "interest": {"max": 0.0, "min": 0.0},
+    "income": {"max": 0.0, "min": 0.0},
   };
 
   final ScrollController _scrollController = ScrollController();

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ticklemickle_m/common/model/raderChart.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
+import 'package:ticklemickle_m/common/utils/const.dart';
 import 'package:ticklemickle_m/common/widgets/circleTitleItem.dart';
 import 'package:ticklemickle_m/common/widgets/commonHighlightText.dart';
 import 'package:ticklemickle_m/common/widgets/commonShareLink.dart';
@@ -35,10 +36,10 @@ class ChatBotResultCommon extends StatelessWidget {
     late final dynamic match_result;
     late final dynamic circleImage;
 
-    if (category == 'Questions_InvestmentStatus' ||
-        category == 'Questions_KoreaStockInvestment' ||
-        category == 'Questions_USAStockInvestment' ||
-        category == 'Questions_Crypto') {
+    if (category == CategoryConst.questionsBasicStatus ||
+        category == CategoryConst.questionsKoreaStockInvestment ||
+        category == CategoryConst.questionsUSAStockInvestment ||
+        category == CategoryConst.questionsCrypto) {
       labels = ['공격성', '기대\n수익률', '보유\n기간', '지식', '투자\n금액'];
       result = mapInvestorResult(
           aggression: scoreList[0],
@@ -65,8 +66,8 @@ class ChatBotResultCommon extends StatelessWidget {
           defaultColor: Colors.red,
         ),
       ];
-    } else if (category == 'Questions_RealEstateCommercial' ||
-        category == 'Questions_RealEstateResidential') {
+    } else if (category == CategoryConst.questionsRealEstateCommercial ||
+        category == CategoryConst.questionsRealEstateResidential) {
       labels = ['공격성', '기대\n수익률', '지식', '투자기간', '투자\n금액'];
       result = commonHousingList[random.nextInt(6)];
       match_result = commonHousingList[random.nextInt(6)];

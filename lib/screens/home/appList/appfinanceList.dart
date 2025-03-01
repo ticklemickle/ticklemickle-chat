@@ -1,3 +1,5 @@
+import 'package:ticklemickle_m/common/utils/const.dart';
+
 Map<String, dynamic> getCategoryObject(String category) {
   final result = appfinanceList.firstWhere(
     (element) => element["category"] == category,
@@ -7,20 +9,19 @@ Map<String, dynamic> getCategoryObject(String category) {
 
 String getCategoryGroup(String category) {
   final String group = getCategoryObject(category)["group"];
-  final String title = getCategoryObject(category)["title"];
   final String result = group == "propensity"
-      ? " 성향 분석"
+      ? "성향 분석"
       : group == "knowledge"
-          ? " 지식 테스트"
+          ? "지식 테스트"
           : "";
 
-  return title + result;
+  return result;
 }
 
 final List<Map<String, dynamic>> appfinanceList = [
   {
     "group": "basic",
-    "category": "Questions_InvestmentStatus",
+    "category": CategoryConst.questionsBasicStatus,
     "title": "재테크 현황",
     "subtitle": "2025년 최신판",
     "image": "money.png",
@@ -28,70 +29,70 @@ final List<Map<String, dynamic>> appfinanceList = [
   },
   {
     "group": "propensity",
-    "category": "Questions_KoreaStockInvestment",
+    "category": CategoryConst.questionsKoreaStockInvestment,
     "title": "국내 주식 투자",
     "image": "stockGraph.png",
     "participants": 12
   },
   {
     "group": "propensity",
-    "category": "Questions_USAStockInvestment",
+    "category": CategoryConst.questionsUSAStockInvestment,
     "title": "미국 주식 투자",
     "image": "stockGraph.png",
     "participants": 5
   },
   {
     "group": "propensity",
-    "category": "Questions_RealEstateCommercial",
+    "category": CategoryConst.questionsRealEstateCommercial,
     "title": "부동산(상가) 투자",
     "image": "building.png",
     "participants": 35
   },
   {
     "group": "propensity",
-    "category": "Questions_RealEstateResidential",
+    "category": CategoryConst.questionsRealEstateResidential,
     "title": "부동산(주택) 투자",
     "image": "house.png",
     "participants": 325
   },
   {
     "group": "propensity",
-    "category": "Questions_Crypto",
+    "category": CategoryConst.questionsCrypto,
     "title": "코인 투자",
     "image": "bitcoin.png",
     "participants": 35
   },
   {
     "group": "propensity",
-    "category": "Questions_lookalike",
+    "category": CategoryConst.questionsLookalike,
     "title": "금융 닮은꼴 찾기",
     "image": "happyface.png",
     "participants": 3675
   },
   {
     "group": "propensity",
-    "category": "Questions_StableInvestor",
+    "category": CategoryConst.questionsStableInvestor,
     "title": "안정적인 투자자",
     "image": "bank.png",
     "participants": 75
   },
   {
     "group": "knowledge",
-    "category": "Questions_Taxes",
+    "category": CategoryConst.questionsTaxes,
     "title": "세금(절세, 연말정산)",
     "image": "tax.png",
     "participants": 5
   },
   {
     "group": "knowledge",
-    "category": "Questions_Loans",
+    "category": CategoryConst.questionsLoans,
     "title": "대출",
     "image": "loan.png",
     "participants": 15
   },
   {
     "group": "knowledge",
-    "category": "Questions_FinancialHistory",
+    "category": CategoryConst.questionsFinancialHistory,
     "title": "금융 역사",
     "image": "history.png",
     "participants": 75
