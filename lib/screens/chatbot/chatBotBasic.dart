@@ -71,19 +71,17 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
         }
 
         if (messages[messageIndex - 1]["type"] != "text" &&
-            messages[messageIndex - 1]["type"] != "userPick" &&
             messages[messageIndex - 1]["type"] != "multi-choice" &&
             messages[messageIndex - 1]["type"] != "basic") {
-          userScores = getUserScore(
-              messages[messageIndex - 1], userResponse, userScores);
-          scoreRange = getQuestionRange(messages[messageIndex - 1], scoreRange);
-
           userPickMessage.add({
             "question": messages.last["message"],
             "message": upperResponse,
           });
-          messages.add({"type": "userPick", "message": upperResponse});
-          messageIndex++;
+        }
+        if (messages[messageIndex - 1]["type"] == "input") {
+          //type: choice, input
+          userScores = updateUserScores(
+              messages[messageIndex - 1], userResponse, userScores);
         }
 
         if (messages[messageIndex - 1]["type"] == "multi-choice") {
@@ -103,7 +101,7 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
             } else {}
             isAdded = true;
             messages.add({
-              "goal": ["assets, spend, possiblity, interest, income"],
+              "goal": ["spend, possiblity"],
               "type": "choice",
               "message": '$item 대출 보유 금액이 얼마인지 알려주세요.',
               "options": [
@@ -144,7 +142,8 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
   void _displayFinalAnswers() {
     if (isResultDisplayed) {
       print("마지막 질문까지 모두 제출됨.");
-      context.go(RouteConst.chatBotResultBasic);
+      context.go('${RouteConst.chatBotResultBasic}?category=$category',
+          extra: scaleScores(userScores, scoreRange));
       return;
     }
 

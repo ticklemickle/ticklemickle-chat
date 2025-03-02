@@ -63,3 +63,81 @@ List<double> scaleScores(
 
   return scaledScores;
 }
+
+///////////////////
+/* basic chatbot */
+double convertMoneyToManWon(String moneyStr) {
+  // 공백, 콤마 제거
+  moneyStr = moneyStr.trim().replaceAll(",", "").replaceAll(" ", "");
+  double total = 0;
+
+  if (moneyStr.contains("억")) {
+    // '억'을 기준으로 분할
+    List<String> parts = moneyStr.split("억");
+    // 억 단위 부분 처리 (예: "9" → 9 * 10000)
+    double billionPart = double.tryParse(parts[0]) ?? 0;
+    total += billionPart * 10000;
+    // 만원 단위가 뒤에 있는 경우 처리 (예: "8765만원")
+    if (parts.length > 1 && parts[1].contains("만원")) {
+      String manPart = parts[1].replaceAll("만원", "");
+      double manValue = double.tryParse(manPart) ?? 0;
+      total += manValue;
+    }
+    return total;
+  } else if (moneyStr.contains("만원")) {
+    String numberPart = moneyStr.replaceAll("만원", "");
+    return double.tryParse(numberPart) ?? 0;
+  } else {
+    return double.tryParse(moneyStr) ?? 0;
+  }
+}
+
+double getInputValue(String input) {
+  if (input.contains("만원") || input.contains("억원")) {
+    return convertMoneyToManWon(input);
+  } else {
+    return double.tryParse(input.replaceAll(",", "")) ?? 0;
+  }
+}
+
+int calculateScoreFromThresholds(List<String> options, String userInput) {
+  print("calculateScoreFromThresholds");
+  double inputValue = getInputValue(userInput);
+  // options를 double 리스트로 변환합니다.
+  List<double> thresholds = options
+      .map((option) => double.tryParse(option.replaceAll(",", "")) ?? 0)
+      .toList();
+
+  if (inputValue <= thresholds[0]) {
+    return 1;
+  } else if (inputValue <= thresholds[1]) {
+    return 2;
+  } else if (inputValue <= thresholds[2]) {
+    return 3;
+  } else if (inputValue <= thresholds[3]) {
+    return 4;
+  } else {
+    return 5;
+  }
+}
+
+Map<String, double> updateUserScores(Map<String, dynamic> question,
+    String userInput, Map<String, double> userScores) {
+  int score = calculateScoreFromThresholds(question["options"], userInput);
+  // goal 리스트 내의 각 문자열을 ','로 분리하여 실제 key 목록을 구성합니다.
+  List<String> goals = [];
+  for (var g in question["goal"]) {
+    if (g.contains(",")) {
+      goals.addAll(g.split(',').map((s) => s.trim()));
+    } else {
+      goals.add(g.trim());
+    }
+  }
+  // 해당 goal에 해당하는 userScore 항목에 점수를 누적합니다.
+  for (var key in goals) {
+    if (userScores.containsKey(key)) {
+      userScores[key] = userScores[key]! + score;
+    }
+  }
+  return userScores;
+}

@@ -58,7 +58,6 @@ class _MessageWidgetState extends State<MessageWidget>
             if (type == "choice" || type == "basic") _buildChoiceOptions(),
             if (type == "multi-choice") _buildMultiChoiceOptions(),
             if (type == "ox") _buildOXButtons(),
-            if (type == "userPick") _buildUserPick(),
             if (type == "input") _buildInputOptions(),
           ],
         ),
@@ -234,28 +233,6 @@ class _MessageWidgetState extends State<MessageWidget>
           child: child,
         )
       ],
-    );
-  }
-
-  Widget _buildUserPick() {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 25),
-        decoration: BoxDecoration(
-          color: MyColors.mainlightColor,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: MyColors.mainlightColor),
-        ),
-        child: Text(
-          widget.messageData["message"],
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
     );
   }
 

@@ -70,7 +70,6 @@ class _ChatBotScreenState extends State<ChatBotMain> {
         }
 
         if (messages[messageIndex - 1]["type"] != "text" &&
-            messages[messageIndex - 1]["type"] != "userPick" &&
             messages[messageIndex - 1]["type"] != "basic") {
           userScores = getUserScore(
               messages[messageIndex - 1], userResponse, userScores);
@@ -80,8 +79,6 @@ class _ChatBotScreenState extends State<ChatBotMain> {
             "question": messages.last["message"],
             "message": upperResponse,
           });
-          messages.add({"type": "userPick", "message": upperResponse});
-          messageIndex++;
         }
       });
     }

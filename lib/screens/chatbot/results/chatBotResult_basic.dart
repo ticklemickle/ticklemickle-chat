@@ -12,13 +12,19 @@ import 'package:ticklemickle_m/screens/chatbot/widget/comparisonBarWidget.dart';
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
 
 class ChatBotResultBasic extends StatelessWidget {
-  const ChatBotResultBasic({Key? key}) : super(key: key);
+  final String category;
+  final List<double> scoreList;
+
+  const ChatBotResultBasic(
+      {Key? key, required this.category, required this.scoreList})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print(scoreList);
     final List<String> labels = ['자산', '소비', '가능성', '관심', '소득'];
     // 5점 척도라고 가정 (maxValue = 5)
-    final List<double> sampleValues = [3, 2, 4, 5, 3];
+    final List<double> sampleValues = scoreList;
     final double maxValue = 5;
 
     return Scaffold(
