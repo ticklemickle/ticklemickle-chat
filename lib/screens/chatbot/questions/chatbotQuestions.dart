@@ -76,7 +76,7 @@ const List<Map<String, dynamic>> Questions_basicStatus = [
   {
     "goal": ["assets, spend, possiblity, interest, income"],
     "type": "input",
-    "message": "마지막 질문입니다! 현재 즉시 가용 가능한 현금 및 예적금은 총 얼마인가요? (저축 포함)",
+    "message": "마지막 질문입니다!\n현재 즉시 가용 가능한 현금 및 예적금은 총 얼마인가요? (저축 포함)",
     "message-hint": "즉시 가용 자금 입력 (만원 단위)",
     "options": ["1000", "2000", "5000", "10000"],
   },

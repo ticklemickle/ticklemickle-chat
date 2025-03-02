@@ -21,7 +21,7 @@ class ChatBotBasic extends StatefulWidget {
 class _ChatBotScreenState extends State<ChatBotBasic> {
   late String category;
   late final List<Map<String, dynamic>> questionList;
-
+  List<String> _pendingMultiChoices = [];
   List<Map<String, dynamic>> messages = []; // 대화 내역 저장
   List<Map<String, String>> userPickMessage = []; // 사용자의 선택 저장
   int totalQuestions = 0;
@@ -29,6 +29,7 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
   int messageIndex = 0;
   bool isFirstMessage = true;
   bool isResultDisplayed = false;
+  bool isAdded = false;
 
   Map<String, double> userScores = {
     "assets": 0,
@@ -71,6 +72,7 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
 
         if (messages[messageIndex - 1]["type"] != "text" &&
             messages[messageIndex - 1]["type"] != "userPick" &&
+            messages[messageIndex - 1]["type"] != "multi-choice" &&
             messages[messageIndex - 1]["type"] != "basic") {
           userScores = getUserScore(
               messages[messageIndex - 1], userResponse, userScores);
@@ -83,10 +85,42 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
           messages.add({"type": "userPick", "message": upperResponse});
           messageIndex++;
         }
+
+        if (messages[messageIndex - 1]["type"] == "multi-choice") {
+          if (_pendingMultiChoices.isEmpty) {
+            _pendingMultiChoices =
+                userResponse.split(',').map((item) => item.trim()).toList();
+          }
+          if (_pendingMultiChoices.isNotEmpty) {
+            userPickMessage.add({
+              "question": messages.last["message"],
+              "message": upperResponse,
+            });
+
+            String item = _pendingMultiChoices.removeAt(0);
+            if (_pendingMultiChoices.isEmpty) {
+              messageIndex++;
+            } else {}
+            isAdded = true;
+            messages.add({
+              "goal": ["assets, spend, possiblity, interest, income"],
+              "type": "choice",
+              "message": '$item 대출 보유 금액이 얼마인지 알려주세요.',
+              "options": [
+                "100만원",
+                "200만원",
+                "300만원",
+                "500만원",
+              ],
+            });
+          }
+        }
       });
     }
 
-    if (currentQuestionIndex < totalQuestions) {
+    if (isAdded) {
+      isAdded = false;
+    } else if (currentQuestionIndex < totalQuestions) {
       setState(() {
         messages.add(questionList[currentQuestionIndex]);
         currentQuestionIndex++;
@@ -180,4 +214,17 @@ ${userPickMessage.map((userPick) => "• ${userPick["question"]}\n➡️ ${userP
       ),
     );
   }
+}
+
+bool isUserOptionsValid(List<String> options, String userInput) {
+  // 사용자 입력 문자열을 쉼표로 분리하고, 앞뒤 공백을 제거합니다.
+  List<String> userTokens = userInput.split(',').map((e) => e.trim()).toList();
+
+  // 각 토큰이 options 리스트에 있는지 확인합니다.
+  for (var token in userTokens) {
+    if (!options.contains(token)) {
+      return false;
+    }
+  }
+  return true;
 }

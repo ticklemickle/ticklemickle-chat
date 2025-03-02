@@ -26,7 +26,7 @@ class _MessageWidgetState extends State<MessageWidget>
   late Animation<double> _fadeInAnimation;
   final TextEditingController _inputController = TextEditingController();
   List<String> _multiSelectedOptions = [];
-  bool _showInputField = true;
+  bool _submitPressed = true;
 
   @override
   void initState() {
@@ -67,13 +67,11 @@ class _MessageWidgetState extends State<MessageWidget>
   }
 
   Widget _buildMultiChoiceOptions() {
-    // messageData["options"]에 들어있는 항목들을 문자열 리스트로 변환
     List<String> options = (widget.messageData["options"] as List<dynamic>?)
             ?.map((e) => e.toString())
             .toList() ??
         [];
 
-    // 적절히 그리드 개수 계산 (필요에 따라 조정)
     int totalOptions = options.length;
     int crossAxisCount = (totalOptions <= 3)
         ? 1
@@ -85,14 +83,11 @@ class _MessageWidgetState extends State<MessageWidget>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 봇이 보여줄 안내 텍스트
           Text(
             widget.messageData["message"] ?? "",
             style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 20),
-
-          // 다중 선택할 수 있는 Grid
           StaggeredGrid.count(
             crossAxisCount: crossAxisCount,
             mainAxisSpacing: 8,
@@ -106,41 +101,44 @@ class _MessageWidgetState extends State<MessageWidget>
                 child: SelectableContainer(
                   label: option,
                   isSelected: isSelected,
-                  onTap: () {
-                    // 이미 선택된 항목이면 해제, 아니면 추가
-                    setState(() {
-                      if (isSelected) {
-                        _multiSelectedOptions.remove(option);
-                      } else {
-                        _multiSelectedOptions.add(option);
-                      }
-                    });
-                  },
+                  onTap: _submitPressed
+                      ? () {
+                          setState(() {
+                            if (isSelected) {
+                              _multiSelectedOptions.remove(option);
+                            } else {
+                              _multiSelectedOptions.add(option);
+                            }
+                          });
+                        }
+                      : () {},
                 ),
               );
             }),
           ),
-
           const SizedBox(height: 16),
-
-          // '제출' 버튼
           Align(
             alignment: Alignment.centerRight,
             child: ElevatedButton(
-              onPressed: () {
-                if (_multiSelectedOptions.isNotEmpty) {
-                  // 선택된 항목들을 쉼표로 연결하거나, 원하는 형식으로 변환
-                  final String joined = _multiSelectedOptions.join(", ");
+              onPressed: _submitPressed
+                  ? () {
+                      if (_multiSelectedOptions.isNotEmpty) {
+                        // 선택된 항목들을 쉼표로 연결하거나, 원하는 형식으로 변환
+                        final String joined = _multiSelectedOptions.join(",");
 
-                  // 부모 위젯으로 전달 -> userPick 메시지 생성
-                  widget.onAnswerSelected(joined);
+                        // 부모 위젯으로 전달 -> userPick 메시지 생성
+                        widget.onAnswerSelected(joined);
 
-                  // 선택 항목 초기화(필요에 따라 조정)
-                  setState(() {
-                    _multiSelectedOptions.clear();
-                  });
-                }
-              },
+                        // 선택 항목 초기화(필요에 따라 조정)
+                        // setState(() {
+                        //   _multiSelectedOptions.clear();
+                        // });
+                        setState(() {
+                          _submitPressed = false;
+                        });
+                      }
+                    }
+                  : null,
               style: ElevatedButton.styleFrom(
                 backgroundColor: MyColors.mainColor,
               ),
@@ -163,6 +161,7 @@ class _MessageWidgetState extends State<MessageWidget>
           ),
           const SizedBox(height: 12),
           TextField(
+            enabled: _submitPressed,
             controller: _inputController,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
@@ -196,17 +195,17 @@ class _MessageWidgetState extends State<MessageWidget>
           Align(
             alignment: Alignment.centerRight,
             child: ElevatedButton(
-              onPressed: () {
-                final inputValue = _inputController.text.trim();
-                if (inputValue.isNotEmpty) {
-                  // 상위 위젯으로 전달 -> 상위 로직에서 userPick 메시지 생성
-                  widget.onAnswerSelected(inputValue);
-                  _inputController.clear();
-                  setState(() {
-                    _showInputField = false; // 입력창 숨김
-                  });
-                }
-              },
+              onPressed: _submitPressed
+                  ? () {
+                      final inputValue = _inputController.text.trim();
+                      if (inputValue.isNotEmpty) {
+                        widget.onAnswerSelected(inputValue);
+                        setState(() {
+                          _submitPressed = false;
+                        });
+                      }
+                    }
+                  : null,
               style: ElevatedButton.styleFrom(
                 backgroundColor: MyColors.mainColor,
               ),
@@ -307,7 +306,7 @@ class _MessageWidgetState extends State<MessageWidget>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            widget.messageData["message"],
+            widget.messageData["message"] ?? "",
             style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 20),
