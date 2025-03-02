@@ -91,3 +91,21 @@ class ChatbotSelectableText extends StatelessWidget {
     );
   }
 }
+
+// 헬퍼 메서드: 입력된 숫자를 만원 단위로 포맷팅
+String formatAmount(String value) {
+  if (value.isEmpty) return "";
+  final int amount = int.tryParse(value) ?? 0;
+  if (amount == 0) {
+    return "$amount 원";
+  } else if (amount < 10000) {
+    return "$amount 만원";
+  } else {
+    final int oku = amount ~/ 10000;
+    final int remain = amount % 10000;
+    if (remain == 0) {
+      return "${oku}억";
+    }
+    return "${oku}억 ${remain}만원";
+  }
+}

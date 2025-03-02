@@ -33,6 +33,30 @@ class MyApp extends StatelessWidget {
           selectionColor: MyColors.mainlightestColor,
           selectionHandleColor: MyColors.mainDarkColor,
         ),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: MyColors.mainColor,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: MyColors.mainColor,
+            foregroundColor: Colors.black,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: MyColors.mainColor,
+            ),
+          ),
+          hintStyle: TextStyle(color: Colors.grey[400]),
+          labelStyle: TextStyle(color: MyColors.mainDarkColor),
+        ),
       ),
       // ErrorBoundary를 builder로 래핑하여 GoRouter context를 포함하게 함
       builder: (context, child) {

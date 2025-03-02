@@ -52,7 +52,7 @@ class _AppHomeState extends State<AppHome> {
               IconButton(
                 icon: const Icon(Icons.menu, size: 28),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/settingMain');
+                  context.push(RouteConst.settingMain);
                 },
               ),
             ],

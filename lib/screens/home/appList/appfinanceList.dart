@@ -9,13 +9,15 @@ Map<String, dynamic> getCategoryObject(String category) {
 
 String getCategoryGroup(String category) {
   final String group = getCategoryObject(category)["group"];
+  String title = getCategoryObject(category)["title"];
+  title = title.split(' ')[0];
   final String result = group == "propensity"
-      ? "성향 분석"
+      ? " 성향 분석"
       : group == "knowledge"
-          ? "지식 테스트"
-          : "";
+          ? " 지식 테스트"
+          : " 성향 분석";
 
-  return result;
+  return title + result;
 }
 
 final List<Map<String, dynamic>> appfinanceList = [
@@ -30,28 +32,28 @@ final List<Map<String, dynamic>> appfinanceList = [
   {
     "group": "propensity",
     "category": CategoryConst.questionsKoreaStockInvestment,
-    "title": "국내 주식 투자",
+    "title": "국내주식 투자",
     "image": "stockGraph.png",
     "participants": 12
   },
   {
     "group": "propensity",
     "category": CategoryConst.questionsUSAStockInvestment,
-    "title": "미국 주식 투자",
+    "title": "미국주식 투자",
     "image": "stockGraph.png",
     "participants": 5
   },
   {
     "group": "propensity",
     "category": CategoryConst.questionsRealEstateCommercial,
-    "title": "부동산(상가) 투자",
+    "title": "부동산 (상가) 투자",
     "image": "building.png",
     "participants": 35
   },
   {
     "group": "propensity",
     "category": CategoryConst.questionsRealEstateResidential,
-    "title": "부동산(주택) 투자",
+    "title": "부동산 (주택) 투자",
     "image": "house.png",
     "participants": 325
   },
@@ -79,7 +81,7 @@ final List<Map<String, dynamic>> appfinanceList = [
   {
     "group": "knowledge",
     "category": CategoryConst.questionsTaxes,
-    "title": "세금(절세, 연말정산)",
+    "title": "세금 (절세, 연말정산)",
     "image": "tax.png",
     "participants": 5
   },
