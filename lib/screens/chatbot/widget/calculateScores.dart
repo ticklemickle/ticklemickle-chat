@@ -25,7 +25,7 @@ Map<String, Map<String, double>> getQuestionRange(Map<String, dynamic> question,
   double maxScore = 0;
   double minScore = 0;
 
-  if (question["type"] == "choice") {
+  if (question["type"] == "choice" || question["type"] == "input") {
     List<dynamic> options = question["options"];
     maxScore = (options.length).toDouble();
     minScore = 1;
@@ -66,43 +66,42 @@ List<double> scaleScores(
 
 ///////////////////
 /* basic chatbot */
-double convertMoneyToManWon(String moneyStr) {
+int convertMoneyToManWon(String moneyStr) {
   // 공백, 콤마 제거
   moneyStr = moneyStr.trim().replaceAll(",", "").replaceAll(" ", "");
-  double total = 0;
+  int total = 0;
 
   if (moneyStr.contains("억")) {
     // '억'을 기준으로 분할
     List<String> parts = moneyStr.split("억");
     // 억 단위 부분 처리 (예: "9" → 9 * 10000)
-    double billionPart = double.tryParse(parts[0]) ?? 0;
+    int billionPart = int.tryParse(parts[0]) ?? 0;
     total += billionPart * 10000;
     // 만원 단위가 뒤에 있는 경우 처리 (예: "8765만원")
     if (parts.length > 1 && parts[1].contains("만원")) {
       String manPart = parts[1].replaceAll("만원", "");
-      double manValue = double.tryParse(manPart) ?? 0;
+      int manValue = int.tryParse(manPart) ?? 0;
       total += manValue;
     }
     return total;
   } else if (moneyStr.contains("만원")) {
     String numberPart = moneyStr.replaceAll("만원", "");
-    return double.tryParse(numberPart) ?? 0;
+    return int.tryParse(numberPart) ?? 0;
   } else {
-    return double.tryParse(moneyStr) ?? 0;
+    return int.tryParse(moneyStr) ?? 0;
   }
 }
 
-double getInputValue(String input) {
+int getInputValue(String input) {
   if (input.contains("만원") || input.contains("억원")) {
     return convertMoneyToManWon(input);
   } else {
-    return double.tryParse(input.replaceAll(",", "")) ?? 0;
+    return int.tryParse(input.replaceAll(",", "")) ?? 0;
   }
 }
 
 int calculateScoreFromThresholds(List<String> options, String userInput) {
-  print("calculateScoreFromThresholds");
-  double inputValue = getInputValue(userInput);
+  int inputValue = getInputValue(userInput);
   // options를 double 리스트로 변환합니다.
   List<double> thresholds = options
       .map((option) => double.tryParse(option.replaceAll(",", "")) ?? 0)
@@ -140,4 +139,33 @@ Map<String, double> updateUserScores(Map<String, dynamic> question,
     }
   }
   return userScores;
+}
+
+///////////////////
+/* basic chatbot: mapping */
+Map<String, int> extractUserAnswerMap(
+    List<Map<String, dynamic>> userPickMessage) {
+  Map<String, int> userAnswerMap = {};
+
+  for (var message in userPickMessage) {
+    if (message.containsKey("goal") && message["goal"] != null) {
+      // goal은 리스트 형태라고 가정합니다.
+      List<dynamic> goals = message["goal"];
+      // userResponse 값을 문자열로 변환 후 숫자로 변환합니다.
+      String userResponseStr = message["userResponse"].toString();
+      int value = getInputValue(userResponseStr);
+
+      for (var goal in goals) {
+        String goalKey = goal.toString();
+        if (goalKey == "loan") {
+          // "loan"은 여러 건이 있을 수 있으므로 누적합을 구합니다.
+          userAnswerMap[goalKey] = (userAnswerMap[goalKey] ?? 0) + value;
+        } else {
+          // 그 외의 goal은 단일 값으로 세팅합니다.
+          userAnswerMap[goalKey] = value;
+        }
+      }
+    }
+  }
+  return userAnswerMap;
 }

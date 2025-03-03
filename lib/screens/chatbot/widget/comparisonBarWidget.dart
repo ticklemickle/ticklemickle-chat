@@ -50,7 +50,9 @@ class ComparisonBarChart extends StatelessWidget {
                 Text(data.averageLabel, style: const TextStyle(fontSize: 13)),
                 const SizedBox(height: 4),
                 Container(
-                    width: barWidth, height: avgBarHeight, color: Colors.grey),
+                    width: barWidth,
+                    height: avgBarHeight,
+                    color: MyColors.darkGrey),
                 const SizedBox(height: 4),
                 const Text('평균', style: TextStyle(fontSize: 10)),
               ],

@@ -23,7 +23,7 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
   late final List<Map<String, dynamic>> questionList;
   List<String> _pendingMultiChoices = [];
   List<Map<String, dynamic>> messages = []; // 대화 내역 저장
-  List<Map<String, String>> userPickMessage = []; // 사용자의 선택 저장
+  List<Map<String, dynamic>> userPickMessage = []; // 사용자의 선택 저장
   int totalQuestions = 0;
   int currentQuestionIndex = 0;
   int messageIndex = 0;
@@ -31,18 +31,25 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
   bool isResultDisplayed = false;
   bool isAdded = false;
 
+  Map<String, int> userAnswerMap = {
+    "income": 0,
+    "assets": 0,
+    "spend": 0,
+    "saved": 0,
+  };
+
   Map<String, double> userScores = {
     "assets": 0,
     "spend": 0,
-    "possiblity": 0,
-    "interest": 0,
+    "loan": 0,
+    "saved": 0,
     "income": 0,
   };
   Map<String, Map<String, double>> scoreRange = {
     "assets": {"max": 0.0, "min": 0.0},
     "spend": {"max": 0.0, "min": 0.0},
-    "possiblity": {"max": 0.0, "min": 0.0},
-    "interest": {"max": 0.0, "min": 0.0},
+    "loan": {"max": 0.0, "min": 0.0},
+    "saved": {"max": 0.0, "min": 0.0},
     "income": {"max": 0.0, "min": 0.0},
   };
 
@@ -74,14 +81,16 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
             messages[messageIndex - 1]["type"] != "multi-choice" &&
             messages[messageIndex - 1]["type"] != "basic") {
           userPickMessage.add({
-            "question": messages.last["message"],
-            "message": upperResponse,
+            "message": messages.last["message"],
+            "goal": messages.last["goal"],
+            "userResponse": upperResponse,
           });
         }
         if (messages[messageIndex - 1]["type"] == "input") {
           //type: choice, input
           userScores = updateUserScores(
               messages[messageIndex - 1], userResponse, userScores);
+          scoreRange = getQuestionRange(messages[messageIndex - 1], scoreRange);
         }
 
         if (messages[messageIndex - 1]["type"] == "multi-choice") {
@@ -91,8 +100,9 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
           }
           if (_pendingMultiChoices.isNotEmpty) {
             userPickMessage.add({
-              "question": messages.last["message"],
-              "message": upperResponse,
+              "message": messages.last["message"],
+              if (messages.last["goal"] != null) "goal": messages.last["goal"],
+              "userResponse": upperResponse,
             });
 
             String item = _pendingMultiChoices.removeAt(0);
@@ -101,7 +111,7 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
             } else {}
             isAdded = true;
             messages.add({
-              "goal": ["spend, possiblity"],
+              "goal": ["loan"],
               "type": "choice",
               "message": '$item 대출 보유 금액이 얼마인지 알려주세요.',
               "options": [
@@ -141,23 +151,26 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
 
   void _displayFinalAnswers() {
     if (isResultDisplayed) {
-      print("마지막 질문까지 모두 제출됨.");
-      context.go('${RouteConst.chatBotResultBasic}?category=$category',
-          extra: scaleScores(userScores, scoreRange));
+      context.go(
+        '${RouteConst.chatBotResultBasic}?category=$category',
+        extra: {
+          'scoreList': scaleScores(userScores, scoreRange),
+          'userAnswer': userAnswerMap,
+        },
+      );
       return;
     }
-
-    setState(() {
-      isResultDisplayed = true;
-      messages.add({
-        "type": "choice",
-        "options": ["위 내용으로 분석하기"],
-        "message": """
+    userAnswerMap = extractUserAnswerMap(userPickMessage);
+    // print(userPickMessage);/
+    isResultDisplayed = true;
+    messages.add({
+      "type": "choice",
+      "options": ["결과 보러가기"],
+      "message": """
 재테크 현황 분석이 완료되었습니다.
 
-${userPickMessage.map((userPick) => "• ${userPick["question"]}\n➡️ ${userPick["message"]}").join("\n\n")}
+${userPickMessage.map((userPick) => "• ${userPick["message"]}\n➡️ ${userPick["userResponse"]}").join("\n\n")}
         """,
-      });
     });
 
     Future.delayed(const Duration(milliseconds: 100), () {
@@ -213,17 +226,4 @@ ${userPickMessage.map((userPick) => "• ${userPick["question"]}\n➡️ ${userP
       ),
     );
   }
-}
-
-bool isUserOptionsValid(List<String> options, String userInput) {
-  // 사용자 입력 문자열을 쉼표로 분리하고, 앞뒤 공백을 제거합니다.
-  List<String> userTokens = userInput.split(',').map((e) => e.trim()).toList();
-
-  // 각 토큰이 options 리스트에 있는지 확인합니다.
-  for (var token in userTokens) {
-    if (!options.contains(token)) {
-      return false;
-    }
-  }
-  return true;
 }

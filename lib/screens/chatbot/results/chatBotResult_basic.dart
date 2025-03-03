@@ -14,15 +14,19 @@ import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
 class ChatBotResultBasic extends StatelessWidget {
   final String category;
   final List<double> scoreList;
+  final Map<String, int> userAnswer;
 
   const ChatBotResultBasic(
-      {Key? key, required this.category, required this.scoreList})
+      {Key? key,
+      required this.category,
+      required this.scoreList,
+      required this.userAnswer})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print(scoreList);
-    final List<String> labels = ['자산', '소비', '가능성', '관심', '소득'];
+    print(userAnswer);
+    final List<String> labels = ['자산', '소비', '부채', '저축', '소득'];
     // 5점 척도라고 가정 (maxValue = 5)
     final List<double> sampleValues = scoreList;
     final double maxValue = 5;
@@ -61,7 +65,7 @@ class ChatBotResultBasic extends StatelessWidget {
                     Wrap(
                       spacing: 5,
                       runSpacing: 70,
-                      children: chartDataList.map((data) {
+                      children: updateChartDataList(userAnswer).map((data) {
                         // 화면 가로 길이와 패딩/간격을 고려해 각 아이템의 width 계산
                         final width =
                             (MediaQuery.of(context).size.width - 16 * 2 - 16) /

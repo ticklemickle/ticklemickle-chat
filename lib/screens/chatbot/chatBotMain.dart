@@ -122,7 +122,7 @@ class _ChatBotScreenState extends State<ChatBotMain> {
       isResultDisplayed = true;
       messages.add({
         "type": "choice",
-        "options": ["위 내용으로 분석하기"],
+        "options": ["결과 보러가기"],
         "message": """
 재테크 현황 분석이 완료되었습니다.
 

@@ -41,21 +41,34 @@ const List<Map<String, dynamic>> Questions_basicStatus = [
     "options": ["맞아요", "변경하기"],
   },
   {
-    "goal": ["possiblity", "income"],
+    "goal": ["income"],
     "type": "input",
     "message": "연소득이 얼마인지 알려주세요.",
     "message-hint": "연소득 입력 (만원 단위)",
     "options": ["3000", "5000", "9000", "13000"],
   },
   {
-    "goal": ["spend", "possiblity"],
+    "goal": ["saved"],
+    "type": "input",
+    "message": "현재 즉시 가용 가능한 현금 및 예적금은 총 얼마인가요? (저축 포함)",
+    "message-hint": "즉시 가용 자금 입력 (만원 단위)",
+    "options": ["1000", "2000", "5000", "10000"],
+  },
+  {
+    "goal": ["spend"],
     "type": "input",
     "message": "월 평균 카드값이 얼마 정도 나오나요?",
     "message-hint": "평균 카드값 입력 (만원 단위)",
     "options": ["120", "220", "350", "500"],
   },
   {
-    "goal": ["spend", "possiblity"],
+    "goal": ["assets"],
+    "type": "input",
+    "message": "현재 순자산은 어느 정도인가요??",
+    "message-hint": "순자산: 자산 - 부채 (만원 단위)",
+    "options": ["4000", "10000", "25000", "60000"],
+  },
+  {
     "type": "multi-choice",
     "message": "현재 보유하고 있는 대출을 모두 선택해주세요.",
     "options": [
@@ -73,13 +86,6 @@ const List<Map<String, dynamic>> Questions_basicStatus = [
       "정부 지원",
       "없음"
     ],
-  },
-  {
-    "goal": ["assets", "possiblity"],
-    "type": "input",
-    "message": "마지막 질문입니다!\n현재 즉시 가용 가능한 현금 및 예적금은 총 얼마인가요? (저축 포함)",
-    "message-hint": "즉시 가용 자금 입력 (만원 단위)",
-    "options": ["1000", "2000", "5000", "10000"],
   },
 ];
 

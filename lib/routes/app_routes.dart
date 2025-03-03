@@ -36,11 +36,17 @@ class AppRoutes {
         path: RouteConst.chatBotResultBasic,
         builder: (context, state) {
           final category = state.uri.queryParameters['category'] ?? '';
-          if (category.isEmpty || !(state.extra is List<double>)) {
+          if (category.isEmpty || state.extra == null || state.extra is! Map) {
             return const RedirectToAppHome();
           }
-          final scoreList = state.extra as List<double>;
-          return ChatBotResultBasic(category: category, scoreList: scoreList);
+          final extraData = state.extra as Map;
+          final scoreList = extraData['scoreList'] as List<double>;
+          final userAnswer = extraData['userAnswer'] as Map<String, int>;
+          return ChatBotResultBasic(
+            category: category,
+            scoreList: scoreList,
+            userAnswer: userAnswer,
+          );
         },
       ),
       GoRoute(

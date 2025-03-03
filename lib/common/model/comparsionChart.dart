@@ -1,7 +1,7 @@
 class ComparisonData {
   final String title; // 예: '소득', '자산' 등
-  final double averageValue; // 평균값
-  final double myValue; // 내 값
+  final int averageValue; // 평균값
+  final int myValue; // 내 값
   final String averageLabel; // 평균값 라벨
   final String myLabel; // 내 값 라벨
 
