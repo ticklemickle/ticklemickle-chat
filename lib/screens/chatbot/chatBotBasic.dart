@@ -79,14 +79,19 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
 
         if (messages[messageIndex - 1]["type"] != "text" &&
             messages[messageIndex - 1]["type"] != "multi-choice" &&
+            messages[messageIndex - 1]["type"] != "userPick" &&
             messages[messageIndex - 1]["type"] != "basic") {
           userPickMessage.add({
             "message": messages.last["message"],
             "goal": messages.last["goal"],
+            "options": messages.last["options"],
             "userResponse": upperResponse,
           });
+          messages.add({"type": "userPick", "message": upperResponse});
+          messageIndex++;
         }
-        if (messages[messageIndex - 1]["type"] == "input") {
+        if (messages[messageIndex - 1]["type"] == "input" ||
+            messages[messageIndex - 1]["type"] == "choice") {
           //type: choice, input
           userScores = updateUserScores(
               messages[messageIndex - 1], userResponse, userScores);
@@ -161,7 +166,7 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
       return;
     }
     userAnswerMap = extractUserAnswerMap(userPickMessage);
-    // print(userPickMessage);/
+    print(userPickMessage);
     isResultDisplayed = true;
     messages.add({
       "type": "choice",

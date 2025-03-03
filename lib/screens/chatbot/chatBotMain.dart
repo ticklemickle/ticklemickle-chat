@@ -70,15 +70,19 @@ class _ChatBotScreenState extends State<ChatBotMain> {
         }
 
         if (messages[messageIndex - 1]["type"] != "text" &&
+            messages[messageIndex - 1]["type"] != "userPick" &&
             messages[messageIndex - 1]["type"] != "basic") {
           userScores = getUserScore(
               messages[messageIndex - 1], userResponse, userScores);
           scoreRange = getQuestionRange(messages[messageIndex - 1], scoreRange);
 
           userPickMessage.add({
-            "question": messages.last["message"],
-            "message": upperResponse,
+            "message": messages.last["message"],
+            "userResponse": upperResponse,
           });
+          /* 사용자가 선택한 값 나오게 하는 부분 */
+          messages.add({"type": "userPick", "message": upperResponse});
+          messageIndex++;
         }
       });
     }
@@ -126,7 +130,7 @@ class _ChatBotScreenState extends State<ChatBotMain> {
         "message": """
 재테크 현황 분석이 완료되었습니다.
 
-${userPickMessage.map((userPick) => "• ${userPick["question"]}\n➡️ ${userPick["message"]}").join("\n\n")}
+${userPickMessage.map((userPick) => "• ${userPick["message"]}\n➡️ ${userPick["userResponse"]}").join("\n\n")}
         """,
       });
     });

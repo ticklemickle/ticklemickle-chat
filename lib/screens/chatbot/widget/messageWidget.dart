@@ -59,7 +59,30 @@ class _MessageWidgetState extends State<MessageWidget>
             if (type == "multi-choice") _buildMultiChoiceOptions(),
             if (type == "ox") _buildOXButtons(),
             if (type == "input") _buildInputOptions(),
+            if (type == "userPick") _buildUserPick(),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUserPick() {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 25),
+        decoration: BoxDecoration(
+          color: MyColors.mainlightColor,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: MyColors.mainlightColor),
+        ),
+        child: Text(
+          widget.messageData["message"],
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
     );
@@ -170,25 +193,11 @@ class _MessageWidgetState extends State<MessageWidget>
               contentPadding: const EdgeInsets.all(10),
               counterText: '',
             ),
-            maxLength: 6,
-            // 오직 숫자만 입력되도록
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            onChanged: (value) {
-              String digits = value.replaceAll(RegExp(r'[^\d]'), '');
-              // 첫번째 숫자가 '0'이면 더 이상 입력되지 않도록 (이미 0이면 그대로)
-              if (digits.length > 1 && digits.startsWith('0')) {
-                digits = digits.substring(0, 1);
-              }
-              // 포맷팅된 문자열 생성
-              String formatted = formatAmount(digits);
-
-              if (formatted != value) {
-                _inputController.value = _inputController.value.copyWith(
-                  text: formatted,
-                  // selection: TextSelection.collapsed(offset: formatted.length),(커서 위치 마지막으로 이동)
-                );
-              }
-            },
+            maxLength: 10,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              AmountFormatter(), // 새로운 Formatter 적용
+            ],
           ),
           const SizedBox(height: 8),
           Align(

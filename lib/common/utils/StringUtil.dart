@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
 
 String processText(String text) {
@@ -92,7 +93,7 @@ class ChatbotSelectableText extends StatelessWidget {
   }
 }
 
-// 헬퍼 메서드: 입력된 숫자를 만원 단위로 포맷팅
+// 입력된 숫자를 만원 단위로 포맷팅
 String formatAmount(String value) {
   if (value.isEmpty) return "";
   final int amount = int.tryParse(value) ?? 0;
@@ -107,5 +108,32 @@ String formatAmount(String value) {
       return "${oku}억";
     }
     return "${oku}억 ${remain}만원";
+  }
+}
+
+class AmountFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    String digits = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
+
+    // 첫 번째 숫자가 '0'이면 유지
+    if (digits.length > 1 && digits.startsWith('0')) {
+      digits = digits.substring(0, 1);
+    }
+
+    // 포맷 적용
+    String formatted = formatAmount(digits);
+
+    // 커서 위치 유지
+    int baseOffset = newValue.selection.baseOffset;
+    int newOffset = baseOffset - (newValue.text.length - digits.length);
+
+    return TextEditingValue(
+      text: formatted,
+      selection: TextSelection.collapsed(
+        offset: newOffset.clamp(0, formatted.length),
+      ),
+    );
   }
 }
