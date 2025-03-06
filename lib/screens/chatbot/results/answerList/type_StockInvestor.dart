@@ -1,5 +1,5 @@
 import 'package:ticklemickle_m/common/model/jsonToFinanceCommon.dart';
-import 'package:ticklemickle_m/screens/chatbot/results/answerList/common_FinanceList.dart';
+import 'package:ticklemickle_m/screens/chatbot/results/answerList/common_answerList.dart';
 
 // Helper: 각 값에 대해 Low, Medium, High 범주를 반환하는 함수
 bool isLow(double value) => value < 3;

@@ -171,7 +171,7 @@ double calculateLoanScore(Map<String, int> userAnswer) {
 
   if (loan == 0) return 5.0; // 부채가 없으면 최고 점수 반환
   double ratio = loan / (assets + loan); // 부채 비율 계산
-  double score = 5.0 - ratio * 4; // 비율을 반대로 적용하여 5.0~1 범위로 변환
+  double score = 5.0 - ratio * 4.0; // 비율을 반대로 적용하여 5~1 범위로 변환
 
   return double.parse(score.toStringAsFixed(2)); // 소수점 2자리 제한
 }

@@ -77,34 +77,40 @@ class _ChatBotScreenState extends State<ChatBotFinance> {
         }
 
         if (messages[messageIndex - 1]["type"] == "multi-choice") {
-          if (_pendingMultiChoices.isEmpty) {
-            _pendingMultiChoices =
-                userResponse.split(',').map((item) => item.trim()).toList();
-          }
-          if (_pendingMultiChoices.isNotEmpty) {
-            userPickMessage.add({
-              "message": messages.last["message"],
-              if (messages.last["goal"] != null) "goal": messages.last["goal"],
-              "userResponse": upperResponse,
-            });
-
-            String item = _pendingMultiChoices.removeAt(0);
+          if (upperResponse == "") {
+            /* 여기 수정해야함 Loan 부분에 대해서 */
+            messageIndex++;
+          } else {
             if (_pendingMultiChoices.isEmpty) {
-              messageIndex++;
-            } else {}
-            isAdded = true;
-            messages.add({
-              "goal": ["loan"],
-              "type": "input",
-              "message": '현재 보유 중인 ' '$item 대출' ' 금액이 얼마인가요?',
-              "message-hint": "(만원 단위)",
-              "options": [
-                "1000",
-                "2500",
-                "3000",
-                "5000",
-              ],
-            });
+              _pendingMultiChoices =
+                  userResponse.split(',').map((item) => item.trim()).toList();
+            }
+            if (_pendingMultiChoices.isNotEmpty) {
+              userPickMessage.add({
+                "message": messages.last["message"],
+                if (messages.last["goal"] != null)
+                  "goal": messages.last["goal"],
+                "userResponse": upperResponse,
+              });
+
+              String item = _pendingMultiChoices.removeAt(0);
+              if (_pendingMultiChoices.isEmpty) {
+                messageIndex++;
+              }
+              isAdded = true;
+              messages.add({
+                "goal": ["loan"],
+                "type": "input",
+                "message": '현재 보유 중인 ' '$item 대출' ' 금액이 얼마인가요?',
+                "message-hint": "(만원 단위)",
+                "options": [
+                  "1000",
+                  "2500",
+                  "3000",
+                  "5000",
+                ],
+              });
+            }
           }
         }
       });

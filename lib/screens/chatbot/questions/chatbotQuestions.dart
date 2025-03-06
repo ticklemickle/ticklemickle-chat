@@ -71,6 +71,7 @@ const List<Map<String, dynamic>> Questions_basicStatus = [
   {
     "type": "multi-choice",
     "message": "현재 보유하고 있는 대출을 모두 선택 해주세요.",
+    "message-hint": "대출 없음",
     "options": [
       "주택담보",
       "전세",
@@ -84,7 +85,6 @@ const List<Map<String, dynamic>> Questions_basicStatus = [
       "카드론",
       "사업자",
       "정부 지원",
-      "없음"
     ],
   },
 ];

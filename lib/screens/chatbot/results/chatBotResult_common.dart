@@ -9,7 +9,7 @@ import 'package:ticklemickle_m/common/widgets/circleTitleItem.dart';
 import 'package:ticklemickle_m/common/widgets/commonHighlightText.dart';
 import 'package:ticklemickle_m/common/widgets/commonShareLink.dart';
 import 'package:ticklemickle_m/common/widgets/roundTextButton.dart';
-import 'package:ticklemickle_m/screens/chatbot/results/answerList/common_FinanceList.dart';
+import 'package:ticklemickle_m/screens/chatbot/results/answerList/common_answerList.dart';
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/answerList/type_StockInvestor.dart';
 import 'package:ticklemickle_m/screens/home/appList/appfinanceList.dart';

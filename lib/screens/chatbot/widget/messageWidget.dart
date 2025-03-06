@@ -139,34 +139,55 @@ class _MessageWidgetState extends State<MessageWidget>
             }),
           ),
           const SizedBox(height: 16),
-          Align(
-            alignment: Alignment.centerRight,
-            child: ElevatedButton(
-              onPressed: _submitPressed
-                  ? () {
-                      if (_multiSelectedOptions.isNotEmpty) {
-                        // 선택된 항목들을 쉼표로 연결하거나, 원하는 형식으로 변환
-                        final String joined = _multiSelectedOptions.join(",");
-
-                        // 부모 위젯으로 전달 -> userPick 메시지 생성
-                        widget.onAnswerSelected(joined);
-
-                        // 선택 항목 초기화(필요에 따라 조정)
-                        // setState(() {
-                        //   _multiSelectedOptions.clear();
-                        // });
-                        setState(() {
-                          _submitPressed = false;
-                        });
-                      }
-                    }
-                  : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: MyColors.mainColor,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _multiSelectedOptions.clear();
+                      _submitPressed = false;
+                    });
+                    widget.onAnswerSelected("");
+                  },
+                  child: Text(
+                    widget.messageData["message-hint"] ?? "",
+                  ),
+                ),
               ),
-              child: const Text("제출"),
-            ),
-          ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: ElevatedButton(
+                  onPressed: _submitPressed
+                      ? () {
+                          if (_multiSelectedOptions.isNotEmpty) {
+                            // 선택된 항목들을 쉼표로 연결하거나, 원하는 형식으로 변환
+                            final String joined =
+                                _multiSelectedOptions.join(",");
+
+                            // 부모 위젯으로 전달 -> userPick 메시지 생성
+                            widget.onAnswerSelected(joined);
+
+                            // 선택 항목 초기화(필요에 따라 조정)
+                            // setState(() {
+                            //   _multiSelectedOptions.clear();
+                            // });
+                            setState(() {
+                              _submitPressed = false;
+                            });
+                          }
+                        }
+                      : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: MyColors.mainColor,
+                  ),
+                  child: const Text("제출"),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

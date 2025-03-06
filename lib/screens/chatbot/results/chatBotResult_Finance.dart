@@ -8,7 +8,7 @@ import 'package:ticklemickle_m/common/widgets/commonShareLink.dart';
 import 'package:ticklemickle_m/common/widgets/commonTitleAndContent.dart';
 import 'package:ticklemickle_m/common/widgets/roundTextButton.dart';
 import 'package:ticklemickle_m/screens/chatbot/questions/chatbotQuestions.dart';
-import 'package:ticklemickle_m/screens/chatbot/results/answerList/comparsion_barList.dart';
+import 'package:ticklemickle_m/screens/chatbot/results/answerList/finance_answerList.dart';
 import 'package:ticklemickle_m/screens/chatbot/widget/calculateScores.dart';
 import 'package:ticklemickle_m/screens/chatbot/widget/comparisonBarWidget.dart';
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
@@ -46,7 +46,7 @@ class ChatBotResultFinance extends StatelessWidget {
                     Center(
                       child: CommonHighlightText(
                         leadingText: "홍길동 님은 ",
-                        highlightedText: "발전 가능형",
+                        highlightedText: matchFinancialType(scoreList)['type']!,
                         trailingText: " 입니다.",
                       ),
                     ),
@@ -85,8 +85,7 @@ class ChatBotResultFinance extends StatelessWidget {
                           CommonTextWidget(
                               title: '강점',
                               content:
-                                  '재테크에 또래 대비하여 관심도가 높은 편 입니다. 지속적인 관심이 있다면 높은 자산을 형성할 가능성이 매우 높은 유형입니다. '
-                                  '투자 금액이 평균 소득 대비하여 102만원 (12%) 많은 것으로 분석되었습니다.',
+                                  matchFinancialType(scoreList)['strength']!,
                               highlightWords: ['102만원', '(12%)'],
                               highlightColor: MyColors.highlightFontColor),
                           CommonTextWidget(
