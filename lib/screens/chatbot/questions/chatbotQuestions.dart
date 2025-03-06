@@ -50,27 +50,27 @@ const List<Map<String, dynamic>> Questions_basicStatus = [
   {
     "goal": ["saved"],
     "type": "input",
-    "message": "현재 즉시 가용 가능한 현금 및 예적금은 총 얼마인가요? (저축 포함)",
+    "message": "현재 즉시 가용 가능한 현금과 예적금은 총 얼마 인가요? (저축 포함)",
     "message-hint": "즉시 가용 자금 입력 (만원 단위)",
     "options": ["1000", "2000", "5000", "10000"],
   },
   {
     "goal": ["spend"],
     "type": "input",
-    "message": "월 평균 카드값이 얼마 정도 나오나요?",
+    "message": "월 평균 카드값이 얼마 인가요?",
     "message-hint": "평균 카드값 입력 (만원 단위)",
     "options": ["120", "220", "350", "500"],
   },
   {
     "goal": ["assets"],
     "type": "input",
-    "message": "현재 순자산은 어느 정도인가요??",
-    "message-hint": "순자산: 자산 - 부채 (만원 단위)",
-    "options": ["4000", "10000", "25000", "60000"],
+    "message": "현재 자산은 어느 정도 인가요?",
+    "message-hint": "부동산 포함 평가 금액 (만원 단위)",
+    "options": ["10000", "25000", "60000", "150000"],
   },
   {
     "type": "multi-choice",
-    "message": "현재 보유하고 있는 대출을 모두 선택해주세요.",
+    "message": "현재 보유하고 있는 대출을 모두 선택 해주세요.",
     "options": [
       "주택담보",
       "전세",

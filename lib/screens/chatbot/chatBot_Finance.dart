@@ -9,16 +9,16 @@ import 'dart:async';
 import 'widget/messageWidget.dart';
 import 'package:ticklemickle_m/screens/chatbot/questions/chatbotQuestions.dart';
 
-class ChatBotBasic extends StatefulWidget {
+class ChatBotFinance extends StatefulWidget {
   final String category;
 
-  const ChatBotBasic({Key? key, required this.category}) : super(key: key);
+  const ChatBotFinance({Key? key, required this.category}) : super(key: key);
 
   @override
   _ChatBotScreenState createState() => _ChatBotScreenState();
 }
 
-class _ChatBotScreenState extends State<ChatBotBasic> {
+class _ChatBotScreenState extends State<ChatBotFinance> {
   late String category;
   late final List<Map<String, dynamic>> questionList;
   List<String> _pendingMultiChoices = [];
@@ -36,21 +36,6 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
     "assets": 0,
     "spend": 0,
     "saved": 0,
-  };
-
-  Map<String, double> userScores = {
-    "assets": 0,
-    "spend": 0,
-    "loan": 0,
-    "saved": 0,
-    "income": 0,
-  };
-  Map<String, Map<String, double>> scoreRange = {
-    "assets": {"max": 0.0, "min": 0.0},
-    "spend": {"max": 0.0, "min": 0.0},
-    "loan": {"max": 0.0, "min": 0.0},
-    "saved": {"max": 0.0, "min": 0.0},
-    "income": {"max": 0.0, "min": 0.0},
   };
 
   final ScrollController _scrollController = ScrollController();
@@ -90,13 +75,6 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
           messages.add({"type": "userPick", "message": upperResponse});
           messageIndex++;
         }
-        if (messages[messageIndex - 1]["type"] == "input" ||
-            messages[messageIndex - 1]["type"] == "choice") {
-          //type: choice, input
-          userScores = updateUserScores(
-              messages[messageIndex - 1], userResponse, userScores);
-          scoreRange = getQuestionRange(messages[messageIndex - 1], scoreRange);
-        }
 
         if (messages[messageIndex - 1]["type"] == "multi-choice") {
           if (_pendingMultiChoices.isEmpty) {
@@ -117,13 +95,14 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
             isAdded = true;
             messages.add({
               "goal": ["loan"],
-              "type": "choice",
-              "message": '$item 대출 보유 금액이 얼마인지 알려주세요.',
+              "type": "input",
+              "message": '현재 보유 중인 ' '$item 대출' ' 금액이 얼마인가요?',
+              "message-hint": "(만원 단위)",
               "options": [
-                "100만원",
-                "200만원",
-                "300만원",
-                "500만원",
+                "1000",
+                "2500",
+                "3000",
+                "5000",
               ],
             });
           }
@@ -156,17 +135,19 @@ class _ChatBotScreenState extends State<ChatBotBasic> {
 
   void _displayFinalAnswers() {
     if (isResultDisplayed) {
+      print(userAnswerMap);
+      // print(questionList);
       context.go(
-        '${RouteConst.chatBotResultBasic}?category=$category',
+        '${RouteConst.chatBotResultFinance}?category=$category',
         extra: {
-          'scoreList': scaleScores(userScores, scoreRange),
+          'scoreList': calculateFinanceScore(userAnswerMap, questionList),
           'userAnswer': userAnswerMap,
         },
       );
       return;
     }
     userAnswerMap = extractUserAnswerMap(userPickMessage);
-    print(userPickMessage);
+    // print(userPickMessage);
     isResultDisplayed = true;
     messages.add({
       "type": "choice",

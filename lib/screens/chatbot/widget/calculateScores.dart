@@ -92,68 +92,17 @@ int convertMoneyToManWon(String moneyStr) {
   }
 }
 
-int getInputValue(String input) {
-  if (input.contains("만원") || input.contains("억원")) {
-    return convertMoneyToManWon(input);
-  } else {
-    return int.tryParse(input.replaceAll(",", "")) ?? 0;
-  }
-}
-
-int calculateScoreFromThresholds(List<String> options, String userInput) {
-  int inputValue = getInputValue(userInput);
-  // options를 double 리스트로 변환합니다.
-  List<double> thresholds = options
-      .map((option) => double.tryParse(option.replaceAll(",", "")) ?? 0)
-      .toList();
-
-  if (inputValue <= thresholds[0]) {
-    return 1;
-  } else if (inputValue <= thresholds[1]) {
-    return 2;
-  } else if (inputValue <= thresholds[2]) {
-    return 3;
-  } else if (inputValue <= thresholds[3]) {
-    return 4;
-  } else {
-    return 5;
-  }
-}
-
-Map<String, double> updateUserScores(Map<String, dynamic> question,
-    String userInput, Map<String, double> userScores) {
-  int score = calculateScoreFromThresholds(question["options"], userInput);
-  // goal 리스트 내의 각 문자열을 ','로 분리하여 실제 key 목록을 구성합니다.
-  List<String> goals = [];
-  for (var g in question["goal"]) {
-    if (g.contains(",")) {
-      goals.addAll(g.split(',').map((s) => s.trim()));
-    } else {
-      goals.add(g.trim());
-    }
-  }
-  // 해당 goal에 해당하는 userScore 항목에 점수를 누적합니다.
-  for (var key in goals) {
-    if (userScores.containsKey(key)) {
-      userScores[key] = userScores[key]! + score;
-    }
-  }
-  return userScores;
-}
-
-///////////////////
 /* basic chatbot: mapping */
 Map<String, int> extractUserAnswerMap(
     List<Map<String, dynamic>> userPickMessage) {
   Map<String, int> userAnswerMap = {};
-
   for (var message in userPickMessage) {
     if (message.containsKey("goal") && message["goal"] != null) {
       // goal은 리스트 형태라고 가정합니다.
       List<dynamic> goals = message["goal"];
       // userResponse 값을 문자열로 변환 후 숫자로 변환합니다.
       String userResponseStr = message["userResponse"].toString();
-      int value = getInputValue(userResponseStr);
+      int value = convertMoneyToManWon(userResponseStr);
 
       for (var goal in goals) {
         String goalKey = goal.toString();
@@ -168,4 +117,94 @@ Map<String, int> extractUserAnswerMap(
     }
   }
   return userAnswerMap;
+}
+
+Map<String, double> calculateFinanceScore(
+  Map<String, int> userAnswer,
+  List<Map<String, dynamic>> questions,
+) {
+  final scores = Map.fromEntries(
+    questions
+        .where((question) =>
+            question.containsKey('goal') &&
+            question['goal'] is List &&
+            question['goal'].isNotEmpty &&
+            question.containsKey('options'))
+        .map((question) {
+      // goal 리스트에서 첫 번째 키 사용
+      String key = question['goal'][0];
+      List<int> thresholds = (question['options'] as List)
+          .map((option) => int.parse(option.toString()))
+          .toList();
+
+      int value = userAnswer[key] ?? 0;
+      double score = 1;
+
+      if (value <= thresholds[0]) {
+        score = key == "spend" ? 5.0 : 1; // 소비(spend)일 경우 반대로 적용
+      } else if (value >= thresholds[3]) {
+        score = key == "spend" ? 1 : 5.0; // 소비(spend)일 경우 반대로 적용
+      } else {
+        // 비율 기반 점수 계산
+        for (int i = 0; i < thresholds.length - 1; i++) {
+          if (value <= thresholds[i + 1]) {
+            double ratio =
+                (value - thresholds[i]) / (thresholds[i + 1] - thresholds[i]);
+            score = (i + 1) + ratio; // 기본 점수 + 비율 보정
+            // 소비(spend)일 경우 반대로 변환
+            if (key == "spend") {
+              score = 5.5 - score;
+            }
+          }
+        }
+      }
+      return MapEntry(key, double.parse(score.toStringAsFixed(2)));
+    }),
+  );
+  scores['loan'] = calculateLoanScore(userAnswer);
+  return scores;
+}
+
+double calculateLoanScore(Map<String, int> userAnswer) {
+  int loan = userAnswer['loan'] ?? 0;
+  int assets = userAnswer['assets'] ?? 0;
+
+  if (loan == 0) return 5.0; // 부채가 없으면 최고 점수 반환
+  double ratio = loan / (assets + loan); // 부채 비율 계산
+  double score = 5.0 - ratio * 4; // 비율을 반대로 적용하여 5.0~1 범위로 변환
+
+  return double.parse(score.toStringAsFixed(2)); // 소수점 2자리 제한
+}
+
+Map<String, int> getMedianValues(List<Map<String, dynamic>> questions) {
+  Map<String, int> result = {};
+
+  for (var question in questions) {
+    if (question.containsKey('goal') && question.containsKey('options')) {
+      List<String> goals = List<String>.from(question['goal']); // goal 리스트 추출
+      List<int> options = (question['options'] as List)
+          .map((option) => int.parse(option.toString()))
+          .toList();
+
+      if (options.isEmpty) continue; // options가 비어있으면 건너뛰기
+
+      options.sort(); // 정렬
+
+      int median;
+      int length = options.length;
+
+      if (length % 2 == 1) {
+        median = options[length ~/ 2]; // 홀수 개면 가운데 값
+      } else {
+        median = (options[length ~/ 2 - 1] + options[length ~/ 2]) ~/
+            2; // 짝수 개면 두 개 평균 (정수)
+      }
+
+      for (var goal in goals) {
+        result[goal] = median; // 각 goal에 대해 중간값 저장
+      }
+    }
+  }
+
+  return result;
 }

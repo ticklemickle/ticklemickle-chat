@@ -1,9 +1,9 @@
 import 'package:go_router/go_router.dart';
 import 'package:ticklemickle_m/common/utils/const.dart';
 import 'package:ticklemickle_m/common/widgets/restartWidget.dart';
-import 'package:ticklemickle_m/screens/chatbot/chatBotBasic.dart';
+import 'package:ticklemickle_m/screens/chatbot/chatBot_Finance.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/chatBotResult_common.dart';
-import 'package:ticklemickle_m/screens/chatbot/results/chatBotResult_basic.dart';
+import 'package:ticklemickle_m/screens/chatbot/results/chatBotResult_Finance.dart';
 import 'package:ticklemickle_m/screens/home/appHome.dart';
 import 'package:ticklemickle_m/screens/chatbot/chatBotMain.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/chatBotResult_lookalike.dart';
@@ -26,23 +26,23 @@ class AppRoutes {
         },
       ),
       GoRoute(
-        path: '${RouteConst.chatBotBasic}/:category',
+        path: '${RouteConst.chatBotFinance}/:category',
         builder: (context, state) {
           final String category = state.pathParameters['category'] ?? '';
-          return ChatBotBasic(category: category);
+          return ChatBotFinance(category: category);
         },
       ),
       GoRoute(
-        path: RouteConst.chatBotResultBasic,
+        path: RouteConst.chatBotResultFinance,
         builder: (context, state) {
           final category = state.uri.queryParameters['category'] ?? '';
           if (category.isEmpty || state.extra == null || state.extra is! Map) {
             return const RedirectToAppHome();
           }
           final extraData = state.extra as Map;
-          final scoreList = extraData['scoreList'] as List<double>;
+          final scoreList = extraData['scoreList'] as Map<String, double>;
           final userAnswer = extraData['userAnswer'] as Map<String, int>;
-          return ChatBotResultBasic(
+          return ChatBotResultFinance(
             category: category,
             scoreList: scoreList,
             userAnswer: userAnswer,

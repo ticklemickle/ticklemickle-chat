@@ -7,16 +7,18 @@ import 'package:ticklemickle_m/common/widgets/commonHighlightText.dart';
 import 'package:ticklemickle_m/common/widgets/commonShareLink.dart';
 import 'package:ticklemickle_m/common/widgets/commonTitleAndContent.dart';
 import 'package:ticklemickle_m/common/widgets/roundTextButton.dart';
+import 'package:ticklemickle_m/screens/chatbot/questions/chatbotQuestions.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/answerList/comparsion_barList.dart';
+import 'package:ticklemickle_m/screens/chatbot/widget/calculateScores.dart';
 import 'package:ticklemickle_m/screens/chatbot/widget/comparisonBarWidget.dart';
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
 
-class ChatBotResultBasic extends StatelessWidget {
+class ChatBotResultFinance extends StatelessWidget {
   final String category;
-  final List<double> scoreList;
+  final Map<String, double> scoreList;
   final Map<String, int> userAnswer;
 
-  const ChatBotResultBasic(
+  const ChatBotResultFinance(
       {Key? key,
       required this.category,
       required this.scoreList,
@@ -25,11 +27,10 @@ class ChatBotResultBasic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(userAnswer);
     final List<String> labels = ['자산', '소비', '부채', '저축', '소득'];
-    // 5점 척도라고 가정 (maxValue = 5)
-    final List<double> sampleValues = scoreList;
     final double maxValue = 5;
+    print(scoreList);
+    Map<String, int> averageAnswer = getMedianValues(Questions_basicStatus);
 
     return Scaffold(
         appBar: CommonAppBar(
@@ -50,7 +51,7 @@ class ChatBotResultBasic extends StatelessWidget {
                       ),
                     ),
                     RadarChart(
-                      values: sampleValues,
+                      values: convertScoreList(scoreList, labels),
                       maxValue: maxValue,
                       labels: labels,
                       chartSize: 200,
@@ -65,7 +66,8 @@ class ChatBotResultBasic extends StatelessWidget {
                     Wrap(
                       spacing: 5,
                       runSpacing: 70,
-                      children: updateChartDataList(userAnswer).map((data) {
+                      children: updateChartDataList(averageAnswer, userAnswer)
+                          .map((data) {
                         // 화면 가로 길이와 패딩/간격을 고려해 각 아이템의 width 계산
                         final width =
                             (MediaQuery.of(context).size.width - 16 * 2 - 16) /

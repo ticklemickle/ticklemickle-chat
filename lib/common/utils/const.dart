@@ -15,9 +15,9 @@ class CategoryConst {
 
 class RouteConst {
   static const String chatBotMain = "/ChatBotMain";
-  static const String chatBotBasic = "/ChatBotBasic";
+  static const String chatBotFinance = "/ChatBotFinance";
   static const String chatBotResultCommon = "/ChatBotResultCommon";
-  static const String chatBotResultBasic = "/ChatBotReult_basic";
+  static const String chatBotResultFinance = "/ChatBotReult_Finance";
 
   static const String chatBotResultLookalike = "/ChatBotResultLookalike";
   static const String myInfo = "/myInfo";

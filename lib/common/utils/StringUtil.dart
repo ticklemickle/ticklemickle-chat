@@ -93,14 +93,13 @@ class ChatbotSelectableText extends StatelessWidget {
   }
 }
 
-// 입력된 숫자를 만원 단위로 포맷팅
 String formatAmount(String value) {
   if (value.isEmpty) return "";
   final int amount = int.tryParse(value) ?? 0;
   if (amount == 0) {
     return "$amount 원";
   } else if (amount < 10000) {
-    return "$amount 만원";
+    return "$amount만원";
   } else {
     final int oku = amount ~/ 10000;
     final int remain = amount % 10000;
@@ -111,29 +110,39 @@ String formatAmount(String value) {
   }
 }
 
+// 실제 원시 입력값과 이전 포매팅 값을 이용하여 포매팅된 문자열만 반환하는 함수
+String formatAmountV2(String rawValue, String prevFormatted) {
+  int intValue = int.tryParse(rawValue) ?? 0;
+  if (prevFormatted.contains("억") && intValue < 100) {
+    return formatAmount((intValue * 10000).toString());
+  } else {
+    return formatAmount(rawValue);
+  }
+}
+
 class AmountFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    String digits = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
+    // 새 입력값에서 숫자만 추출합니다.
+    String rawDigits = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
 
-    // 첫 번째 숫자가 '0'이면 유지
-    if (digits.length > 1 && digits.startsWith('0')) {
-      digits = digits.substring(0, 1);
+    // 여러 자리이고 첫 문자가 '0'이면 한 자리만 유지합니다.
+    if (rawDigits.length > 1 && rawDigits.startsWith('0')) {
+      rawDigits = rawDigits.substring(0, 1);
     }
 
-    // 포맷 적용
-    String formatted = formatAmount(digits);
+    // 원시값과 이전 포매팅 값을 함께 전달하여 포매팅된 문자열을 생성합니다.
+    String formatted = formatAmountV2(rawDigits, oldValue.text);
 
-    // 커서 위치 유지
+    // 커서 위치 조정을 위해 새 입력의 길이와 원시값 길이 차이를 보정합니다.
     int baseOffset = newValue.selection.baseOffset;
-    int newOffset = baseOffset - (newValue.text.length - digits.length);
+    int newOffset = baseOffset - (newValue.text.length - rawDigits.length);
 
     return TextEditingValue(
       text: formatted,
-      selection: TextSelection.collapsed(
-        offset: newOffset.clamp(0, formatted.length),
-      ),
+      selection:
+          TextSelection.collapsed(offset: newOffset.clamp(0, formatted.length)),
     );
   }
 }

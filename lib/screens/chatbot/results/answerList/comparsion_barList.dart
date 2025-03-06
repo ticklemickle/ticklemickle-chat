@@ -1,69 +1,57 @@
-// 4개의 예시 데이터
 import 'package:ticklemickle_m/common/model/comparsionChart.dart';
 import 'package:ticklemickle_m/common/utils/StringUtil.dart';
 
-List<ComparisonData> updateChartDataList(Map<String, int> newValues) {
-  return chartDataList.map((data) {
-    String key;
-    switch (data.title) {
-      case '소득':
-        key = 'income';
-        break;
-      case '자산':
-        key = 'assets';
-        break;
-      case '소비':
-        key = 'spend';
-        break;
-      case '저축 규모':
-        key = 'saved';
-        break;
-      default:
-        key = '';
-    }
+List<ComparisonData> updateChartDataList(
+    Map<String, int> averageValue, Map<String, int> myValue) {
+  const titleToKey = {
+    '자산': 'assets',
+    '월 소비': 'spend',
+    '총 저축': 'saved',
+    '소득': 'income',
+  };
 
-    // newValues에 해당 key가 없으면 기존 myValue를 사용합니다.
-    final newMyValue = newValues[key] ?? data.myValue;
-    // 단위 등 추가 포맷팅이 필요하면 아래에서 수정할 수 있습니다.
-    final newMyLabel = formatAmount(newMyValue.toString());
+  return chartDataList.map((data) {
+    final key = titleToKey[data.title] ?? '';
+    final newAverageValue = averageValue[key] ?? data.averageValue;
+    final newMyValue = myValue[key] ?? data.myValue;
 
     return ComparisonData(
       title: data.title,
-      averageValue: data.averageValue,
+      averageValue: newAverageValue,
       myValue: newMyValue,
-      averageLabel: data.averageLabel,
-      myLabel: newMyLabel,
+      averageLabel: formatAmount(newAverageValue.toString()),
+      myLabel: formatAmount(newMyValue.toString()),
     );
   }).toList();
 }
 
-final chartDataList = [
-  const ComparisonData(
-    title: '소득',
-    averageValue: 4805,
-    myValue: 0,
-    averageLabel: '0원',
-    myLabel: '0원',
-  ),
-  const ComparisonData(
-    title: '자산',
-    averageValue: 37000,
-    myValue: 0,
-    averageLabel: '0원',
-    myLabel: '0원',
-  ),
-  const ComparisonData(
-    title: '소비',
-    averageValue: 105,
-    myValue: 0,
-    averageLabel: '0원',
-    myLabel: '0원',
-  ),
-  const ComparisonData(
-    title: '저축 규모',
-    averageValue: 10000,
-    myValue: 0,
-    averageLabel: '0원',
-    myLabel: '0원',
-  ),
-];
+final chartDataList = ['자산', '월 소비', '총 저축', '소득']
+    .map((title) => ComparisonData(
+          title: title,
+          averageValue: 999,
+          myValue: 0,
+          averageLabel: '0원',
+          myLabel: '0원',
+        ))
+    .toList();
+
+List<double> convertScoreList(
+  Map<String, double> scoreList,
+  List<String> labels,
+) {
+  // 한글 label과 영어 key의 매핑 (필요에 따라 확장 가능)
+  final Map<String, String> korToEng = {
+    '자산': 'assets',
+    '소비': 'spend',
+    '부채': 'loan',
+    '저축': 'saved',
+    '소득': 'income',
+  };
+
+  return labels.map((label) {
+    // 각 한글 label에 해당하는 영어 key를 가져오고,
+    // scoreList에 해당 key가 없으면 기본값 0을 사용합니다.
+    String engKey = korToEng[label] ?? '';
+    return scoreList[engKey] ?? 0;
+  }).toList();
+}

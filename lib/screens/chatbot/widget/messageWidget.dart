@@ -186,6 +186,7 @@ class _MessageWidgetState extends State<MessageWidget>
             enabled: _submitPressed,
             controller: _inputController,
             keyboardType: TextInputType.number,
+            textInputAction: TextInputAction.done,
             decoration: InputDecoration(
               hintText: widget.messageData["message-hint"] ?? "",
               border: OutlineInputBorder(),

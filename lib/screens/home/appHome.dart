@@ -68,7 +68,7 @@ class _AppHomeState extends State<AppHome> {
                       if (appfinanceList[index]["category"] ==
                           CategoryConst.questionsBasicStatus) {
                         context.push(
-                            '/ChatBotBasic/${appfinanceList[index]["category"]}');
+                            '/ChatBotFinance/${appfinanceList[index]["category"]}');
                       } else {
                         context.push(
                             '/ChatBotMain/${appfinanceList[index]["category"]}');
