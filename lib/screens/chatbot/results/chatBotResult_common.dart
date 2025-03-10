@@ -6,11 +6,13 @@ import 'package:go_router/go_router.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
 import 'package:ticklemickle_m/common/utils/const.dart';
 import 'package:ticklemickle_m/common/widgets/circleTitleItem.dart';
+import 'package:ticklemickle_m/common/widgets/commonCard.dart';
 import 'package:ticklemickle_m/common/widgets/commonHighlightText.dart';
 import 'package:ticklemickle_m/common/widgets/commonShareLink.dart';
 import 'package:ticklemickle_m/common/widgets/roundTextButton.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/answerList/common_answerList.dart';
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
+import 'package:ticklemickle_m/screens/chatbot/results/answerList/linkResult.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/answerList/type_StockInvestor.dart';
 import 'package:ticklemickle_m/screens/home/appList/appfinanceList.dart';
 
@@ -104,6 +106,13 @@ class ChatBotResultCommon extends StatelessWidget {
         ),
       ];
     }
+
+    final commonCardResult = getchatBotResultLink(jsonList: [
+      {
+        "level": 2,
+        "title": result.title,
+      },
+    ]);
 
     return Scaffold(
         appBar: CommonAppBar(
@@ -207,19 +216,15 @@ class ChatBotResultCommon extends StatelessWidget {
                     ]),
                     const SizedBox(height: 50),
                     Commonsharelink(),
-                    const SizedBox(height: 70),
-                    Center(
-                      child: RoundedTextButton(
-                        text: '다른 분석 결과 보기',
-                        onPressed: () {
-                          context.go(RouteConst.appHome);
-                        },
-                        backgroundColor: MyColors.mainColor,
-                        textColor: Colors.black,
-                        borderRadius: 10.0,
+                    const SizedBox(height: 100),
+                    for (var link in commonCardResult.links)
+                      CommonCard(
+                        imagePath: link.imagePath,
+                        title: link.title ?? "",
+                        subtitle: link.detail,
+                        onTap: () => handleCardTap(context, link),
                       ),
-                    ),
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 60),
                   ],
                 ))));
   }

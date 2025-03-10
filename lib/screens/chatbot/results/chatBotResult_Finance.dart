@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ticklemickle_m/common/model/raderChart.dart';
-import 'package:go_router/go_router.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
-import 'package:ticklemickle_m/common/utils/const.dart';
+import 'package:ticklemickle_m/common/widgets/commonCard.dart';
 import 'package:ticklemickle_m/common/widgets/commonHighlightText.dart';
 import 'package:ticklemickle_m/common/widgets/commonShareLink.dart';
 import 'package:ticklemickle_m/common/widgets/commonTitleAndContent.dart';
-import 'package:ticklemickle_m/common/widgets/roundTextButton.dart';
 import 'package:ticklemickle_m/screens/chatbot/questions/chatbotQuestions.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/answerList/finance_answerList.dart';
+import 'package:ticklemickle_m/screens/chatbot/results/answerList/linkResult.dart';
 import 'package:ticklemickle_m/screens/chatbot/widget/calculateScores.dart';
 import 'package:ticklemickle_m/screens/chatbot/widget/comparisonBarWidget.dart';
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
@@ -29,6 +28,8 @@ class ChatBotResultFinance extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<String> labels = ['자산', '소비', '부채', '저축', '소득'];
     final double maxValue = 5;
+    final commonCardResult = getchatBotResultLink();
+
     print(scoreList);
     Map<String, int> averageAnswer = getMedianValues(Questions_basicStatus);
 
@@ -86,31 +87,28 @@ class ChatBotResultFinance extends StatelessWidget {
                               title: '강점',
                               content:
                                   matchFinancialType(scoreList)['strength']!,
-                              highlightWords: ['102만원', '(12%)'],
+                              highlightWords: [
+                                '@',
+                              ],
                               highlightColor: MyColors.highlightFontColor),
                           CommonTextWidget(
                               title: '보완점',
                               content:
-                                  '단기 소비 성향이 과도한 편에 속합니다. 평균과 대비하여 변동 지출이 큰 것은 향후 자산 형성에 불리할 수 있습니다.'
-                                  '또래 평균 매월 59만원의 소비 패턴을 보인 것에 대비하여 13만원 (31%) 더 많이 소비 성향을 보이고 있습니다. ',
-                              highlightWords: ['평균 매월 59만원의', '13만원 (31%) %'],
+                                  matchFinancialType(scoreList)['weakness']!,
+                              highlightWords: ['@'],
                               highlightColor: MyColors.highlightFontColor),
                         ]),
                     const SizedBox(height: 50),
                     Commonsharelink(),
-                    const SizedBox(height: 70),
-                    Center(
-                      child: RoundedTextButton(
-                        text: '다른 분석 결과 보기',
-                        onPressed: () {
-                          context.go(RouteConst.appHome);
-                        },
-                        backgroundColor: MyColors.mainColor,
-                        textColor: Colors.black,
-                        borderRadius: 10.0,
+                    const SizedBox(height: 100),
+                    for (var link in commonCardResult.links)
+                      CommonCard(
+                        imagePath: link.imagePath,
+                        title: link.title ?? "",
+                        subtitle: link.detail,
+                        onTap: () => handleCardTap(context, link),
                       ),
-                    ),
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 60),
                   ],
                 ))));
   }

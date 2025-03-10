@@ -40,7 +40,7 @@ final List<Map<String, dynamic>> appfinanceList = [
     "group": "propensity",
     "category": CategoryConst.questionsUSAStockInvestment,
     "title": "미국주식 투자",
-    "image": "stockGraph.png",
+    "image": "usStock.png",
     "participants": 5
   },
   {

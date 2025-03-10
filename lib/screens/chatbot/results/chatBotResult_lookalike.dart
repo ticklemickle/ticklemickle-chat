@@ -1,9 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:ticklemickle_m/common/utils/const.dart';
 import 'package:ticklemickle_m/common/widgets/commonAlertsheet.dart';
+import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
 import 'package:ticklemickle_m/common/widgets/commonCard.dart';
 import 'package:ticklemickle_m/common/widgets/commonShareLink.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/answerList/lookalike_answerList.dart';
@@ -18,18 +17,9 @@ class ChatBotLookalikeScreen extends StatelessWidget {
     final result = lookalikeList[random.nextInt(3)];
 
     return Scaffold(
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        title: const Text("금융 닮은꼴 찾기 결과"),
-        backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.home),
-            onPressed: () {
-              context.go(RouteConst.appHome);
-            },
-          )
-        ],
+      appBar: CommonAppBar(
+        title: '금융 닮은 꼴 결과',
+        useAppHome: true,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
