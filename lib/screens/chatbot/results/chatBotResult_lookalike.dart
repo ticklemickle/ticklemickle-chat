@@ -1,12 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:ticklemickle_m/common/widgets/commonAlertsheet.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ticklemickle_m/common/utils/const.dart';
+import 'package:ticklemickle_m/common/widgets/BackButtonHandler.dart';
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
 import 'package:ticklemickle_m/common/widgets/commonCard.dart';
 import 'package:ticklemickle_m/common/widgets/commonShareLink.dart';
+import 'package:ticklemickle_m/screens/chatbot/results/answerList/linkResult.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/answerList/lookalike_answerList.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ChatBotLookalikeScreen extends StatelessWidget {
   const ChatBotLookalikeScreen({super.key});
@@ -16,74 +18,58 @@ class ChatBotLookalikeScreen extends StatelessWidget {
     final random = Random();
     final result = lookalikeList[random.nextInt(3)];
 
-    return Scaffold(
-      appBar: CommonAppBar(
-        title: '금융 닮은 꼴 결과',
-        useAppHome: true,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16.0),
-        children: [
-          Center(
-            child: Image.asset(result.image,
-                width: 200, height: 200, fit: BoxFit.cover),
-          ),
-          const SizedBox(height: 25),
-          Center(
-              child: Text(result.name,
-                  style: const TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.w600))),
-          Center(
-              child: Text(result.match,
-                  style: const TextStyle(fontSize: 16, color: Colors.blue))),
-          const SizedBox(height: 25),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text(result.description,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16)),
-          ),
-          const SizedBox(height: 25),
-          // Center(
-          //   child: ElevatedButton(
-          //     onPressed: () {},
-          //     style: ElevatedButton.styleFrom(
-          //       backgroundColor: Colors.grey[300],
-          //       padding:
-          //           const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-          //     ),
-          //     child: const Text("더보기", style: TextStyle(color: Colors.black)),
-          //   ),
-          // ),
-          const SizedBox(height: 25),
-          Commonsharelink(),
-          const SizedBox(height: 40),
-          for (var link in result.links)
-            CommonCard(
-              imagePath: link.imagePath,
-              title: link.title,
-              subtitle: link.detail,
-              onTap: () {
-                link.level == 1
-                    ? launchUrl(Uri.parse('https://open.kakao.com/o/gLztSsgh'))
-                    : showCommonAlertSheet(
-                        context: context,
-                        title: link.title,
-                        subTitle: link.detail,
-                        content: (link.level == 2)
-                            ? "본 모임은 4,900 원 유료 모임입니다. \n실명으로만 단체 카톡방 참석 가능합니다.\n성향 분석 결과와 유사한 투자 성향을 가진 사람들끼리 모입니다.\n결제가 완료되면, 담당자가 단체 카톡방에 초대해 드립니다."
-                            : "본 모임은 50,000 원 유료 모임입니다.\n실명으로만 단체 카톡방 참석 가능합니다.\n성향 분석 결과와 유사한 투자 성향을 갖은 사람들끼리 모입니다.\n소득, 자산, 직업, 지역 등을 종합적으로 고려하여 최적의 멤버들과 그룹을 구성합니다.\n결제가 완료되면, 담당자가 단체 카톡방에 초대해드립니다.",
-                        confirmText: "동의하고 결제하기",
-                        onConfirm: () {
-                          Navigator.pop(context); // 팝업 닫기
-                        },
-                        cancelText: "닫기",
-                        onCancel: () => Navigator.pop(context),
-                      );
-              },
+    final commonCardResult = getchatBotResultLink(jsonList: [
+      {
+        "level": 2,
+        "title": "한국의 ${result.name} 모임",
+      },
+    ]);
+
+    return BackButtonHandler(
+      onBackButtonPressed: () async {
+        context.go(RouteConst.appHome);
+        return false;
+      },
+      child: Scaffold(
+        appBar: CommonAppBar(
+          title: '금융 닮은 꼴 결과',
+          useAppHome: true,
+        ),
+        body: ListView(
+          padding: const EdgeInsets.all(16.0),
+          children: [
+            Center(
+              child: Image.asset(result.image,
+                  width: 200, height: 200, fit: BoxFit.cover),
             ),
-          const SizedBox(height: 40),
-        ],
+            const SizedBox(height: 25),
+            Center(
+                child: Text(result.name,
+                    style: const TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.w600))),
+            Center(
+                child: Text(result.match,
+                    style: const TextStyle(fontSize: 16, color: Colors.blue))),
+            const SizedBox(height: 25),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(result.description,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 16)),
+            ),
+            const SizedBox(height: 50),
+            Commonsharelink(),
+            const SizedBox(height: 40),
+            for (var link in commonCardResult.links)
+              CommonCard(
+                imagePath: link.imagePath,
+                title: link.title ?? "",
+                subtitle: link.detail,
+                onTap: () => handleCardTap(context, link),
+              ),
+            const SizedBox(height: 40),
+          ],
+        ),
       ),
     );
   }

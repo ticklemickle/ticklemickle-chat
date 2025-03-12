@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
 import 'package:ticklemickle_m/common/utils/const.dart';
-import 'package:ticklemickle_m/common/widgets/commonToast.dart';
+import 'package:ticklemickle_m/common/widgets/BackButtonHandler.dart';
 import 'package:ticklemickle_m/screens/home/appList/appfinanceList.dart';
 import 'appListItem.dart';
 
@@ -17,28 +16,10 @@ class AppHome extends StatefulWidget {
 class _AppHomeState extends State<AppHome> {
   @override
   Widget build(BuildContext context) {
-    DateTime? backPressedTime;
-
-    return PopScope(
-        // 사용자가 현재 화면을 pop할 수 없도록 false로 설정
-        canPop: false,
-        onPopInvoked: (bool didPop) {
-          // 만약 이미 pop 처리가 된 경우에는 추가 동작 없이 반환
-          if (didPop) {
-            return;
-          }
-
-          DateTime nowTime = DateTime.now();
-          // 마지막 뒤로가기 시간과 현재 시간의 차이가 2초보다 크면 스낵바로 안내 메시지 출력
-          if (backPressedTime == null ||
-              nowTime.difference(backPressedTime!) >
-                  const Duration(seconds: 2)) {
-            backPressedTime = nowTime;
-            showToast(context, "결제창 연결에 실패했습니다.");
-          } else {
-            // 2초 이내에 두 번째 누름 -> 앱 종료
-            SystemNavigator.pop();
-          }
+    return BackButtonHandler(
+        onBackButtonPressed: () async {
+          context.go(RouteConst.appHome);
+          return false;
         },
         child: Scaffold(
           appBar: AppBar(

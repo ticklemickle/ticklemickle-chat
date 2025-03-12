@@ -28,7 +28,6 @@ class ChatBotResultFinance extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<String> labels = ['자산', '소비', '부채', '저축', '소득'];
     final double maxValue = 5;
-    final commonCardResult = getchatBotResultLink();
 
     print(scoreList);
     Map<String, int> averageAnswer = getMedianValues(Questions_basicStatus);
@@ -101,7 +100,7 @@ class ChatBotResultFinance extends StatelessWidget {
                     const SizedBox(height: 50),
                     Commonsharelink(),
                     const SizedBox(height: 100),
-                    for (var link in commonCardResult.links)
+                    for (var link in getchatBotResultLink().links)
                       CommonCard(
                         imagePath: link.imagePath,
                         title: link.title ?? "",

@@ -59,7 +59,6 @@ class Result {
   }
 }
 
-// 샘플 데이터 상수 정의
 const freeTitle = "재테크 단톡방 참여하기";
 const freeDetail = "200명 미만 무료";
 const freeImagePath = "assets/chatbot/result/common/free_card.png";

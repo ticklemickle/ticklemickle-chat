@@ -90,7 +90,7 @@ const List<Map<String, dynamic>> Questions_basicStatus = [
 ];
 
 const List<Map<String, dynamic>> Questions_lookalike = [
-  {"type": "text", "message": "안녕하세요. 금융 지식 테스트를 시작하겠습니다!"},
+  {"type": "text", "message": "안녕하세요. 금융 닮은꼴 분석을 시작하겠습니다!"},
   {
     "goal": ["knowledge"],
     "type": "ox",
