@@ -1,5 +1,5 @@
 class CategoryConst {
-  static const String questionsFinancialHistory = "Questions_basicStatus";
+  static const String questionsFinancialHistory = "Questions_FinancialHistory";
   static const String questionsLoans = "Questions_lookalike";
   static const String questionsTaxes = "Questions_KoreaStockInvestment";
   static const String questionsStableInvestor = "Questions_USAStockInvestment";
@@ -10,7 +10,7 @@ class CategoryConst {
   static const String questionsUSAStockInvestment = "Questions_StableInvestor";
   static const String questionsKoreaStockInvestment = "Questions_Taxes";
   static const String questionsLookalike = "Questions_Loans";
-  static const String questionsBasicStatus = "Questions_FinancialHistory";
+  static const String questionsBasicStatus = "Questions_basicStatus";
 }
 
 class RouteConst {

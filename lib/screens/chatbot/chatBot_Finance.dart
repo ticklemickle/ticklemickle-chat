@@ -30,6 +30,7 @@ class _ChatBotScreenState extends State<ChatBotFinance> {
   bool isFirstMessage = true;
   bool isResultDisplayed = false;
   bool isAdded = false;
+  bool _isLoading = true; // 로딩 여부 상태 변수
 
   Map<String, int> userAnswerMap = {
     "income": 0,
@@ -44,8 +45,15 @@ class _ChatBotScreenState extends State<ChatBotFinance> {
   void initState() {
     super.initState();
     category = widget.category;
-    questionList = getQuestionsList(category);
+    _fetchQuestions();
+  }
+
+  Future<void> _fetchQuestions() async {
+    questionList = await getQuestionsListFromFirebase(category);
     totalQuestions = questionList.length;
+    setState(() {
+      _isLoading = false;
+    });
     _addNextQuestion();
   }
 
@@ -78,7 +86,6 @@ class _ChatBotScreenState extends State<ChatBotFinance> {
 
         if (messages[messageIndex - 1]["type"] == "multi-choice") {
           if (upperResponse == "") {
-            /* 여기 수정해야함 Loan 부분에 대해서 */
             messageIndex++;
           } else {
             if (_pendingMultiChoices.isEmpty) {
@@ -142,7 +149,6 @@ class _ChatBotScreenState extends State<ChatBotFinance> {
   void _displayFinalAnswers() {
     if (isResultDisplayed) {
       print(userAnswerMap);
-      // print(questionList);
       context.go(
         '${RouteConst.chatBotResultFinance}?category=$category',
         extra: {
@@ -153,7 +159,6 @@ class _ChatBotScreenState extends State<ChatBotFinance> {
       return;
     }
     userAnswerMap = extractUserAnswerMap(userPickMessage);
-    // print(userPickMessage);
     isResultDisplayed = true;
     messages.add({
       "type": "choice",
@@ -162,7 +167,7 @@ class _ChatBotScreenState extends State<ChatBotFinance> {
 재테크 현황 분석이 완료되었습니다.
 
 ${userPickMessage.map((userPick) => "• ${userPick["message"]}\n➡️ ${userPick["userResponse"]}").join("\n\n")}
-        """,
+      """,
     });
 
     Future.delayed(const Duration(milliseconds: 100), () {
@@ -180,6 +185,17 @@ ${userPickMessage.map((userPick) => "• ${userPick["message"]}\n➡️ ${userPi
 
   @override
   Widget build(BuildContext context) {
+    // 로딩중에는 로딩 인디케이터를 표시합니다.
+    if (_isLoading) {
+      return Scaffold(
+        appBar: CommonAppBar(
+          title: getCategoryGroup(category),
+          useAppHome: true,
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       appBar: CommonAppBar(
         title: getCategoryGroup(category),
@@ -189,13 +205,17 @@ ${userPickMessage.map((userPick) => "• ${userPick["message"]}\n➡️ ${userPi
         children: [
           TweenAnimationBuilder<double>(
             tween: Tween<double>(
-                begin: 0.0, end: currentQuestionIndex / totalQuestions),
-            duration: Duration(seconds: 1), // 애니메이션 지속 시간
+                begin: 0.0,
+                end: totalQuestions > 0
+                    ? currentQuestionIndex / totalQuestions
+                    : 0.0),
+            duration: const Duration(seconds: 1),
             builder: (context, value, child) {
               return LinearProgressIndicator(
                 value: value,
                 backgroundColor: MyColors.lightGrey,
-                valueColor: AlwaysStoppedAnimation<Color>(MyColors.mainColor),
+                valueColor:
+                    const AlwaysStoppedAnimation<Color>(MyColors.mainColor),
               );
             },
           ),
@@ -206,7 +226,7 @@ ${userPickMessage.map((userPick) => "• ${userPick["message"]}\n➡️ ${userPi
               child: Column(
                 children: messages
                     .map((message) => MessageWidget(
-                          key: ValueKey(message), // Key 추가하여 위젯 재사용
+                          key: ValueKey(message),
                           messageData: message,
                           onAnswerSelected: _addNextQuestion,
                         ))
