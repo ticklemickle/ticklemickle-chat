@@ -145,13 +145,15 @@ class _MessageWidgetState extends State<MessageWidget>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _multiSelectedOptions.clear();
-                      _submitPressed = false;
-                    });
-                    widget.onAnswerSelected("");
-                  },
+                  onTap: _submitPressed
+                      ? () {
+                          setState(() {
+                            _multiSelectedOptions.clear();
+                            _submitPressed = false;
+                          });
+                          widget.onAnswerSelected("");
+                        }
+                      : null,
                   child: Text(
                     widget.messageData["message-hint"] ?? "",
                     style: const TextStyle(
