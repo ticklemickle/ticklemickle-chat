@@ -2,14 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:ticklemickle_m/common/model/raderChart.dart';
-import 'package:go_router/go_router.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
 import 'package:ticklemickle_m/common/utils/const.dart';
 import 'package:ticklemickle_m/common/widgets/circleTitleItem.dart';
 import 'package:ticklemickle_m/common/widgets/commonCard.dart';
 import 'package:ticklemickle_m/common/widgets/commonHighlightText.dart';
 import 'package:ticklemickle_m/common/widgets/commonShareLink.dart';
-import 'package:ticklemickle_m/common/widgets/roundTextButton.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/answerList/common_answerList.dart';
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
 import 'package:ticklemickle_m/screens/chatbot/results/answerList/linkResult.dart';
@@ -110,7 +108,7 @@ class ChatBotResultCommon extends StatelessWidget {
     final commonCardResult = getchatBotResultLink(jsonList: [
       {
         "level": 2,
-        "title": result.title,
+        "title": "${_removeLastCharacterIfHyung(result.title)} 유형 끼리 모임",
       },
     ]);
 
@@ -228,4 +226,11 @@ class ChatBotResultCommon extends StatelessWidget {
                   ],
                 ))));
   }
+}
+
+String _removeLastCharacterIfHyung(String title) {
+  if (title.isNotEmpty && title.endsWith('형')) {
+    return title.substring(0, title.length - 1);
+  }
+  return title;
 }

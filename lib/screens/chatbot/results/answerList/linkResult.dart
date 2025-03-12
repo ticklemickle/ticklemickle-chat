@@ -75,12 +75,31 @@ const vipDetail = "10명 미만, 실명, 오프라인 스터디";
 const vipImagePath = "assets/chatbot/result/common/vip_card.png";
 
 Result getchatBotResultLink({List<Map<String, dynamic>>? jsonList}) {
+  List<JsonToResult> defaultList = _defaultJsonToResultList();
+
   if (jsonList == null || jsonList.isEmpty) {
-    return Result(links: _defaultJsonToResultList());
+    return Result(links: defaultList);
   }
-  List<JsonToResult> links =
-      jsonList.map((json) => JsonToResult.fromJson(json)).toList();
-  return Result(links: links);
+
+  // jsonList에 있는 level 값을 기준으로 defaultList를 업데이트
+  for (var json in jsonList) {
+    int level = json['level'] as int;
+
+    // 해당 level을 가진 기본 데이터 찾기
+    int index = defaultList.indexWhere((item) => item.level == level);
+    if (index != -1) {
+      // 기존 값 유지하고, jsonList에서 제공된 값만 덮어쓰기
+      defaultList[index] = JsonToResult(
+        level: level,
+        title: json['title'] as String? ?? defaultList[index].title,
+        detail: json['detail'] as String? ?? defaultList[index].detail,
+        imagePath: json['imagePath'] as String? ?? defaultList[index].imagePath,
+        link: json['link'] as String? ?? defaultList[index].link,
+      );
+    }
+  }
+
+  return Result(links: defaultList);
 }
 
 // default 값을 반환하는 메서드
