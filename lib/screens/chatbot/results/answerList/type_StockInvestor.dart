@@ -1,5 +1,5 @@
+import 'package:ticklemickle_m/common/model/fireabaseController.dart';
 import 'package:ticklemickle_m/common/model/jsonToFinanceCommon.dart';
-import 'package:ticklemickle_m/screens/chatbot/results/answerList/common_answerList.dart';
 
 // Helper: 각 값에 대해 Low, Medium, High 범주를 반환하는 함수
 bool isLow(double value) => value < 3;
@@ -86,14 +86,14 @@ String getInvestorType({
   }
 }
 
-/// 입력 점수와 투자자 유형에 따른 랜덤 궁합 점수를 함께 반환하는 함수
-JsonToResult mapInvestorResult({
+// 기존 mapInvestorResult 함수를 비동기 함수로 변경하여 Firestore 데이터를 가져옴
+Future<JsonToResultCommon?> mapInvestorResult({
   required double aggression,
   required double ret,
   required double period,
   required double knowledge,
   required double amount,
-}) {
+}) async {
   final investorType = getInvestorType(
     aggression: aggression,
     ret: ret,
@@ -101,12 +101,17 @@ JsonToResult mapInvestorResult({
     knowledge: knowledge,
     amount: amount,
   );
-  print(investorType);
-  return findStockBySub(investorType);
+
+  return await findStockBySub(investorType);
 }
 
-JsonToResult findStockBySub(String sub) {
-  return commonStockList.firstWhere(
-    (stock) => stock.sub == sub,
-  );
+Future<JsonToResultCommon?> findStockBySub(String sub) async {
+  List<Map<String, dynamic>> stockData = await getStockResultFromFirebase(sub);
+
+  if (stockData.isNotEmpty) {
+    print('✅ ${stockData.first} get from Firebase');
+    return JsonToResultCommon.fromJson(stockData.first);
+  }
+
+  return null; // 데이터가 없을 경우 null 반환
 }

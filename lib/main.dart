@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ticklemickle_m/common/model/fireabaseController.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
 import 'package:ticklemickle_m/common/widgets/restartWidget.dart';
 import 'package:url_strategy/url_strategy.dart';
@@ -13,6 +14,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   setPathUrlStrategy(); //Url 에서 #을 제거
+
+  setInitDataFromFirebase();
   runApp(const RestartWidget(
     child: MyApp(),
   ));

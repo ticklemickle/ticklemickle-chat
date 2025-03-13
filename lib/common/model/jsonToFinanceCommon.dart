@@ -1,7 +1,7 @@
-class JsonToResult {
+class JsonToResultCommon {
   final String image, match, description, sub, title;
 
-  JsonToResult({
+  JsonToResultCommon({
     required this.image,
     required this.sub,
     required this.title,
@@ -9,7 +9,8 @@ class JsonToResult {
     required this.description,
   });
 
-  factory JsonToResult.fromJson(Map<String, dynamic> json) => JsonToResult(
+  factory JsonToResultCommon.fromJson(Map<String, dynamic> json) =>
+      JsonToResultCommon(
         image: json["image"],
         sub: json["sub"],
         title: json["title"],

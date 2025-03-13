@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ticklemickle_m/common/model/fireabaseController.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
 import 'package:ticklemickle_m/common/utils/const.dart';
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
@@ -7,7 +8,6 @@ import 'package:ticklemickle_m/screens/chatbot/widget/calculateScores.dart';
 import 'package:ticklemickle_m/screens/home/appList/appfinanceList.dart';
 import 'dart:async';
 import 'widget/messageWidget.dart';
-import 'package:ticklemickle_m/screens/chatbot/questions/chatbotQuestions.dart';
 
 class ChatBotMain extends StatefulWidget {
   final String category;
@@ -29,6 +29,7 @@ class _ChatBotScreenState extends State<ChatBotMain> {
   int messageIndex = 0;
   bool isFirstMessage = true;
   bool isResultDisplayed = false;
+  bool _isLoading = true; // 로딩 여부 상태 변수
 
   Map<String, double> userScores = {
     "aggression": 0,
@@ -51,8 +52,15 @@ class _ChatBotScreenState extends State<ChatBotMain> {
   void initState() {
     super.initState();
     category = widget.category;
-    questionList = getQuestionsList(category);
+    _fetchQuestions();
+  }
+
+  Future<void> _fetchQuestions() async {
+    questionList = await getQuestionsListFromFirebase(category);
     totalQuestions = questionList.length;
+    setState(() {
+      _isLoading = false;
+    });
     _addNextQuestion();
   }
 
@@ -150,6 +158,15 @@ ${userPickMessage.map((userPick) => "• ${userPick["message"]}\n➡️ ${userPi
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Scaffold(
+        appBar: CommonAppBar(
+          title: getCategoryGroup(category),
+          useAppHome: true,
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
     return Scaffold(
       appBar: CommonAppBar(
         title: getCategoryGroup(category),

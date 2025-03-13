@@ -3,10 +3,11 @@ class CategoryConst {
   static const String questionsLoans = "Questions_lookalike";
   static const String questionsTaxes = "Questions_KoreaStockInvestment";
   static const String questionsStableInvestor = "Questions_USAStockInvestment";
-  static const String questionsCrypto = "Questions_RealEstateCommercial";
+  static const String questionsCrypto = "Questions_Crypto";
   static const String questionsRealEstateResidential =
       "QuestionsRealEstateResidential";
-  static const String questionsRealEstateCommercial = "Questions_Crypto";
+  static const String questionsRealEstateCommercial =
+      "Questions_RealEstateCommercial";
   static const String questionsUSAStockInvestment = "Questions_StableInvestor";
   static const String questionsKoreaStockInvestment = "Questions_Taxes";
   static const String questionsLookalike = "Questions_Loans";

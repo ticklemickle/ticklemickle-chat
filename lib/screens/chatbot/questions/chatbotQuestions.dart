@@ -1,20 +1,4 @@
 import 'package:ticklemickle_m/common/utils/const.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-Future<List<Map<String, dynamic>>> getQuestionsListFromFirebase(
-    String category) async {
-  DocumentSnapshot docSnapshot = await FirebaseFirestore.instance
-      .collection('chatbot_questions')
-      .doc(category)
-      .get();
-  if (docSnapshot.exists) {
-    Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?;
-    if (data != null && data.containsKey('question')) {
-      return List<Map<String, dynamic>>.from(data['question']);
-    }
-  }
-  return [];
-}
 
 List<Map<String, dynamic>> getQuestionsList(String category) {
   switch (category) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ticklemickle_m/common/model/fireabaseController.dart';
 import 'package:ticklemickle_m/common/themes/colors.dart';
 import 'package:ticklemickle_m/common/utils/const.dart';
 import 'package:ticklemickle_m/common/widgets/commonAppBar.dart';
@@ -7,7 +8,6 @@ import 'package:ticklemickle_m/screens/chatbot/widget/calculateScores.dart';
 import 'package:ticklemickle_m/screens/home/appList/appfinanceList.dart';
 import 'dart:async';
 import 'widget/messageWidget.dart';
-import 'package:ticklemickle_m/screens/chatbot/questions/chatbotQuestions.dart';
 
 class ChatBotFinance extends StatefulWidget {
   final String category;
@@ -185,7 +185,6 @@ ${userPickMessage.map((userPick) => "• ${userPick["message"]}\n➡️ ${userPi
 
   @override
   Widget build(BuildContext context) {
-    // 로딩중에는 로딩 인디케이터를 표시합니다.
     if (_isLoading) {
       return Scaffold(
         appBar: CommonAppBar(
